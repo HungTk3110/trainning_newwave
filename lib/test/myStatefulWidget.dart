@@ -13,6 +13,7 @@ class MyStatefulWidget extends StatefulWidget{
 class MyStatefulWidget_State extends State<MyStatefulWidget>{
 
   var value = "Change text";
+  var boolChangeTexx = true;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -26,14 +27,14 @@ class MyStatefulWidget_State extends State<MyStatefulWidget>{
         body: Center(
           child: Column(
            children: [
-             Text(value),
+             boolChangeTexx ? Text(value) : Text("Change text success"),
              ElevatedButton(
                style: ElevatedButton.styleFrom(
                  minimumSize: const Size(240, 80),
                ),
                onPressed: () {
                  setState(() {
-                   value = "Change text success";
+                   boolChangeTexx =  false;
                  });
                },
                child:const Text("Change text" , style: TextStyle(fontSize: 28)) ,
