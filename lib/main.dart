@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:training_newwave/test/myStatefulWidget.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const MyStatefulWidget());
 }
 
 class MyApp extends StatelessWidget {
