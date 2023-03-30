@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:training_newwave/C3/trainnningC3.dart';
 import 'package:training_newwave/test/myStatefulWidget.dart';
 
 void main() {
-  runApp(const MyStatefulWidget());
+  runApp( MaterialApp(home: trainingC3()));
 }
 
 class MyApp extends StatelessWidget {
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home:  trainingC3()
     );
   }
 }
