@@ -27,7 +27,7 @@ class MyStatefulWidget_State extends State<MyStatefulWidget>{
         body: Center(
           child: Column(
            children: [
-             boolChangeTexx ? Text(value) : Text("Change text success"),
+             boolChangeTexx ? Text(value) : Text("Change text success",),
              ElevatedButton(
                style: ElevatedButton.styleFrom(
                  minimumSize: const Size(240, 80),
