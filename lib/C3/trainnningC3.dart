@@ -11,6 +11,7 @@ class trainingC3 extends StatefulWidget {
 class HomeSate extends State<trainingC3>{
 
    var  isRefresh = false;
+   var themeLight = true;
 
   List<SaladItem> saladItems = [
     SaladItem("Salad with cabbage and shrimp", "John Adams",
@@ -28,24 +29,31 @@ class HomeSate extends State<trainingC3>{
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: themeLight ? ThemeData.light() : ThemeData.dark(),
       home: Scaffold(
         appBar: AppBar(
-          systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
-          backgroundColor: Colors.white,
-          leading: const Icon(
+          backgroundColor:themeLight ?  Colors.white : Colors.black,
+          leading: Icon(
             Icons.arrow_back_outlined,
-            color: Colors.black,
+            color: themeLight ? Colors.black : Colors.white,
           ),
-          title: const Text(
+          title:  Text(
             "Salad",
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(color: themeLight ? Colors.black : Colors.white),
           ),
           actions: <Widget>[
             Container(
               margin: const EdgeInsets.only(right: 20.0),
-              child: const Icon(
-                Icons.search,
-                color: Colors.black,
+              child:  IconButton(
+                color: Colors.black, onPressed: () {
+                  setState(() {
+                    if(themeLight)
+                      themeLight = false;
+                    else
+                      themeLight = true;
+                  });
+              }, icon:  Icon( Icons.search ,
+              color: themeLight ? Colors.black : Colors.white,),
               ),
             )
           ],
@@ -53,10 +61,12 @@ class HomeSate extends State<trainingC3>{
         body: RefreshIndicator(
           onRefresh: () {
             setState(() {
-              isRefresh = true;
+              if(isRefresh)
+                isRefresh = false;
+              else
+                isRefresh = true;
             });
-            isRefresh = true;
-            return Future<void>.delayed(const Duration(seconds: 3));
+            return Future<void>.delayed(const Duration(microseconds: 600));
           },
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
@@ -131,10 +141,10 @@ class HomeSate extends State<trainingC3>{
                     textBaseline: TextBaseline.alphabetic,
                     children: [
                       Container(
-                        child: const Text(
+                        child: Text(
                           "Sort by",
                           style: TextStyle(
-                            color: Colors.black,
+                            color:  themeLight ? Colors.black : Colors.white,
                             fontSize: 20.0,
                           ),
                         ),
@@ -226,11 +236,11 @@ class HomeSate extends State<trainingC3>{
                               top: 10,
                               child: Container(
                                 padding: EdgeInsets.all(5),
-                                decoration: const BoxDecoration(
+                                decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                   color:  isRefresh : C,
+                                   color: isRefresh ?  Colors.yellow : Colors.red,
                                 ),
-                                child: const Icon(Icons.bookmark_border ,color: Colors.white,),
+                                child: Icon( isRefresh ? Icons.search : Icons.bookmark_border ,color: Colors.white),
                               ))
                         ],
                       );
