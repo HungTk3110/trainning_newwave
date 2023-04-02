@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:training_newwave/C3/trainnningC3.dart';
 import 'package:training_newwave/test/myStatefulWidget.dart';
 
+import 'C4/C4_1.dart';
+import 'C4/C4_3.dart';
+import 'C4/C4b2.dart';
+import 'C4/C4b4.dart';
+
 void main() {
-  runApp( MaterialApp(home: trainingC3()));
+  runApp(VideoApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -26,7 +31,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home:  trainingC3()
+      // home:  ()
     );
   }
 }
