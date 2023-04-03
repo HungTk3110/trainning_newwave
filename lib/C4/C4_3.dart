@@ -11,7 +11,6 @@ class C4b3 extends StatelessWidget {
     C4b1("Terms & Conditions", "assets/svg/terms.svg")
   ];
 
-  C4b3({super.key});
 
   @override
   Widget build(BuildContext context) {

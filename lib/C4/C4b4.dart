@@ -3,15 +3,16 @@ import 'package:video_player/video_player.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class VideoApp extends StatefulWidget {
-  const VideoApp({super.key});
+  const VideoApp({Key key}) : super(key: key);
+
 
   @override
   _VideoAppState createState() => _VideoAppState();
 }
 
 class _VideoAppState extends State<VideoApp> {
-  late VideoPlayerController _controller;
-  late YoutubePlayerController _ytbPlayerController;
+   VideoPlayerController _controller;
+   YoutubePlayerController _ytbPlayerController;
 
   @override
   void initState() {

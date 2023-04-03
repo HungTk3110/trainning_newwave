@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import '../model/Salad_entity.dart';
 
 class TrainingC3 extends StatefulWidget {
-  const TrainingC3({super.key});
+  const TrainingC3({Key key}) : super(key: key);
+
 
 
   @override

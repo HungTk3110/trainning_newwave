@@ -9,7 +9,6 @@ class TrainingC4_1 extends StatelessWidget {
     C4b1("Terms & Conditions", "assets/images/terms.png")
   ];
 
-  TrainingC4_1({super.key});
 
   @override
   Widget build(BuildContext context) {
