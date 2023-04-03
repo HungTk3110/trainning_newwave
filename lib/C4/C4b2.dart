@@ -2,25 +2,27 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class C4b2 extends StatelessWidget {
+  const C4b2({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text("Training Newwave C4 bai 2"),
+          title: const Text("Training Newwave C4 bai 2"),
         ),
         body: Container(
           padding: const EdgeInsets.all(20),
           child: ListView(
             children: [
               Container(
-                padding: EdgeInsets.all(20),
-                child: Text("Sử dụng Image.network"),
+                padding: const EdgeInsets.all(20),
+                child: const Text("Sử dụng Image.network"),
               ),
               Card(
                 child: ListTile(
-                  title: Text("@airplanes45"),
-                  subtitle: Text("Sarah Paul"),
+                  title: const Text("@airplanes45"),
+                  subtitle: const Text("Sarah Paul"),
                   leading: CircleAvatar(
                     child: ClipOval(
                       child: Image.network(
@@ -34,13 +36,13 @@ class C4b2 extends StatelessWidget {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(20),
-                child: Text("Sử dụng thư viện cached_network_image"),
+                padding: const EdgeInsets.all(20),
+                child: const Text("Sử ding thư viện cached_network_image"),
               ),
               Card(
                 child: ListTile(
-                  title: Text("@airplanes45"),
-                  subtitle: Text("Sarah Paul"),
+                  title: const Text("@airplanes45"),
+                  subtitle: const Text("Sarah Paul"),
                   leading: CircleAvatar(
                     child: ClipOval(
                       child: CachedNetworkImage(
@@ -49,8 +51,8 @@ class C4b2 extends StatelessWidget {
                         height: 100,
                         fit: BoxFit.cover,
                         placeholder: (context, url) =>
-                            CircularProgressIndicator(),
-                        errorWidget: (context, url, error) => Icon(Icons.error),
+                            const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => const Icon(Icons.error),
                       ),
                     ),
                   ),

@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 
-class trainingC4_1 extends StatelessWidget {
-  List<c4b1> list = [
-    c4b1("FAQ", "assets/images/FAQ.png"),
-    c4b1("Contact Us", "assets/images/Group.png"),
-    c4b1("Terms & Conditions", "assets/images/terms.png")
+import '../model/C4b1_entity.dart';
+
+class TrainingC4_1 extends StatelessWidget {
+  List<C4b1> list = [
+    C4b1("FAQ", "assets/images/FAQ.png"),
+    C4b1("Contact Us", "assets/images/Group.png"),
+    C4b1("Terms & Conditions", "assets/images/terms.png")
   ];
+
+  TrainingC4_1({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text("Training Newwave C4 bai 1"),
+          title: const Text("Training Newwave C4 bai 1"),
         ),
         body: Container(
           padding: const EdgeInsets.all(20),
@@ -23,7 +27,7 @@ class trainingC4_1 extends StatelessWidget {
                     return Card(
                       child: ListTile(
                         leading: Image.asset(list[index].assetImage),
-                        title: Text(list[index].title , style: TextStyle(color: Colors.grey),),
+                        title: Text(list[index].title , style: const TextStyle(color: Colors.grey),),
                       ),
                     );
               }),
@@ -33,9 +37,3 @@ class trainingC4_1 extends StatelessWidget {
   }
 }
 
-class c4b1 {
-  String title;
-  String assetImage;
-
-  c4b1(this.title, this.assetImage);
-}

@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-class trainingC3 extends StatefulWidget {
+import '../model/Salad_entity.dart';
+
+class TrainingC3 extends StatefulWidget {
+  const TrainingC3({super.key});
+
+
   @override
   State<StatefulWidget> createState() {
     return HomeSate();
   }
 }
 
-class HomeSate extends State<trainingC3>{
-
-   var  isRefresh = false;
-   var themeLight = true;
+class HomeSate extends State<TrainingC3> {
+  var isRefresh = false;
+  var themeLight = true;
 
   List<SaladItem> saladItems = [
     SaladItem("Salad with cabbage and shrimp", "John Adams",
@@ -26,34 +29,40 @@ class HomeSate extends State<trainingC3>{
     SaladItem("Salad of cove beans, shrimp and potatoes", "John Tyler",
         "assets/images/img1.jpg"),
   ];
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: themeLight ? ThemeData.light() : ThemeData.dark(),
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor:themeLight ?  Colors.white : Colors.black,
+          backgroundColor: themeLight ? Colors.white : Colors.black,
           leading: Icon(
             Icons.arrow_back_outlined,
             color: themeLight ? Colors.black : Colors.white,
           ),
-          title:  Text(
+          title: Text(
             "Salad",
             style: TextStyle(color: themeLight ? Colors.black : Colors.white),
           ),
           actions: <Widget>[
             Container(
               margin: const EdgeInsets.only(right: 20.0),
-              child:  IconButton(
-                color: Colors.black, onPressed: () {
+              child: IconButton(
+                color: Colors.black,
+                onPressed: () {
                   setState(() {
-                    if(themeLight)
+                    if (themeLight) {
                       themeLight = false;
-                    else
+                    } else {
                       themeLight = true;
+                    }
                   });
-              }, icon:  Icon( Icons.search ,
-              color: themeLight ? Colors.black : Colors.white,),
+                },
+                icon: Icon(
+                  Icons.search,
+                  color: themeLight ? Colors.black : Colors.white,
+                ),
               ),
             )
           ],
@@ -61,10 +70,11 @@ class HomeSate extends State<trainingC3>{
         body: RefreshIndicator(
           onRefresh: () {
             setState(() {
-              if(isRefresh)
+              if (isRefresh) {
                 isRefresh = false;
-              else
+              } else {
                 isRefresh = true;
+              }
             });
             return Future<void>.delayed(const Duration(microseconds: 600));
           },
@@ -86,7 +96,8 @@ class HomeSate extends State<trainingC3>{
                       return Stack(
                         children: [
                           Container(
-                            width: MediaQuery.of(context).size.width -MediaQuery.of(context).padding.left,
+                            width: MediaQuery.of(context).size.width -
+                                MediaQuery.of(context).padding.left,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
                               image: DecorationImage(
@@ -128,9 +139,12 @@ class HomeSate extends State<trainingC3>{
                           ),
                         ],
                       );
-                    }, separatorBuilder: (BuildContext context, int index) {
-                    return SizedBox(width: 16,);
-                  },
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const SizedBox(
+                        width: 16,
+                      );
+                    },
                   ),
                 ),
                 Container(
@@ -140,33 +154,27 @@ class HomeSate extends State<trainingC3>{
                     crossAxisAlignment: CrossAxisAlignment.baseline,
                     textBaseline: TextBaseline.alphabetic,
                     children: [
-                      Container(
-                        child: Text(
-                          "Sort by",
-                          style: TextStyle(
-                            color:  themeLight ? Colors.black : Colors.white,
-                            fontSize: 20.0,
-                          ),
+                      Text(
+                        "Sort by",
+                        style: TextStyle(
+                          color: themeLight ? Colors.black : Colors.white,
+                          fontSize: 20.0,
                         ),
                       ),
                       Row(
                         children: [
-                          Container(
-                            child: const Text(
-                              "Most popular",
-                              style: TextStyle(
-                                color: Colors.pink,
-                                fontSize: 15.0,
-                              ),
+                          const Text(
+                            "Most popular",
+                            style: TextStyle(
+                              color: Colors.pink,
+                              fontSize: 15.0,
                             ),
                           ),
-                          Container(
-                            child: IconButton(
-                              icon: const Icon(Icons.swap_vert),
-                              iconSize: 18,
-                              color: Colors.pink,
-                              onPressed: () {},
-                            ),
+                          IconButton(
+                            icon: const Icon(Icons.swap_vert),
+                            iconSize: 18,
+                            color: Colors.pink,
+                            onPressed: () {},
                           )
                         ],
                       )
@@ -179,7 +187,7 @@ class HomeSate extends State<trainingC3>{
                   child: GridView.builder(
                     itemCount: saladItems.length,
                     gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       crossAxisSpacing: 15.0,
                       childAspectRatio: 1 / 1.5,
@@ -189,7 +197,8 @@ class HomeSate extends State<trainingC3>{
                       return Stack(
                         children: [
                           Container(
-                            width: MediaQuery.of(context).size.width / 2 - MediaQuery.of(context).padding.horizontal,
+                            width: MediaQuery.of(context).size.width / 2 -
+                                MediaQuery.of(context).padding.horizontal,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
                               image: DecorationImage(
@@ -235,12 +244,16 @@ class HomeSate extends State<trainingC3>{
                               right: 10,
                               top: 10,
                               child: Container(
-                                padding: EdgeInsets.all(5),
+                                padding: const EdgeInsets.all(5),
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                   color: isRefresh ?  Colors.yellow : Colors.red,
+                                  color: isRefresh ? Colors.yellow : Colors.red,
                                 ),
-                                child: Icon( isRefresh ? Icons.search : Icons.bookmark_border ,color: Colors.white),
+                                child: Icon(
+                                    isRefresh
+                                        ? Icons.search
+                                        : Icons.bookmark_border,
+                                    color: Colors.white),
                               ))
                         ],
                       );
@@ -254,13 +267,4 @@ class HomeSate extends State<trainingC3>{
       ),
     );
   }
-
-}
-
-class SaladItem {
-  String title;
-  String subtitle;
-  String assetImage;
-
-  SaladItem(this.title, this.subtitle, this.assetImage);
 }

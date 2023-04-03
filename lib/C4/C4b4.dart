@@ -25,7 +25,7 @@ class _VideoAppState extends State<VideoApp> {
     _ytbPlayerController = YoutubePlayerController(
       initialVideoId: YoutubePlayer.convertUrlToId(
           "https://www.youtube.com/watch?v=YBRkVCRP1Gw") as String,
-      flags: YoutubePlayerFlags(
+      flags: const YoutubePlayerFlags(
         mute: false,
         autoPlay: true,
       ),
@@ -39,13 +39,13 @@ class _VideoAppState extends State<VideoApp> {
         title: 'Video Demo',
         home: Scaffold(
           appBar: AppBar(
-            title: Text("Training Newwave C4 bai 4"),
+            title: const Text("Training Newwave C4 bai 4"),
           ),
           body: Container(
-              padding: EdgeInsets.only(top: 20),
+              padding: const EdgeInsets.only(top: 20),
               child: Column(
                 children: [
-                  Text("Sử dụng thư viện video_player"),
+                  const Text("Sử dụng thư viện video_player"),
                   Stack(
                     children: [
                       _controller.value.isInitialized
@@ -74,9 +74,9 @@ class _VideoAppState extends State<VideoApp> {
                       ),
                     ],
                   ),
-                  Text("Sử dụng thư viện youtube_player_flutter"),
+                  const Text("Sử dụng thư viện youtube_player_flutter"),
                   YoutubePlayer(
-                    controller: _ytbPlayerController!,
+                    controller: _ytbPlayerController,
                     showVideoProgressIndicator: true,
                   ),
                 ],
