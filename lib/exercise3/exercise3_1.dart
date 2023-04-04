@@ -3,18 +3,20 @@ import 'package:training_newwave/model/salad_entity.dart';
 
 // ignore: must_be_immutable
 class TrainingC3 extends StatefulWidget {
-  var isRefresh = false;
+
   var isThemeLight = true;
 
-  TrainingC3({Key key, this.isRefresh, this.isThemeLight}) : super(key: key);
+  TrainingC3({Key key, this.isThemeLight}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return HomeSate();
+    return TrainingC3State();
   }
 }
 
-class HomeSate extends State<TrainingC3> {
+class TrainingC3State extends State<TrainingC3> {
+  var isRefresh = false;
+
   List<SaladItem> saladItems = [
     SaladItem(
       "Salad with cabbage and shrimp",
@@ -58,9 +60,12 @@ class HomeSate extends State<TrainingC3> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: widget.isThemeLight ? Colors.white : Colors.black,
-        leading: Icon(
-          Icons.arrow_back_outlined,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_outlined),
           color: widget.isThemeLight ? Colors.black : Colors.white,
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
         title: Text(
           "Salad",
@@ -93,10 +98,10 @@ class HomeSate extends State<TrainingC3> {
       body: RefreshIndicator(
         onRefresh: () {
           setState(() {
-            if (widget.isRefresh) {
-              widget.isRefresh = false;
+            if (isRefresh) {
+              isRefresh = false;
             } else {
-              widget.isRefresh = true;
+              isRefresh = true;
             }
           });
           return Future<void>.delayed(const Duration(microseconds: 600));
@@ -106,7 +111,7 @@ class HomeSate extends State<TrainingC3> {
           child: Column(
             children: <Widget>[
               const SizedBox(
-                height: 20,
+                height: 16,
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.25,
@@ -180,7 +185,8 @@ class HomeSate extends State<TrainingC3> {
                     Text(
                       "Sort by",
                       style: TextStyle(
-                        color: widget.isThemeLight ? Colors.black : Colors.white,
+                        color:
+                            widget.isThemeLight ? Colors.black : Colors.white,
                         fontSize: 20.0,
                       ),
                     ),
@@ -212,7 +218,7 @@ class HomeSate extends State<TrainingC3> {
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 15.0,
-                    childAspectRatio: 1 / 1.5,
+                    childAspectRatio: 1 / 1.3,
                     mainAxisSpacing: 15.0,
                   ),
                   itemBuilder: (BuildContext context, int index) {
@@ -239,7 +245,8 @@ class HomeSate extends State<TrainingC3> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               SizedBox(
-                                width: MediaQuery.of(context).size.width / 2 - 40,
+                                width:
+                                    MediaQuery.of(context).size.width / 2 - 40,
                                 child: Text(
                                   saladItems[index].title,
                                   style: const TextStyle(
@@ -270,10 +277,10 @@ class HomeSate extends State<TrainingC3> {
                             padding: const EdgeInsets.all(5),
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: widget.isRefresh ? Colors.yellow : Colors.red,
+                              color: isRefresh ? Colors.yellow : Colors.red,
                             ),
                             child: Icon(
-                              widget.isRefresh ? Icons.search : Icons.bookmark_border,
+                              isRefresh ? Icons.search : Icons.bookmark_border,
                               color: Colors.white,
                             ),
                           ),

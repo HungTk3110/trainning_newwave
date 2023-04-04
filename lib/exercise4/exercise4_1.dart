@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:training_newwave/model/image_exercise4_entity.dart';
 
+// ignore: camel_case_types, must_be_immutable
 class Exercise4_1 extends StatelessWidget {
   List<Image_Exercise4_Entity> list = [
     Image_Exercise4_Entity(

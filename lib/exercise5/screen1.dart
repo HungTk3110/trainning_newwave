@@ -1,19 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:training_newwave/exercise5/screen2.dart';
 
-class Screen1 extends StatelessWidget {
+class Screen1 extends StatefulWidget {
   const Screen1({Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: StatefulScreen1(),
-    );
-  }
-}
-
-class StatefulScreen1 extends StatefulWidget {
-  const StatefulScreen1({Key key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -21,11 +10,15 @@ class StatefulScreen1 extends StatefulWidget {
   }
 }
 
-class StatelessScreen1 extends State<StatefulScreen1> {
+class StatelessScreen1 extends State<Screen1> {
+  TextEditingController passScreen1 = TextEditingController();
+  TextEditingController passScreen2 = TextEditingController();
+  TextEditingController passScreen3 = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
+      resizeToAvoidBottomInset: false,
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
@@ -62,7 +55,7 @@ class StatelessScreen1 extends State<StatefulScreen1> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const Padding(
-                  padding: EdgeInsets.only(left: 86, right: 86, top: 300),
+                  padding: EdgeInsets.only(left: 86, right: 86, top: 250),
                   child: Image(
                     image: AssetImage("assets/images/Marvel_Logo.png"),
                   ),
@@ -71,9 +64,10 @@ class StatelessScreen1 extends State<StatefulScreen1> {
                   margin: const EdgeInsets.only(top: 20),
                   width: 300,
                   height: 50,
-                  child: const TextField(
+                  child: TextField(
                     obscureText: true,
-                    decoration: InputDecoration(
+                    controller: passScreen1,
+                    decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       filled: true,
                       fillColor: Colors.white,
@@ -100,7 +94,13 @@ class StatelessScreen1 extends State<StatefulScreen1> {
                   ),
                   onPressed: () {
                     Navigator.push(
-                        context, MaterialPageRoute(builder: (context) => const Screen2()));
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Screen2(
+                                  passScreen1: passScreen1,
+                                  passScreen2: passScreen2,
+                                  passScreen3: passScreen3,
+                                )));
                   },
                   child: const Text(
                     'Continue',
