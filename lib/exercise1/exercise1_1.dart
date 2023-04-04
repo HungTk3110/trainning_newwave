@@ -1,6 +1,7 @@
 void main() {
   print(isValid("()[]{}"));
 }
+
 bool isValid(String s) {
   String d1 = "()";
   String d2 = "{}";

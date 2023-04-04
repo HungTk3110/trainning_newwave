@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:training_newwave/C3/trainnningC3.dart';
 import 'package:training_newwave/test/myStatefulWidget.dart';
-
-import 'C4/C4_1.dart';
-import 'C4/C4_3.dart';
-import 'C4/C4b2.dart';
-import 'C4/C4b4.dart';
-import 'C5/screen1.dart';
+import 'exercise4/exercise4_4.dart';
+import 'exercise5/screen1.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const Exercise4_4());
 }
 
 class MyApp extends StatelessWidget {
@@ -33,7 +28,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home:  Screen1()
+      home:  const Screen1()
     );
   }
 }

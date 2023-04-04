@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:training_newwave/exercise5/screen3.dart';
 
-class Screen1 extends StatelessWidget {
-  const Screen1({Key key}) : super(key: key);
+class Screen2 extends StatelessWidget {
+  const Screen2({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: StatefulScreen1(),
+      home: StatefulScreen2(),
     );
   }
 }
 
-class StatefulScreen1 extends StatefulWidget {
-  const StatefulScreen1({Key key}) : super(key: key);
+class StatefulScreen2 extends StatefulWidget {
+  const StatefulScreen2({Key key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return StatelessScreen1();
+    return StatelessScreen2();
   }
 }
 
-class StatelessScreen1 extends State<StatefulScreen1> {
+class StatelessScreen2 extends State<StatefulScreen2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +35,7 @@ class StatelessScreen1 extends State<StatefulScreen1> {
           ),
           image: DecorationImage(
             image: AssetImage(
-              'assets/images/screen1.jpg',
+              'assets/images/screen2.png',
             ),
             fit: BoxFit.cover,
           ),
@@ -52,7 +53,6 @@ class StatelessScreen1 extends State<StatefulScreen1> {
                     Colors.transparent,
                     Colors.black,
                   ],
-                  // Gradient from https://learnui.design/tools/gradient-generator.html
                   tileMode: TileMode.mirror,
                 ),
               ),
@@ -84,7 +84,7 @@ class StatelessScreen1 extends State<StatefulScreen1> {
                  const Padding(
                    padding: EdgeInsets.symmetric(horizontal: 55),
                   child: Text(
-                    "All your favourite MARVEL Movies & Series at one place",
+                    "Watch Online\n or \nDownload Offline",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
@@ -98,7 +98,10 @@ class StatelessScreen1 extends State<StatefulScreen1> {
                     backgroundColor: Colors.red,
                     minimumSize: const Size(300, 50),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const Screen3()));
+                  },
                   child: const Text(
                     'Continue',
                     style: TextStyle(fontSize: 18 , color: Colors.white),

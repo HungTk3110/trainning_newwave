@@ -1,7 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:training_newwave/configs/app_constant.dart';
 
-class C4b2 extends StatelessWidget {
+// ignore: camel_case_types
+class Exercise4_2 extends StatelessWidget {
+  const Exercise4_2({Key key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +29,7 @@ class C4b2 extends StatelessWidget {
                   leading: CircleAvatar(
                     child: ClipOval(
                       child: Image.network(
-                        "https://blog.logrocket.com/wp-content/uploads/2021/04/Building-Flutter-desktop-app-tutorial-examples.png",
+                        App_Constant.IMAGE_EXERCISE4_2,
                         width: 100,
                         height: 100,
                         fit: BoxFit.cover,
@@ -45,7 +49,7 @@ class C4b2 extends StatelessWidget {
                   leading: CircleAvatar(
                     child: ClipOval(
                       child: CachedNetworkImage(
-                        imageUrl: "https://blog.logrocket.com/wp-content/uploads/2021/04/Building-Flutter-desktop-app-tutorial-examples.png",
+                        imageUrl: App_Constant.IMAGE_EXERCISE4_2_CACHE,
                         width: 100,
                         height: 100,
                         fit: BoxFit.cover,

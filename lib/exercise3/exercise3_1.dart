@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-
-import '../model/Salad_entity.dart';
+import 'package:training_newwave/model/salad_entity.dart';
 
 class TrainingC3 extends StatefulWidget {
   const TrainingC3({Key key}) : super(key: key);
-
-
 
   @override
   State<StatefulWidget> createState() {
@@ -18,17 +15,41 @@ class HomeSate extends State<TrainingC3> {
   var themeLight = true;
 
   List<SaladItem> saladItems = [
-    SaladItem("Salad with cabbage and shrimp", "John Adams",
-        "assets/images/img1.jpg"),
-    SaladItem("Italian-style tomato salad", "Thomas Jefferson",
-        "assets/images/img2.jpg"),
-    SaladItem("Cucumber salad, cherry tomatoes", "James Madison",
-        "assets/images/img3.jpg"),
-    SaladItem("Corn Salad", "James Monroe", "assets/images/img4.jpg"),
-    SaladItem("Avocado Salad", "John Quincy Adams", "assets/images/img5.jpg"),
-    SaladItem("Potato Salad", "Martin Van Buren", "assets/images/img6.jpg"),
-    SaladItem("Salad of cove beans, shrimp and potatoes", "John Tyler",
-        "assets/images/img1.jpg"),
+    SaladItem(
+      "Salad with cabbage and shrimp",
+      "John Adams",
+      "assets/images/img1.jpg",
+    ),
+    SaladItem(
+      "Italian-style tomato salad",
+      "Thomas Jefferson",
+      "assets/images/img2.jpg",
+    ),
+    SaladItem(
+      "Cucumber salad, cherry tomatoes",
+      "James Madison",
+      "assets/images/img3.jpg",
+    ),
+    SaladItem(
+      "Corn Salad",
+      "James Monroe",
+      "assets/images/img4.jpg",
+    ),
+    SaladItem(
+      "Avocado Salad",
+      "John Quincy Adams",
+      "assets/images/img5.jpg",
+    ),
+    SaladItem(
+      "Potato Salad",
+      "Martin Van Buren",
+      "assets/images/img6.jpg",
+    ),
+    SaladItem(
+      "Salad of cove beans, shrimp and potatoes",
+      "John Tyler",
+      "assets/images/img1.jpg",
+    ),
   ];
 
   @override
@@ -44,7 +65,9 @@ class HomeSate extends State<TrainingC3> {
           ),
           title: Text(
             "Salad",
-            style: TextStyle(color: themeLight ? Colors.black : Colors.white),
+            style: TextStyle(
+              color: themeLight ? Colors.black : Colors.white,
+            ),
           ),
           actions: <Widget>[
             Container(
@@ -93,6 +116,11 @@ class HomeSate extends State<TrainingC3> {
                     shrinkWrap: true,
                     itemCount: saladItems.length,
                     scrollDirection: Axis.horizontal,
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const SizedBox(
+                        width: 16,
+                      );
+                    },
                     itemBuilder: (BuildContext context, int index) {
                       return Stack(
                         children: [
@@ -141,11 +169,6 @@ class HomeSate extends State<TrainingC3> {
                         ],
                       );
                     },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return const SizedBox(
-                        width: 16,
-                      );
-                    },
                   ),
                 ),
                 Container(
@@ -187,8 +210,7 @@ class HomeSate extends State<TrainingC3> {
                   height: MediaQuery.of(context).size.height * 0.7,
                   child: GridView.builder(
                     itemCount: saladItems.length,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       crossAxisSpacing: 15.0,
                       childAspectRatio: 1 / 1.5,
@@ -203,7 +225,9 @@ class HomeSate extends State<TrainingC3> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
                               image: DecorationImage(
-                                image: AssetImage(saladItems[index].assetImage),
+                                image: AssetImage(
+                                  saladItems[index].assetImage,
+                                ),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -216,8 +240,7 @@ class HomeSate extends State<TrainingC3> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 SizedBox(
-                                  width: MediaQuery.of(context).size.width / 2 -
-                                      40,
+                                  width: MediaQuery.of(context).size.width / 2 - 40,
                                   child: Text(
                                     saladItems[index].title,
                                     style: const TextStyle(
@@ -242,20 +265,20 @@ class HomeSate extends State<TrainingC3> {
                             ),
                           ),
                           Positioned(
-                              right: 10,
-                              top: 10,
-                              child: Container(
-                                padding: const EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: isRefresh ? Colors.yellow : Colors.red,
-                                ),
-                                child: Icon(
-                                    isRefresh
-                                        ? Icons.search
-                                        : Icons.bookmark_border,
-                                    color: Colors.white),
-                              ))
+                            right: 10,
+                            top: 10,
+                            child: Container(
+                              padding: const EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: isRefresh ? Colors.yellow : Colors.red,
+                              ),
+                              child: Icon(
+                                isRefresh ? Icons.search : Icons.bookmark_border,
+                                color: Colors.white,
+                              ),
+                            ),
+                          )
                         ],
                       );
                     },
