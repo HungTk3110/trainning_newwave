@@ -5,16 +5,16 @@ import 'package:training_newwave/model/image_exercise4_entity.dart';
 class Exercise4_1 extends StatelessWidget {
   List<Image_Exercise4_Entity> list = [
     Image_Exercise4_Entity(
-      "FAQ",
-      "assets/images/FAQ.png",
+      title:"FAQ",
+      assetImage:"assets/images/FAQ.png",
     ),
     Image_Exercise4_Entity(
-      "Contact Us",
-      "assets/images/Group.png",
+      title:"Contact Us",
+      assetImage:"assets/images/Group.png",
     ),
     Image_Exercise4_Entity(
-      "Terms & Conditions",
-      "assets/images/terms.png",
+      title:"Terms & Conditions",
+      assetImage:"assets/images/terms.png",
     )
   ];
 

@@ -8,9 +8,18 @@ import '../model/image_exercise4_entity.dart';
 // ignore: camel_case_types
 class Exercise4_3 extends StatelessWidget {
   List<Image_Exercise4_Entity> list = [
-    Image_Exercise4_Entity("FAQ", "assets/svg/FAQ.svg"),
-    Image_Exercise4_Entity("Contact Us", "assets/svg/Contact.svg"),
-    Image_Exercise4_Entity("Terms & Conditions", "assets/svg/terms.svg")
+    Image_Exercise4_Entity(
+      title: "FAQ",
+      assetImage: "assets/svg/FAQ.svg",
+    ),
+    Image_Exercise4_Entity(
+      title: "Contact Us",
+      assetImage: "assets/svg/Contact.svg",
+    ),
+    Image_Exercise4_Entity(
+      title: "Terms & Conditions",
+      assetImage: "assets/svg/terms.svg",
+    )
   ];
 
   Exercise4_3({Key key}) : super(key: key);
@@ -32,7 +41,8 @@ class Exercise4_3 extends StatelessWidget {
                 child: ListTile(
                   leading: SvgPicture.asset(
                     list[index].assetImage,
-                    placeholderBuilder: (BuildContext context) => const CircularProgressIndicator(),
+                    placeholderBuilder: (BuildContext context) =>
+                        const CircularProgressIndicator(),
                   ),
                   title: Text(
                     list[index].title,

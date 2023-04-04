@@ -17,44 +17,6 @@ class TrainingC3 extends StatefulWidget {
 class TrainingC3State extends State<TrainingC3> {
   var isRefresh = false;
 
-  List<SaladItem> saladItems = [
-    SaladItem(
-      "Salad with cabbage and shrimp",
-      "John Adams",
-      "assets/images/img1.jpg",
-    ),
-    SaladItem(
-      "Italian-style tomato salad",
-      "Thomas Jefferson",
-      "assets/images/img2.jpg",
-    ),
-    SaladItem(
-      "Cucumber salad, cherry tomatoes",
-      "James Madison",
-      "assets/images/img3.jpg",
-    ),
-    SaladItem(
-      "Corn Salad",
-      "James Monroe",
-      "assets/images/img4.jpg",
-    ),
-    SaladItem(
-      "Avocado Salad",
-      "John Quincy Adams",
-      "assets/images/img5.jpg",
-    ),
-    SaladItem(
-      "Potato Salad",
-      "Martin Van Buren",
-      "assets/images/img6.jpg",
-    ),
-    SaladItem(
-      "Salad of cove beans, shrimp and potatoes",
-      "John Tyler",
-      "assets/images/img1.jpg",
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
