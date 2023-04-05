@@ -21,6 +21,7 @@ class TrainingC3State extends State<TrainingC3> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         backgroundColor: widget.isThemeLight ? Colors.white : Colors.black,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_outlined),
@@ -69,12 +70,10 @@ class TrainingC3State extends State<TrainingC3> {
           return Future<void>.delayed(const Duration(microseconds: 600));
         },
         child: SingleChildScrollView(
+          padding: const EdgeInsets.only(bottom: 20),
           scrollDirection: Axis.vertical,
           child: Column(
             children: <Widget>[
-              const SizedBox(
-                height: 16,
-              ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.25,
                 child: ListView.separated(
@@ -174,7 +173,6 @@ class TrainingC3State extends State<TrainingC3> {
               ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                height: MediaQuery.of(context).size.height * 0.7,
                 child: GridView.builder(
                   itemCount: saladItems.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -183,6 +181,8 @@ class TrainingC3State extends State<TrainingC3> {
                     childAspectRatio: 1 / 1.3,
                     mainAxisSpacing: 15.0,
                   ),
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (BuildContext context, int index) {
                     return Stack(
                       children: [

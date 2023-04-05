@@ -4,8 +4,12 @@ import 'package:training_newwave/exercise5/screen3.dart';
 
 // ignore: must_be_immutable
 class Screen2 extends StatefulWidget {
-  Screen2({Key key, this.passScreen1, this.passScreen2, this.passScreen3})
-      : super(key: key);
+  Screen2({
+    Key key,
+    this.passScreen1,
+    this.passScreen2,
+    this.passScreen3,
+  }) : super(key: key);
 
   TextEditingController passScreen1 = TextEditingController();
   TextEditingController passScreen2 = TextEditingController();
@@ -67,7 +71,7 @@ class StatelessScreen2 extends State<Screen2> {
                   margin: const EdgeInsets.only(top: 20),
                   width: 300,
                   height: 50,
-                  child:  TextField(
+                  child: TextField(
                     obscureText: true,
                     controller: widget.passScreen2,
                     decoration: const InputDecoration(

@@ -24,12 +24,12 @@ class StatelessScreen4 extends State<Screen4> with WidgetsBindingObserver {
   var isLogin = false;
 
   final containerKey = GlobalKey(debugLabel: "container-key");
-  double height;
-  double width;
-  double top;
-  double bottom;
-  double left;
-  double right;
+  double height = 0;
+  double width = 0;
+  double top = 0;
+  double bottom = 0;
+  double left =  0;
+  double right = 0;
 
   @override
   void initState() {
