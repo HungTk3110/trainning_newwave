@@ -24,6 +24,8 @@ class Screen4 extends StatefulWidget {
 
 class StatelessScreen4 extends State<Screen4> {
 
+  var isLogin = false;
+
   @override
   Widget build(BuildContext context) {
 
@@ -79,7 +81,7 @@ class StatelessScreen4 extends State<Screen4> {
                  Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 55),
                   child: Text(
-                    "Key1: $key1\nKey2: $key2\nKey3: $key3",
+                    isLogin ? "Login Success" : "Key1: $key1\nKey2: $key2\nKey3: $key3",
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       color: Colors.white,
@@ -88,37 +90,48 @@ class StatelessScreen4 extends State<Screen4> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                TextButton(
-                  style: TextButton.styleFrom(
-                    backgroundColor: Colors.red,
+                OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
+                    side: const BorderSide(color: Colors.red),
                     minimumSize: const Size(300, 50),
                   ),
                   onPressed: () {
                     if(key1.isEmpty){
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Screen1()));
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (context) => const Screen1()));
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                      Navigator.pop(context);
                     }
-                    if(key2.isEmpty){
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Screen2(
-                                passScreen1: widget.passScreen1,
-                                passScreen2: widget.passScreen2,
-                                passScreen3: widget.passScreen3,
-                              )));
+                    else if(key2.isEmpty){
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (context) => Screen2(
+                      //           passScreen1: widget.passScreen1,
+                      //           passScreen2: widget.passScreen2,
+                      //           passScreen3: widget.passScreen3,
+                      //         )));
+                      Navigator.pop(context);
+                      Navigator.pop(context);
                     }
-                    if(key3.isEmpty){
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Screen3(
-                                passScreen1: widget.passScreen1,
-                                passScreen2: widget.passScreen2,
-                                passScreen3: widget.passScreen3,
-                              )));
+                    else if(key3.isEmpty){
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (context) => Screen3(
+                      //           passScreen1: widget.passScreen1,
+                      //           passScreen2: widget.passScreen2,
+                      //           passScreen3: widget.passScreen3,
+                      //         )));
+                      Navigator.pop(context);
+                    }else{
+                      setState(() {
+                        isLogin = true;
+                      });
                     }
                   },
                   child: const Text(

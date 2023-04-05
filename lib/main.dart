@@ -28,7 +28,7 @@ class HomeMyApp extends StatefulWidget {
 }
 
 class _HomeMyAppState extends State<HomeMyApp> {
-  var isRefresh = false;
+
   var isThemeLight = true;
 
   @override
