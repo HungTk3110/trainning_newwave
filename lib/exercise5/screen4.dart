@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:training_newwave/exercise5/screen1.dart';
-import 'package:training_newwave/exercise5/screen2.dart';
-import 'package:training_newwave/exercise5/screen3.dart';
+import 'package:training_newwave/configs/app_constant.dart';
 
 // ignore: must_be_immutable
 class Screen4 extends StatefulWidget {
@@ -22,17 +20,35 @@ class Screen4 extends StatefulWidget {
   }
 }
 
-class StatelessScreen4 extends State<Screen4> {
-
+class StatelessScreen4 extends State<Screen4> with WidgetsBindingObserver {
   var isLogin = false;
+
+  final containerKey = GlobalKey(debugLabel: "container-key");
+  double height;
+  double width;
+  double top;
+  double bottom;
+  double left;
+  double right;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void didChangeMetrics() {
+    // debugPrint("${containerKey.hashCode}: ${this.hashCode}");
+    // debugPrint("${WidgetsBinding.instance.buildOwner!.globalKeyCount}");
+    _updateData();
+  }
 
   @override
   Widget build(BuildContext context) {
-
     var key1 = widget.passScreen1?.text;
     var key2 = widget.passScreen2?.text;
     var key3 = widget.passScreen3?.text;
-
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -45,7 +61,7 @@ class StatelessScreen4 extends State<Screen4> {
           ),
           image: DecorationImage(
             image: AssetImage(
-              'assets/images/sceen4.png',
+              AppConstant.imageExercise5_4,
             ),
             fit: BoxFit.cover,
           ),
@@ -71,14 +87,15 @@ class StatelessScreen4 extends State<Screen4> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Padding(
-                  padding: EdgeInsets.only(left: 86, right: 86, top: 250),
-                  child: Image(
-                    image: AssetImage("assets/images/Marvel_Logo.png"),
+                Padding(
+                  key: containerKey,
+                  padding: const EdgeInsets.only(left: 86, right: 86, top: 250),
+                  child: const Image(
+                    image: AssetImage(AppConstant.imageExercise5Logo),
                   ),
                 ),
                 const SizedBox(height: 20),
-                 Padding(
+                Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 55),
                   child: Text(
                     isLogin ? "Login Success" : "Key1: $key1\nKey2: $key2\nKey3: $key3",
@@ -97,7 +114,7 @@ class StatelessScreen4 extends State<Screen4> {
                     minimumSize: const Size(300, 50),
                   ),
                   onPressed: () {
-                    if(key1.isEmpty){
+                    if (key1.isEmpty) {
                       // Navigator.push(
                       //     context,
                       //     MaterialPageRoute(
@@ -105,8 +122,7 @@ class StatelessScreen4 extends State<Screen4> {
                       Navigator.pop(context);
                       Navigator.pop(context);
                       Navigator.pop(context);
-                    }
-                    else if(key2.isEmpty){
+                    } else if (key2.isEmpty) {
                       // Navigator.push(
                       //     context,
                       //     MaterialPageRoute(
@@ -117,8 +133,7 @@ class StatelessScreen4 extends State<Screen4> {
                       //         )));
                       Navigator.pop(context);
                       Navigator.pop(context);
-                    }
-                    else if(key3.isEmpty){
+                    } else if (key3.isEmpty) {
                       // Navigator.push(
                       //     context,
                       //     MaterialPageRoute(
@@ -128,9 +143,10 @@ class StatelessScreen4 extends State<Screen4> {
                       //           passScreen3: widget.passScreen3,
                       //         )));
                       Navigator.pop(context);
-                    }else{
+                    } else {
                       setState(() {
                         isLogin = true;
+                        _updateData();
                       });
                     }
                   },
@@ -141,9 +157,35 @@ class StatelessScreen4 extends State<Screen4> {
                 ),
               ],
             ),
+            Positioned(
+              top: 50,
+              right: 10,
+              child: Text(
+                "top: ${top.toInt()} \nbottom: ${bottom.toInt()} \nleft: ${left.toInt()} "
+                "\nright:${right.toInt()} "
+                "\nheight: ${height.toInt()} \nwidth: ${width.toInt()}",
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                ),
+              ),
+            ),
           ],
         ),
       ),
     );
+  }
+
+  void _updateData() {
+    final renderBox = containerKey.currentContext?.findRenderObject() as RenderBox;
+    final position = renderBox.localToGlobal(Offset.zero);
+    setState(() {
+      height = renderBox.size.height;
+      width = renderBox.size.width;
+      left = position.dx;
+      top = position.dy;
+      right = position.dx + renderBox.size.width;
+      bottom = position.dy + renderBox.size.height;
+    });
   }
 }

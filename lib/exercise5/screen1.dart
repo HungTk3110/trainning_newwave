@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:training_newwave/configs/app_constant.dart';
 import 'package:training_newwave/exercise5/screen2.dart';
+
 
 class Screen1 extends StatefulWidget {
   const Screen1({Key key}) : super(key: key);
@@ -27,8 +29,7 @@ class StatelessScreen1 extends State<Screen1> {
             colors: [Colors.transparent, Colors.black],
           ),
           image: DecorationImage(
-            image: AssetImage(
-              'assets/images/screen1.jpg',
+            image: AssetImage(AppConstant.imageExercise5_1,
             ),
             fit: BoxFit.cover,
           ),
@@ -57,7 +58,7 @@ class StatelessScreen1 extends State<Screen1> {
                 const Padding(
                   padding: EdgeInsets.only(left: 86, right: 86, top: 250),
                   child: Image(
-                    image: AssetImage("assets/images/Marvel_Logo.png"),
+                    image: AssetImage(AppConstant.imageExercise5Logo),
                   ),
                 ),
                 Container(

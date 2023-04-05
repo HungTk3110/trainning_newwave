@@ -33,6 +33,8 @@ dependencies:
   flutter_svg: ^2.0.4
   video_player: ^2.6.0
   youtube_player_flutter: ^8.1.2
+  provider: ^6.0.5
+  shared_preferences: ^2.1.0
 
 
   flutter:

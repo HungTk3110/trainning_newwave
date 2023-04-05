@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:training_newwave/configs/app_constant.dart';
 import 'package:training_newwave/exercise5/screen3.dart';
 
 // ignore: must_be_immutable
@@ -30,7 +31,7 @@ class StatelessScreen2 extends State<Screen2> {
           ),
           image: DecorationImage(
             image: AssetImage(
-              'assets/images/screen2.png',
+              AppConstant.imageExercise5_2,
             ),
             fit: BoxFit.cover,
           ),
@@ -59,7 +60,7 @@ class StatelessScreen2 extends State<Screen2> {
                 const Padding(
                   padding: EdgeInsets.only(left: 86, right: 86, top: 250),
                   child: Image(
-                    image: AssetImage("assets/images/Marvel_Logo.png"),
+                    image: AssetImage(AppConstant.imageExercise5Logo),
                   ),
                 ),
                 Container(

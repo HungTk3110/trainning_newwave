@@ -29,7 +29,7 @@ class Exercise4_2 extends StatelessWidget {
                   leading: CircleAvatar(
                     child: ClipOval(
                       child: Image.network(
-                        App_Constant.IMAGE_EXERCISE4_2,
+                        AppConstant.imageExercise4_2,
                         width: 100,
                         height: 100,
                         fit: BoxFit.cover,
@@ -49,7 +49,7 @@ class Exercise4_2 extends StatelessWidget {
                   leading: CircleAvatar(
                     child: ClipOval(
                       child: CachedNetworkImage(
-                        imageUrl: App_Constant.IMAGE_EXERCISE4_2_CACHE,
+                        imageUrl: AppConstant.imageExercise4_2Cache,
                         width: 100,
                         height: 100,
                         fit: BoxFit.cover,
