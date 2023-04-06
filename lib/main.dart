@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:training_newwave/exercise5/screen1.dart';
+import 'package:training_newwave/movie_app/moive_hone.dart';
 
 import 'exercise3/exercise3_1.dart';
 import 'exercise4/exercise4.dart';
@@ -103,6 +104,27 @@ class _HomeMyAppState extends State<HomeMyApp> {
                 context,
                 MaterialPageRoute(
                   builder: (context) =>  Screen1(),
+                ),
+              );
+            },
+          ),
+          TextButton(
+            style: TextButton.styleFrom(
+              backgroundColor: Colors.red,
+            ),
+            child: Builder(
+              builder: (context) {
+                return const Text(
+                  'Movie Ui',
+                  style: TextStyle(fontSize: 28),
+                );
+              },
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>  const MovieHome(),
                 ),
               );
             },

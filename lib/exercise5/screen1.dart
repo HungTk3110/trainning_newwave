@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:training_newwave/configs/app_constant.dart';
 import 'package:training_newwave/exercise5/screen2.dart';
 
-
 class Screen1 extends StatefulWidget {
   const Screen1({Key key}) : super(key: key);
 
@@ -14,8 +13,6 @@ class Screen1 extends StatefulWidget {
 
 class StatelessScreen1 extends State<Screen1> {
   TextEditingController passScreen1 = TextEditingController();
-  TextEditingController passScreen2 = TextEditingController();
-  TextEditingController passScreen3 = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +26,8 @@ class StatelessScreen1 extends State<Screen1> {
             colors: [Colors.transparent, Colors.black],
           ),
           image: DecorationImage(
-            image: AssetImage(AppConstant.imageExercise5_1,
+            image: AssetImage(
+              AppConstant.imageExercise5_1,
             ),
             fit: BoxFit.cover,
           ),
@@ -95,13 +93,13 @@ class StatelessScreen1 extends State<Screen1> {
                   ),
                   onPressed: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Screen2(
-                                  passScreen1: passScreen1,
-                                  passScreen2: passScreen2,
-                                  passScreen3: passScreen3,
-                                )));
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Screen2(
+                          textScreen1: passScreen1.text,
+                        ),
+                      ),
+                    );
                   },
                   child: const Text(
                     'Continue',

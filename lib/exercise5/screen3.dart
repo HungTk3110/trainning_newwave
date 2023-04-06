@@ -2,17 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:training_newwave/configs/app_constant.dart';
 import 'package:training_newwave/exercise5/screen4.dart';
 
-// ignore: must_be_immutable
 class Screen3 extends StatefulWidget {
-  TextEditingController passScreen1 = TextEditingController();
-  TextEditingController passScreen2 = TextEditingController();
-  TextEditingController passScreen3 = TextEditingController();
+  final String textScreen1;
+  final String textScreen2;
 
-  Screen3({
+  const Screen3({
     Key key,
-    this.passScreen1,
-    this.passScreen2,
-    this.passScreen3,
+    this.textScreen1,
+    this.textScreen2,
   }) : super(key: key);
 
   @override
@@ -22,6 +19,8 @@ class Screen3 extends StatefulWidget {
 }
 
 class StatelessScreen3 extends State<Screen3> {
+  TextEditingController passScreen3 = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,9 +70,9 @@ class StatelessScreen3 extends State<Screen3> {
                   margin: const EdgeInsets.only(top: 20),
                   width: 300,
                   height: 50,
-                  child:  TextField(
+                  child: TextField(
                     obscureText: true,
-                    controller: widget.passScreen3,
+                    controller: passScreen3,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       filled: true,
@@ -101,13 +100,15 @@ class StatelessScreen3 extends State<Screen3> {
                   ),
                   onPressed: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Screen4(
-                              passScreen1: widget.passScreen1,
-                              passScreen2: widget.passScreen2,
-                              passScreen3: widget.passScreen3,
-                            )));
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Screen4(
+                          textScreen1: widget.textScreen1,
+                            textScreen2: widget.textScreen2,
+                            textScreen3: passScreen3.text,
+                        ),
+                      ),
+                    );
                   },
                   child: const Text(
                     'Continue',

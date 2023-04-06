@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:training_newwave/configs/app_constant.dart';
 
-// ignore: must_be_immutable
 class Screen4 extends StatefulWidget {
-  TextEditingController passScreen1 = TextEditingController();
-  TextEditingController passScreen2 = TextEditingController();
-  TextEditingController passScreen3 = TextEditingController();
+  final String textScreen1;
+  final String textScreen2;
+  final String textScreen3;
 
-  Screen4({
+  const Screen4({
     Key key,
-    this.passScreen1,
-    this.passScreen2,
-    this.passScreen3,
+    this.textScreen1,
+    this.textScreen2,
+    this.textScreen3,
   }) : super(key: key);
 
   @override
@@ -28,7 +27,7 @@ class StatelessScreen4 extends State<Screen4> with WidgetsBindingObserver {
   double width = 0;
   double top = 0;
   double bottom = 0;
-  double left =  0;
+  double left = 0;
   double right = 0;
 
   @override
@@ -46,9 +45,9 @@ class StatelessScreen4 extends State<Screen4> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    var key1 = widget.passScreen1?.text;
-    var key2 = widget.passScreen2?.text;
-    var key3 = widget.passScreen3?.text;
+    var key1 = widget.textScreen1;
+    var key2 = widget.textScreen2;
+    var key3 = widget.textScreen3;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
