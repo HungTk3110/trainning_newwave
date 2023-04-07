@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:training_newwave/exercise5/screen1.dart';
-import 'package:training_newwave/movie_app/moive_hone.dart';
+import 'package:training_newwave/movie_app/moive_home.dart';
 
 import 'exercise3/exercise3_1.dart';
 import 'exercise4/exercise4.dart';

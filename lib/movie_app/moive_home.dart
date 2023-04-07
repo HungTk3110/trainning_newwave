@@ -1,6 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:training_newwave/model/movie_entity.dart';
 import 'package:training_newwave/model/movie_type.dart';
+
+import 'movie_detail.dart';
 
 class MovieHome extends StatefulWidget {
   const MovieHome({Key key}) : super(key: key);
@@ -11,18 +15,9 @@ class MovieHome extends StatefulWidget {
 
 // ignore: camel_case_types
 class _Movie_HomeState extends State<MovieHome> {
-  int currentPos = 0;
-  List<String> listPaths = [
-    "assets/images/deadpool.png",
-    "assets/images/deadpool.png",
-    "assets/images/deadpool.png",
-  ];
 
-  List<String> listPath = [
-    "assets/images/Project-Power-Movie-Poster-Jamie-Foxx 1 (2).png",
-    "assets/images/Project-Power-Movie-Poster-Jamie-Foxx 1 (2).png",
-    "assets/images/Project-Power-Movie-Poster-Jamie-Foxx 1 (2).png",
-  ];
+  int currentPos = 0;
+  List<MovieEntity> listMovie = listMovieTop();
 
   List<MovieType> listImage = [
     MovieType(assetImage: "assets/images/Vector.png", title: "Genres"),
@@ -35,14 +30,8 @@ class _Movie_HomeState extends State<MovieHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        width: MediaQuery
-            .of(context)
-            .size
-            .width,
-        height: MediaQuery
-            .of(context)
-            .size
-            .height,
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.centerLeft,
@@ -143,13 +132,13 @@ class _Movie_HomeState extends State<MovieHome> {
               SizedBox(
                 width: double.infinity,
                 height: 150,
-                child: slideShow(listPaths, currentPos),
+                child: slideShowTop(listMovie, currentPos),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: listPaths.map(
-                      (url) {
-                    int index = listPaths.indexOf(url);
+                children: listMovie.map(
+                  (url) {
+                    int index = listMovie.indexOf(url);
                     return Container(
                       width: 8.0,
                       height: 8.0,
@@ -160,7 +149,7 @@ class _Movie_HomeState extends State<MovieHome> {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color:
-                        currentPos == index ? const Color(0xff64ABDB) : const Color(0xff826EC8),
+                            currentPos == index ? const Color(0xff64ABDB) : const Color(0xff826EC8),
                       ),
                     );
                   },
@@ -208,13 +197,13 @@ class _Movie_HomeState extends State<MovieHome> {
                 ),
               ),
               SizedBox(
-                child: slideShow(listPath, currentPos),
+                child: slideShowBottom(listMovie, currentPos),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: listPaths.map(
-                      (url) {
-                    int index = listPaths.indexOf(url);
+                children: listMovie.map(
+                  (url) {
+                    int index = listMovie.indexOf(url);
                     return Container(
                       width: 8.0,
                       height: 8.0,
@@ -225,7 +214,7 @@ class _Movie_HomeState extends State<MovieHome> {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color:
-                        currentPos == index ? const Color(0xff64ABDB) : const Color(0xff826EC8),
+                            currentPos == index ? const Color(0xff64ABDB) : const Color(0xff826EC8),
                       ),
                     );
                   },
@@ -238,19 +227,53 @@ class _Movie_HomeState extends State<MovieHome> {
     );
   }
 
-  Widget slideShow(List<String> list, int current) {
+  Widget slideShowTop(List<MovieEntity> list, int current) {
     return CarouselSlider.builder(
       itemCount: list.length,
       options: CarouselOptions(
-          autoPlay: true,
-          onPageChanged: (index,
-              reason,) {
-            setState(() {
-              current = index;
-            });
-          }),
+        autoPlay: true,
+        onPageChanged: (
+          index,
+          reason,
+        ) {
+          setState(() {
+            current = index;
+          });
+        },
+      ),
       itemBuilder: (context, index) {
-        return MyImageView(list[index]);
+        return MyImageView(
+          movieEntity: list[index],
+          height: 250.0,
+          width: 360.0,
+          hide: true,
+        );
+      },
+    );
+  }
+
+  Widget slideShowBottom(List<MovieEntity> list, int current) {
+    return CarouselSlider.builder(
+      itemCount: list.length,
+      options: CarouselOptions(
+        autoPlay: true,
+        onPageChanged: (
+          index,
+          reason,
+        ) {
+          setState(() {
+            current = index;
+          });
+        },
+        viewportFraction: 0.5,
+      ),
+      itemBuilder: (context, index) {
+        return  MyImageView(
+          movieEntity: list[index],
+          height: 230.0,
+          width: 170.0,
+          hide: false,
+        );
       },
     );
   }
@@ -264,8 +287,8 @@ class _Movie_HomeState extends State<MovieHome> {
           color: Colors.white,
         ),
         borderRadius:
-        const BorderRadius.all(Radius.circular(15.0) //                 <--- border radius here
-        ),
+            const BorderRadius.all(Radius.circular(15.0) //                 <--- border radius here
+                ),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -296,18 +319,66 @@ class _Movie_HomeState extends State<MovieHome> {
 
 // ignore: must_be_immutable
 class MyImageView extends StatelessWidget {
-  String imgPath;
+  MovieEntity movieEntity;
+  double width;
+  double height;
+  bool hide = false;
 
-  MyImageView(this.imgPath, {Key key}) : super(key: key);
+  MyImageView({Key key, this.movieEntity, this.height, this.width ,this.hide}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 5),
-      child: FittedBox(
-        fit: BoxFit.fill,
-        child: Image.asset(imgPath),
+
+      child: GestureDetector(
+        onTap: (){
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => MovieDetail(
+                movieEntity: movieEntity,
+              ),
+            ),
+          );
+        },
+        child: Stack(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(30),
+              child: Image.network(
+                movieEntity.image,
+                width: width,
+                height: height,
+                fit: BoxFit.cover,
+              ),
+            ),
+            Positioned(
+              bottom: 15,
+              left: 30,
+              child: Text( hide ?
+                movieEntity.name : "",
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            // Positioned(
+            //   bottom: 15,
+            //   right: 30,
+            //   child: Image(
+            //     image: SvgPicture.asset(
+            //       movieEntity.point,
+            //       placeholderBuilder: (BuildContext context) =>
+            //       const CircularProgressIndicator(),
+            //     ),
+            //   ),
+            // ),
+          ],
+        ),
       ),
     );
   }
