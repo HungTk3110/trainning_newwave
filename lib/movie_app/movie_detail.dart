@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:training_newwave/configs/app_constant.dart';
+import 'package:training_newwave/model/detail_movie_entity.dart';
 import 'package:training_newwave/model/movie_entity.dart';
 import 'package:training_newwave/model/movie_type.dart';
+import 'package:training_newwave/movie_app/networks/api_service.dart';
 
 // ignore: must_be_immutable
-class MovieDetail extends StatelessWidget {
-  MovieEntity movieEntity;
+class MovieDetail extends StatefulWidget {
+  int id;
+
+  MovieDetail({Key key, this.id}) : super(key: key);
+
+  @override
+  State<MovieDetail> createState() => _MovieDetailState();
+}
+
+class _MovieDetailState extends State<MovieDetail> {
+
   List<MovieType> listImage = [
     MovieType(assetImage: "assets/svg/person.svg", title: "Akaza"),
     MovieType(assetImage: "assets/svg/person.svg", title: "TV series"),
@@ -13,7 +25,21 @@ class MovieDetail extends StatelessWidget {
     MovieType(assetImage: "assets/svg/person.svg", title: "In Theatre"),
   ];
 
-  MovieDetail({Key key, this.movieEntity}) : super(key: key);
+  Future<DetailMovie> futureDetailMovie;
+  DetailMovie detailMovie;
+  // List<Movie> listMovies = <Movie>[];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    futureDetailMovie = ApiService.fetchDetailMovie(widget.id);
+    futureDetailMovie.then((value) {
+      setState(() {
+          detailMovie = value;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +75,7 @@ class MovieDetail extends StatelessWidget {
                   children: [
                     Center(
                       child: Text(
-                        movieEntity.name,
+                        detailMovie.title,
                         style: const TextStyle(
                             color: Colors.white, fontSize: 40, fontWeight: FontWeight.bold),
                       ),
@@ -58,7 +84,7 @@ class MovieDetail extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 15),
                       child: Center(
                         child: Text(
-                          movieEntity.title,
+                          detailMovie.tagline,
                           style: const TextStyle(
                             color: Colors.grey,
                             fontSize: 20,
@@ -71,11 +97,11 @@ class MovieDetail extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          SvgPicture.asset(
-                            movieEntity.point,
-                            placeholderBuilder: (BuildContext context) =>
-                                const CircularProgressIndicator(),
-                          ),
+                          // SvgPicture.asset(
+                          //   movieEntity.point,
+                          //   placeholderBuilder: (BuildContext context) =>
+                          //       const CircularProgressIndicator(),
+                          // ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
@@ -101,7 +127,7 @@ class MovieDetail extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 15),
                       child: Center(
                         child: Text(
-                          movieEntity.describe,
+                          detailMovie.overview,
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 15,
@@ -167,7 +193,7 @@ class MovieDetail extends StatelessWidget {
       height: MediaQuery.of(context).size.height,
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: NetworkImage(movieEntity.image),
+          image: NetworkImage(AppConstant.baseImage + detailMovie.posterPath),
           fit: BoxFit.cover,
         ),
       ),
