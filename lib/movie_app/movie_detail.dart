@@ -71,7 +71,10 @@ class _MovieDetailState extends State<MovieDetail> {
                       ),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+                      padding: const EdgeInsets.only(
+                        left: 30,
+                        right: 30,
+                      ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -80,6 +83,7 @@ class _MovieDetailState extends State<MovieDetail> {
                             child: Text(
                               detailMovie.title,
                               maxLines: 2,
+                              textAlign: TextAlign.center,
                               style: const TextStyle(
                                   color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
                             ),
@@ -101,16 +105,16 @@ class _MovieDetailState extends State<MovieDetail> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                // SvgPicture.asset(
-                                //   movieEntity.point,
-                                //   placeholderBuilder: (BuildContext context) =>
-                                //       const CircularProgressIndicator(),
-                                // ),
+                                SvgPicture.asset(
+                                  "assets/svg/imdb.svg",
+                                  placeholderBuilder: (BuildContext context) =>
+                                      const CircularProgressIndicator(),
+                                ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
                                     SvgPicture.asset(
-                                      "assets/svg/Vector.svg",
+                                      "assets/svg/share.svg",
                                       placeholderBuilder: (BuildContext context) =>
                                           const CircularProgressIndicator(),
                                     ),
@@ -128,11 +132,12 @@ class _MovieDetailState extends State<MovieDetail> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(top: 15),
+                            padding: const EdgeInsets.only(top: 10),
                             child: Center(
                               child: Text(
                                 detailMovie.overview,
-                                maxLines: 4,
+                                maxLines: 3,
+                                textAlign: TextAlign.center,
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 15,
@@ -154,17 +159,17 @@ class _MovieDetailState extends State<MovieDetail> {
                                   ),
                                 ),
                                 Text(
-                                  "show all",
+                                  "see all",
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 20,
+                                    fontSize: 15,
                                   ),
                                 ),
                               ],
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(top: 15),
+                            padding: const EdgeInsets.only(top: 10),
                             child: SizedBox(
                               height: 55,
                               child: ListView.separated(
@@ -213,20 +218,19 @@ class _MovieDetailState extends State<MovieDetail> {
 
   Widget itemCategory(MovieType movieType) {
     return SizedBox(
-      width: 55,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            width: 31,
-            height: 31,
+            height: 40,
             child: SvgPicture.asset(
               movieType.assetImage,
               placeholderBuilder: (BuildContext context) => const CircularProgressIndicator(),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 10),
+            padding: const EdgeInsets.only(),
             child: Text(
               movieType.title,
               style: const TextStyle(

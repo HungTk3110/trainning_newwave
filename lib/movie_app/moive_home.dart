@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:training_newwave/configs/app_constant.dart';
 import 'package:training_newwave/model/movie_entity.dart';
 import 'package:training_newwave/model/movie_type.dart';
@@ -22,10 +23,10 @@ class _Movie_HomeState extends State<MovieHome> {
   List<MovieEntity> listMovie = listMovieTop();
 
   List<MovieType> listImage = [
-    MovieType(assetImage: "assets/images/Vector.png", title: "Genres"),
-    MovieType(assetImage: "assets/images/tv series icon.png", title: "TV series"),
-    MovieType(assetImage: "assets/images/Movie Roll.png", title: "Movies"),
-    MovieType(assetImage: "assets/images/Cinema.png", title: "In Theatre"),
+    MovieType(assetImage: "assets/svg/Vector.svg", title: "Genres"),
+    MovieType(assetImage: "assets/svg/tv series icon.svg", title: "TV series"),
+    MovieType(assetImage: "assets/svg/Movie Roll.svg", title: "Movies"),
+    MovieType(assetImage: "assets/svg/Cinema.svg", title: "In Theatre"),
   ];
 
   List<Movie> listMovies = [];
@@ -63,11 +64,12 @@ class _Movie_HomeState extends State<MovieHome> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(
-                height: 20,
-              ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 50),
+                padding: const EdgeInsets.only(
+                  left: 65,
+                  right: 65,
+                  top: 78,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -78,19 +80,17 @@ class _Movie_HomeState extends State<MovieHome> {
                         fontSize: 18,
                       ),
                     ),
-                    IconButton(
-                      icon: const ImageIcon(
-                        AssetImage("assets/images/notfication_icon.png"),
-                        color: Colors.white,
-                      ),
-                      onPressed: () {},
+                    SvgPicture.asset(
+                      "assets/svg/notfication_icon.svg",
+                      placeholderBuilder: (BuildContext context) =>
+                          const CircularProgressIndicator(),
                     ),
                   ],
                 ),
               ),
               const Padding(
                 padding: EdgeInsets.only(
-                  top: 10,
+                  top: 20,
                   left: 50,
                   right: 50,
                 ),
@@ -130,8 +130,8 @@ class _Movie_HomeState extends State<MovieHome> {
               Padding(
                 padding: const EdgeInsets.only(
                   left: 50,
-                  top: 10,
-                  bottom: 10,
+                  top: 26,
+                  bottom: 15,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -154,29 +154,36 @@ class _Movie_HomeState extends State<MovieHome> {
                   current: currentPos,
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: listMovie.map(
-                  (url) {
-                    int index = listMovie.indexOf(url);
-                    return Container(
-                      width: 8.0,
-                      height: 8.0,
-                      margin: const EdgeInsets.symmetric(
-                        vertical: 10.0,
-                        horizontal: 2.0,
-                      ),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color:
-                            currentPos == index ? const Color(0xff64ABDB) : const Color(0xff826EC8),
-                      ),
-                    );
-                  },
-                ).toList(),
+              Padding(
+                padding: const EdgeInsets.only(
+                  top: 17,
+                  bottom: 20,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: listMovie.map(
+                    (url) {
+                      int index = listMovie.indexOf(url);
+                      return Container(
+                        width: 8.0,
+                        height: 8.0,
+                        margin: const EdgeInsets.symmetric(
+                          vertical: 10.0,
+                          horizontal: 2.0,
+                        ),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: currentPos == index
+                              ? const Color(0xff64ABDB)
+                              : const Color(0xff826EC8),
+                        ),
+                      );
+                    },
+                  ).toList(),
+                ),
               ),
               SizedBox(
-                height: 95,
+                height: 110,
                 child: Center(
                   child: ListView.separated(
                     itemCount: 4,
@@ -188,7 +195,6 @@ class _Movie_HomeState extends State<MovieHome> {
                     },
                     itemBuilder: (context, index) {
                       return SizedBox(
-                        height: 95,
                         child: itemCategory(
                           listImage[index],
                         ),
@@ -200,8 +206,8 @@ class _Movie_HomeState extends State<MovieHome> {
               Padding(
                 padding: const EdgeInsets.only(
                   left: 50,
-                  top: 10,
-                  bottom: 10,
+                  top: 26,
+                  bottom: 15,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -307,7 +313,7 @@ class _Movie_HomeState extends State<MovieHome> {
 
   Widget itemCategory(MovieType movieType) {
     return Container(
-      width: 69,
+      width: 70,
       decoration: BoxDecoration(
         border: Border.all(
           width: 1,
@@ -323,9 +329,9 @@ class _Movie_HomeState extends State<MovieHome> {
           SizedBox(
             width: 31,
             height: 31,
-            child: ImageIcon(
-              AssetImage(movieType.assetImage),
-              color: Colors.white,
+            child: SvgPicture.asset(
+              movieType.assetImage,
+              placeholderBuilder: (BuildContext context) => const CircularProgressIndicator(),
             ),
           ),
           Padding(
@@ -365,7 +371,7 @@ class MyImageView extends StatelessWidget {
             MaterialPageRoute(
               builder: (context) => MovieDetail(
                 id: movie.id,
-                  ),
+              ),
             ),
           );
         },
