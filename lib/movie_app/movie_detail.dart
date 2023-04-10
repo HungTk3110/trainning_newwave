@@ -89,7 +89,7 @@ class _MovieDetailState extends State<MovieDetail> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(top: 15),
+                            padding: const EdgeInsets.only(top: 27),
                             child: Center(
                               child: Text(
                                 detailMovie.originalTitle,
@@ -101,7 +101,7 @@ class _MovieDetailState extends State<MovieDetail> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(top: 15),
+                            padding: const EdgeInsets.only(top: 16.85),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -146,7 +146,7 @@ class _MovieDetailState extends State<MovieDetail> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(top: 15),
+                            padding: const EdgeInsets.only(top: 20),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: const [
@@ -169,7 +169,7 @@ class _MovieDetailState extends State<MovieDetail> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(top: 10),
+                            padding: const EdgeInsets.only(top: 16),
                             child: SizedBox(
                               height: 55,
                               child: ListView.separated(
