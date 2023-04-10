@@ -1,8 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:training_newwave/configs/app_constant.dart';
 import 'package:training_newwave/model/movie_entity.dart';
 import 'package:training_newwave/model/movie_type.dart';
+import 'package:training_newwave/model/popular_entity.dart';
+import 'package:training_newwave/movie_app/networks/api_service.dart';
 
 import 'movie_detail.dart';
 
@@ -15,8 +17,8 @@ class MovieHome extends StatefulWidget {
 
 // ignore: camel_case_types
 class _Movie_HomeState extends State<MovieHome> {
-
   int currentPos = 0;
+
   List<MovieEntity> listMovie = listMovieTop();
 
   List<MovieType> listImage = [
@@ -25,6 +27,21 @@ class _Movie_HomeState extends State<MovieHome> {
     MovieType(assetImage: "assets/images/Movie Roll.png", title: "Movies"),
     MovieType(assetImage: "assets/images/Cinema.png", title: "In Theatre"),
   ];
+
+  List<Movie> listMovies = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchListMovie();
+  }
+
+  void fetchListMovie() async {
+    final result = await ApiService.fetchPopular();
+    setState(() {
+      listMovies = result.results;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -132,7 +149,10 @@ class _Movie_HomeState extends State<MovieHome> {
               SizedBox(
                 width: double.infinity,
                 height: 150,
-                child: slideShowTop(listMovie, currentPos),
+                child: slideShowTop(
+                  listMovie: listMovies,
+                  current: currentPos,
+                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -197,7 +217,7 @@ class _Movie_HomeState extends State<MovieHome> {
                 ),
               ),
               SizedBox(
-                child: slideShowBottom(listMovie, currentPos),
+                child: slideShowBottom(listMovies, currentPos),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -227,55 +247,62 @@ class _Movie_HomeState extends State<MovieHome> {
     );
   }
 
-  Widget slideShowTop(List<MovieEntity> list, int current) {
-    return CarouselSlider.builder(
-      itemCount: list.length,
-      options: CarouselOptions(
-        autoPlay: true,
-        onPageChanged: (
-          index,
-          reason,
-        ) {
-          setState(() {
-            current = index;
-          });
-        },
-      ),
-      itemBuilder: (context, index) {
-        return MyImageView(
-          movieEntity: list[index],
-          height: 250.0,
-          width: 360.0,
-          hide: true,
-        );
-      },
-    );
+  Widget slideShowTop({
+    List<Movie> listMovie,
+    int current,
+  }) {
+    return listMovie.isEmpty
+        ? const SizedBox()
+        : CarouselSlider.builder(
+            itemCount: listMovie.length,
+            options: CarouselOptions(
+              autoPlay: true,
+              onPageChanged: (
+                index,
+                reason,
+              ) {
+                setState(() {
+                  current = index;
+                });
+              },
+            ),
+            itemBuilder: (context, index, realIndex) {
+              return MyImageView(
+                movie: listMovie[index],
+                height: 250.0,
+                width: 360.0,
+                hide: true,
+              );
+            },
+          );
   }
 
-  Widget slideShowBottom(List<MovieEntity> list, int current) {
-    return CarouselSlider.builder(
-      itemCount: list.length,
-      options: CarouselOptions(
-        autoPlay: true,
-        onPageChanged: (
-          index,
-          reason,
-        ) {
-          setState(() {
-            current = index;
-          });
-        },
-        viewportFraction: 0.5,
-      ),
-      itemBuilder: (context, index) {
-        return  MyImageView(
-          movieEntity: list[index],
-          height: 230.0,
-          width: 170.0,
-          hide: false,
-        );
-      },
-    );
+  Widget slideShowBottom(List<Movie> list, int current) {
+    return list.isEmpty
+        ? const SizedBox()
+        : CarouselSlider.builder(
+            itemCount: list.length,
+            options: CarouselOptions(
+              autoPlay: true,
+              onPageChanged: (
+                index,
+                reason,
+              ) {
+                setState(() {
+                  current = index;
+                });
+              },
+              viewportFraction: 0.5,
+            ),
+            itemBuilder: (context, index, realIndex) {
+              return MyImageView(
+                movie: list[index],
+                height: 230.0,
+                width: 170.0,
+                hide: false,
+              );
+            },
+          );
   }
 
   Widget itemCategory(MovieType movieType) {
@@ -319,27 +346,26 @@ class _Movie_HomeState extends State<MovieHome> {
 
 // ignore: must_be_immutable
 class MyImageView extends StatelessWidget {
-  MovieEntity movieEntity;
+  Movie movie;
   double width;
   double height;
   bool hide = false;
 
-  MyImageView({Key key, this.movieEntity, this.height, this.width ,this.hide}) : super(key: key);
+  MyImageView({Key key, this.movie, this.height, this.width, this.hide}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 5),
-
       child: GestureDetector(
-        onTap: (){
+        onTap: () {
           Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => MovieDetail(
-                movieEntity: movieEntity,
-              ),
+                id: movie.id,
+                  ),
             ),
           );
         },
@@ -348,7 +374,7 @@ class MyImageView extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(30),
               child: Image.network(
-                movieEntity.image,
+                AppConstant.baseImage + movie.posterPath,
                 width: width,
                 height: height,
                 fit: BoxFit.cover,
@@ -357,8 +383,8 @@ class MyImageView extends StatelessWidget {
             Positioned(
               bottom: 15,
               left: 30,
-              child: Text( hide ?
-                movieEntity.name : "",
+              child: Text(
+                hide ? movie.title : "",
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 20,
@@ -366,17 +392,6 @@ class MyImageView extends StatelessWidget {
                 ),
               ),
             ),
-            // Positioned(
-            //   bottom: 15,
-            //   right: 30,
-            //   child: Image(
-            //     image: SvgPicture.asset(
-            //       movieEntity.point,
-            //       placeholderBuilder: (BuildContext context) =>
-            //       const CircularProgressIndicator(),
-            //     ),
-            //   ),
-            // ),
           ],
         ),
       ),
