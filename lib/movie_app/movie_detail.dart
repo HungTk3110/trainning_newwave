@@ -57,9 +57,9 @@ class _MovieDetailState extends State<MovieDetail> {
             return detailMovie == null
                 ? const SizedBox()
                 : Container(
-                    // color: Colors.transparent,
                     height: double.infinity,
                     decoration: const BoxDecoration(
+                      color: Colors.red,
                       gradient: LinearGradient(
                         begin: Alignment.centerLeft,
                         end: Alignment.centerRight,
@@ -79,17 +79,18 @@ class _MovieDetailState extends State<MovieDetail> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Center(
-                            child: Text(
-                              detailMovie.title,
-                              maxLines: 2,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                  color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
+                          Text(
+                            detailMovie.title,
+                            maxLines: 2,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(top: 27),
+                            padding: const EdgeInsets.only(top: 28),
                             child: Center(
                               child: Text(
                                 detailMovie.originalTitle,
@@ -101,7 +102,7 @@ class _MovieDetailState extends State<MovieDetail> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(top: 16.85),
+                            padding: const EdgeInsets.only(top: 16),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -227,7 +228,6 @@ class _MovieDetailState extends State<MovieDetail> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            height: 40,
             child: SvgPicture.asset(
               movieType.assetImage,
               placeholderBuilder: (BuildContext context) => const CircularProgressIndicator(),
