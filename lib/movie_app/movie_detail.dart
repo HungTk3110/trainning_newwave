@@ -140,7 +140,7 @@ class _MovieDetailState extends State<MovieDetail> {
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
                                   color: Colors.white,
-                                  fontSize: 15,
+                                  fontSize: 12,
                                 ),
                               ),
                             ),
@@ -149,20 +149,24 @@ class _MovieDetailState extends State<MovieDetail> {
                             padding: const EdgeInsets.only(top: 20),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: const [
                                 Text(
                                   "Cast",
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 20,
+                                    fontSize: 18,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                Text(
-                                  "see all",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15,
+                                Padding(
+                                  padding: EdgeInsets.only(top: 6),
+                                  child: Text(
+                                    "see all",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                    ),
                                   ),
                                 ),
                               ],
