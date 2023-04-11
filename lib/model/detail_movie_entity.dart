@@ -27,30 +27,30 @@ class DetailMovie {
 
   DetailMovie(
       {this.adult,
-      this.backdropPath,
-      this.belongsToCollection,
-      this.budget,
-      this.genres,
-      this.homepage,
-      this.id,
-      this.imdbId,
-      this.originalLanguage,
-      this.originalTitle,
-      this.overview,
-      this.popularity,
-      this.posterPath,
-      this.productionCompanies,
-      this.productionCountries,
-      this.releaseDate,
-      this.revenue,
-      this.runtime,
-      this.spokenLanguages,
-      this.status,
-      this.tagline,
-      this.title,
-      this.video,
-      this.voteAverage,
-      this.voteCount});
+        this.backdropPath,
+        this.belongsToCollection,
+        this.budget,
+        this.genres,
+        this.homepage,
+        this.id,
+        this.imdbId,
+        this.originalLanguage,
+        this.originalTitle,
+        this.overview,
+        this.popularity,
+        this.posterPath,
+        this.productionCompanies,
+        this.productionCountries,
+        this.releaseDate,
+        this.revenue,
+        this.runtime,
+        this.spokenLanguages,
+        this.status,
+        this.tagline,
+        this.title,
+        this.video,
+        this.voteAverage,
+        this.voteCount});
 
   DetailMovie.fromJson(Map<String, dynamic> json) {
     adult = json['adult'];
@@ -152,12 +152,7 @@ class BelongsToCollection {
   String posterPath;
   String backdropPath;
 
-  BelongsToCollection({
-    this.id,
-    this.name,
-    this.posterPath,
-    this.backdropPath,
-  });
+  BelongsToCollection({this.id, this.name, this.posterPath, this.backdropPath});
 
   BelongsToCollection.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -201,12 +196,7 @@ class ProductionCompanies {
   String name;
   String originCountry;
 
-  ProductionCompanies({
-    this.id,
-    this.logoPath,
-    this.name,
-    this.originCountry,
-  });
+  ProductionCompanies({this.id, this.logoPath, this.name, this.originCountry});
 
   ProductionCompanies.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -249,11 +239,7 @@ class SpokenLanguages {
   String iso6391;
   String name;
 
-  SpokenLanguages({
-    this.englishName,
-    this.iso6391,
-    this.name,
-  });
+  SpokenLanguages({this.englishName, this.iso6391, this.name});
 
   SpokenLanguages.fromJson(Map<String, dynamic> json) {
     englishName = json['english_name'];

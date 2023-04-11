@@ -4,12 +4,7 @@ class Popular {
   int totalPages;
   int totalResults;
 
-  Popular({
-    this.page,
-    this.results,
-    this.totalPages,
-    this.totalResults,
-  });
+  Popular({this.page, this.results, this.totalPages, this.totalResults});
 
   Popular.fromJson(Map<String, dynamic> json) {
     page = json['page'];
@@ -48,24 +43,25 @@ class Movie {
   String releaseDate;
   String title;
   bool video;
-  double voteAverage;
+  dynamic voteAverage;
   int voteCount;
 
-  Movie(
-      {this.adult,
-      this.backdropPath,
-      this.genreIds,
-      this.id,
-      this.originalLanguage,
-      this.originalTitle,
-      this.overview,
-      this.popularity,
-      this.posterPath,
-      this.releaseDate,
-      this.title,
-      this.video,
-      this.voteAverage,
-      this.voteCount});
+  Movie({
+    this.adult,
+    this.backdropPath,
+    this.genreIds,
+    this.id,
+    this.originalLanguage,
+    this.originalTitle,
+    this.overview,
+    this.popularity,
+    this.posterPath,
+    this.releaseDate,
+    this.title,
+    this.video,
+    this.voteAverage,
+    this.voteCount,
+  });
 
   Movie.fromJson(Map<String, dynamic> json) {
     adult = json['adult'];
