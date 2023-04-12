@@ -463,7 +463,7 @@ class MyImageView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(
-                        width: 100,
+                        width: 130,
                         child: Text(
                           hide ? movie.title : "",
                           style: const TextStyle(
@@ -471,16 +471,6 @@ class MyImageView extends StatelessWidget {
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
-                        ),
-                      ),
-                      SizedBox(
-                        child: SvgPicture.asset(
-                          "assets/svg/imdb.svg",
-                          width: 45,
-                          height: 16,
-                            fit: BoxFit.cover ,
-                            placeholderBuilder: (BuildContext context) =>
-                          const CircularProgressIndicator(),
                         ),
                       ),
                     ],
