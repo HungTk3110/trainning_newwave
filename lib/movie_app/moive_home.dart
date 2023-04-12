@@ -1,13 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:training_newwave/configs/app_constant.dart';
 import 'package:training_newwave/model/movie_entity.dart';
 import 'package:training_newwave/model/movie_type.dart';
 import 'package:training_newwave/model/popular_entity.dart';
 import 'package:training_newwave/movie_app/networks/api_service.dart';
 
-import 'movie_detail.dart';
+import 'widget/image_carouseslide.dart';
 
 class MovieHome extends StatefulWidget {
   const MovieHome({Key key}) : super(key: key);
@@ -48,8 +47,6 @@ class _Movie_HomeState extends State<MovieHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.centerLeft,
@@ -63,44 +60,39 @@ class _Movie_HomeState extends State<MovieHome> {
         ),
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 65,
-                  right: 65,
-                  top: 78,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: const [
-                        Text(
-                          "Hello, ",
+              SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    left: 65,
+                    right: 65,
+                    top: 24,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      RichText(
+                        text: const TextSpan(
                           style: TextStyle(
-                            color: Colors.white,
                             fontSize: 18,
-                          ),
-                        ),
-                        Text(
-                          "Jane!",
-                          style: TextStyle(
                             color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
                           ),
+                          children: <TextSpan>[
+                            TextSpan(text: "Hello, "),
+                            TextSpan(
+                              text: "jane!",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            )
+                          ],
                         ),
-                      ],
-                    ),
-                    SvgPicture.asset(
-                      "assets/svg/notfication_icon.svg",
-                      placeholderBuilder: (BuildContext context) =>
-                          const CircularProgressIndicator(),
-                    ),
-                  ],
+                      ),
+                      const Spacer(),
+                      SvgPicture.asset(
+                        "assets/svg/notfication_icon.svg",
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Container(
@@ -110,7 +102,6 @@ class _Movie_HomeState extends State<MovieHome> {
                   right: 50,
                 ),
                 height: 50,
-                // color: const Color(0xffFFFFFF).withOpacity(0.2),
                 decoration: BoxDecoration(
                   color: const Color(0xffFFFFFF).withOpacity(0.2),
                   borderRadius: BorderRadius.circular(15),
@@ -151,8 +142,6 @@ class _Movie_HomeState extends State<MovieHome> {
                               width: 1,
                               child: SvgPicture.asset(
                                 "assets/svg/Line 1.svg",
-                                placeholderBuilder: (BuildContext context) =>
-                                    const CircularProgressIndicator(),
                               ),
                             ),
                             SizedBox(
@@ -160,8 +149,6 @@ class _Movie_HomeState extends State<MovieHome> {
                               height: 24,
                               child: SvgPicture.asset(
                                 "assets/svg/voich_icon.svg",
-                                placeholderBuilder: (BuildContext context) =>
-                                    const CircularProgressIndicator(),
                               ),
                             ),
                           ],
@@ -187,24 +174,19 @@ class _Movie_HomeState extends State<MovieHome> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(
+              const Padding(
+                padding: EdgeInsets.only(
                   left: 50,
                   top: 26,
                   bottom: 15,
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text(
-                      "Most Popular",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
+                child: Text(
+                  "Most Popular",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               SizedBox(
@@ -247,7 +229,7 @@ class _Movie_HomeState extends State<MovieHome> {
                 height: 110,
                 child: Center(
                   child: ListView.separated(
-                    itemCount: 4,
+                    itemCount: listImage.length,
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
                     physics: const NeverScrollableScrollPhysics(),
@@ -264,24 +246,19 @@ class _Movie_HomeState extends State<MovieHome> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(
+              const Padding(
+                padding: EdgeInsets.only(
                   left: 50,
                   top: 26,
                   bottom: 15,
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text(
-                      "Upcoming releases",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
+                child: Text(
+                  "Upcoming releases",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               SizedBox(
@@ -301,9 +278,8 @@ class _Movie_HomeState extends State<MovieHome> {
                       ),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: currentPos == index
-                            ? const Color(0xff64ABDB)
-                            : const Color(0xff826EC8),
+                        color:
+                            currentPos == index ? const Color(0xff64ABDB) : const Color(0xff826EC8),
                       ),
                     );
                   },
@@ -326,10 +302,7 @@ class _Movie_HomeState extends State<MovieHome> {
             itemCount: listMovie.length,
             options: CarouselOptions(
               autoPlay: true,
-              onPageChanged: (
-                index,
-                reason,
-              ) {
+              onPageChanged: (index, reason) {
                 setState(() {
                   current = index;
                 });
@@ -353,10 +326,7 @@ class _Movie_HomeState extends State<MovieHome> {
             itemCount: list.length,
             options: CarouselOptions(
               autoPlay: true,
-              onPageChanged: (
-                index,
-                reason,
-              ) {
+              onPageChanged: (index, reason) {
                 setState(() {
                   current = index;
                 });
@@ -384,9 +354,9 @@ class _Movie_HomeState extends State<MovieHome> {
           width: 1,
           color: const Color(0xffFFFFFF).withOpacity(0.2),
         ),
-        borderRadius: const BorderRadius.all(
-            Radius.circular(15.0) //                 <--- border radius here
-            ),
+        borderRadius:
+            const BorderRadius.all(Radius.circular(15.0) //                 <--- border radius here
+                ),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -395,12 +365,14 @@ class _Movie_HomeState extends State<MovieHome> {
             child: SvgPicture.asset(
               movieType.assetImage,
               fit: BoxFit.cover,
-              placeholderBuilder: (BuildContext context) =>
-                  const CircularProgressIndicator(),
+              placeholderBuilder: (BuildContext context) => const CircularProgressIndicator(),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 20,bottom: 15,),
+            padding: const EdgeInsets.only(
+              top: 20,
+              bottom: 15,
+            ),
             child: Text(
               movieType.title,
               style: const TextStyle(
@@ -416,71 +388,12 @@ class _Movie_HomeState extends State<MovieHome> {
 }
 
 // ignore: must_be_immutable
-class MyImageView extends StatelessWidget {
-  Movie movie;
-  double width;
-  double height;
-  bool hide = false;
 
-  MyImageView({Key key, this.movie, this.height, this.width, this.hide})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return Container(
-      width: width,
-      margin: const EdgeInsets.symmetric(horizontal: 5),
-      child: GestureDetector(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => MovieDetail(
-                id: movie.id,
-              ),
-            ),
-          );
-        },
-        child: Stack(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(30),
-              child: Image.network(
-                AppConstant.baseImage + movie.posterPath,
-                width: width,
-                height: height,
-                fit: BoxFit.cover,
-              ),
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 20,right: 15,bottom: 15,),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: 130,
-                        child: Text(
-                          hide ? movie.title : "",
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+/*
+* 1. Sử dụng cachenetworkImage √
+* 2. Xem lại các chỗ dùng thẻ Row, column √
+* 3. làm custom độ dài list cast √
+* 4. Sửa lại các icon Svg lấy chưa đúng √
+* 5. Back 1 lần về luôn màn home từ màn detail √
+* 6.
+* */

@@ -9,6 +9,7 @@ class AppConstant {
   static const String imageExercise5_4 = 'assets/images/sceen4.png';
   static const String imageExercise5Logo = "assets/images/Marvel_Logo.png";
   static const String baseImage = "https://image.tmdb.org/t/p/original/";
+  static const String imageError = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTA4cDBzSpBL0RdiL3XXbhiJE7mMpJbnOXgeg&usqp=CAU";
 }
 
 

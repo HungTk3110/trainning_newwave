@@ -29,6 +29,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   http:
+  rounded_background_text: ^0.3.0
   carousel_slider:
   cached_network_image: ^3.2.3
   flutter_svg: ^2.0.4
