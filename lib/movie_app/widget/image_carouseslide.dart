@@ -8,7 +8,7 @@ import 'package:training_newwave/model/popular_entity.dart';
 import 'package:training_newwave/movie_app/movie_detail.dart';
 
 class MyImageView extends StatelessWidget {
-  Movie movie;
+  final Movie movie;
   double width;
   double height;
   bool hide = false;

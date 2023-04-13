@@ -7,6 +7,8 @@ import 'package:training_newwave/configs/app_vectors.dart';
 import 'package:training_newwave/model/movie_collection_entity.dart';
 import 'package:training_newwave/model/popular_entity.dart';
 import 'package:training_newwave/movie_app/networks/api_service.dart';
+import 'package:training_newwave/movie_app/widget/indicator.dart';
+import 'package:training_newwave/movie_app/widget/item_category_home.dart';
 
 import 'widget/image_carouseslide.dart';
 
@@ -19,13 +21,16 @@ class MovieHome extends StatefulWidget {
 
 // ignore: camel_case_types
 class _Movie_HomeState extends State<MovieHome> {
-  int currentPos = 0;
+  int currentPosTop = 0;
+  int currentPosBottom = 0;
+
   List<Movie> listMovies = [];
   List<MovieCollection> listCollection = [];
 
   @override
   void initState() {
     super.initState();
+    listCollection = listCollectionEntity;
     fetchListMovie();
   }
 
@@ -33,7 +38,6 @@ class _Movie_HomeState extends State<MovieHome> {
     final result = await ApiService.fetchPopular();
     setState(() {
       listMovies = result.results;
-      listCollection = listCollectionEntity;
     });
   }
 
@@ -151,7 +155,7 @@ class _Movie_HomeState extends State<MovieHome> {
                     top: 17,
                     bottom: 20,
                   ),
-                  child: indicator(listMovie: listMovies),
+                  child: Indicator(listMovie: listMovies, currentPos: currentPosTop),
                 ),
                 SizedBox(
                   height: 110,
@@ -166,8 +170,8 @@ class _Movie_HomeState extends State<MovieHome> {
                       },
                       itemBuilder: (context, index) {
                         return SizedBox(
-                          child: itemCategory(
-                            listCollection[index],
+                          child: ItemCategoryHome(
+                            movieCollection: listCollection[index],
                           ),
                         );
                       },
@@ -185,15 +189,13 @@ class _Movie_HomeState extends State<MovieHome> {
                     style: AppTextStyles.whiteS18Bold,
                   ),
                 ),
-                SizedBox(
-                  child: slideShowBottom(listMovies),
-                ),
+                slideShowBottom(listMovies),
                 Padding(
                   padding: const EdgeInsets.only(
                     top: 18,
                     bottom: 20,
                   ),
-                  child: indicator(listMovie: listMovies),
+                  child: Indicator(listMovie: listMovies, currentPos: currentPosBottom),
                 )
               ],
             ),
@@ -214,7 +216,7 @@ class _Movie_HomeState extends State<MovieHome> {
               autoPlay: true,
               onPageChanged: (index, reason) {
                 setState(() {
-                  currentPos = index;
+                  currentPosTop = index;
                 });
               },
             ),
@@ -229,38 +231,6 @@ class _Movie_HomeState extends State<MovieHome> {
           );
   }
 
-  Widget indicator({
-    List<Movie> listMovie,
-  }) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: listMovies.map(
-        (url) {
-          int index = listMovies.indexOf(url);
-          return Container(
-            width: 8.0,
-            height: 8.0,
-            margin: const EdgeInsets.symmetric(
-              vertical: 10.0,
-              horizontal: 2.0,
-            ),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: <Color>[
-                  currentPos == index ? AppColors.havelockBlue : AppColors.havelockBlue30,
-                  currentPos == index ? AppColors.blueMarguerite : AppColors.blueMarguerite30,
-                ],
-              ),
-            ),
-          );
-        },
-      ).toList(),
-    );
-  }
-
   Widget slideShowBottom(List<Movie> list) {
     return list.isEmpty
         ? const SizedBox()
@@ -270,7 +240,7 @@ class _Movie_HomeState extends State<MovieHome> {
               autoPlay: true,
               onPageChanged: (index, reason) {
                 setState(() {
-                  currentPos = index;
+                  currentPosBottom = index;
                 });
               },
               viewportFraction: 0.5,
@@ -284,42 +254,6 @@ class _Movie_HomeState extends State<MovieHome> {
               );
             },
           );
-  }
-
-  Widget itemCategory(MovieCollection movieType) {
-    return Container(
-      width: 70,
-      height: 95,
-      decoration: BoxDecoration(
-        color: AppColors.white20,
-        border: Border.all(
-          width: 1,
-          color: AppColors.white20,
-        ),
-        borderRadius:
-            const BorderRadius.all(Radius.circular(15.0) //                 <--- border radius here
-                ),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          SizedBox(
-            child: SvgPicture.asset(
-              movieType.assetImage,
-              fit: BoxFit.cover,
-              placeholderBuilder: (BuildContext context) => const CircularProgressIndicator(),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 20,
-              bottom: 15,
-            ),
-            child: Text(movieType.title, style: AppTextStyles.whiteS10Medium),
-          )
-        ],
-      ),
-    );
   }
 }
 

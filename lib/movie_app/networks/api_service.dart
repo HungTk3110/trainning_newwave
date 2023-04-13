@@ -6,7 +6,12 @@ import 'package:training_newwave/model/detail_movie_entity.dart';
 import 'package:training_newwave/model/popular_entity.dart';
 
 class ApiService {
+  static const String baseUrl = '';
+  static const String path = '';
+  static const String apiKey = '';
+
   static const String urlPopular =
+      // baseUrl + path + apiKey;
       "https://api.themoviedb.org/3/movie/popular?api_key=9bb89316d8693b06d7a84980b29c011f";
 
   static Future<Popular> fetchPopular() async {
