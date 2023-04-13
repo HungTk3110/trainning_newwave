@@ -3,6 +3,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:training_newwave/configs/app_constant.dart';
+import 'package:training_newwave/configs/app_styles.dart';
 import 'package:training_newwave/model/popular_entity.dart';
 import 'package:training_newwave/movie_app/movie_detail.dart';
 
@@ -43,7 +44,6 @@ class MyImageView extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(30),
               child: CachedNetworkImage(
-                //cache network image
                 imageUrl: AppConstant.baseImage + movie.posterPath,
                 width: width,
                 height: height,
@@ -67,11 +67,7 @@ class MyImageView extends StatelessWidget {
                       width: 130,
                       child: Text(
                         hide ? movie.title : "",
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: AppTextStyles.whiteS18Bold,
                       ),
                     ),
                   ],

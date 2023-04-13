@@ -1,8 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:training_newwave/model/movie_entity.dart';
-import 'package:training_newwave/model/movie_type.dart';
+import 'package:training_newwave/configs/app_colors.dart';
+import 'package:training_newwave/configs/app_styles.dart';
+import 'package:training_newwave/configs/app_vectors.dart';
+import 'package:training_newwave/model/movie_collection_entity.dart';
 import 'package:training_newwave/model/popular_entity.dart';
 import 'package:training_newwave/movie_app/networks/api_service.dart';
 
@@ -18,17 +20,8 @@ class MovieHome extends StatefulWidget {
 // ignore: camel_case_types
 class _Movie_HomeState extends State<MovieHome> {
   int currentPos = 0;
-
-  List<MovieEntity> listMovie = listMovieTop();
-
-  List<MovieType> listImage = [
-    MovieType(assetImage: "assets/svg/Vector.svg", title: "Genres"),
-    MovieType(assetImage: "assets/svg/tv series icon.svg", title: "TV series"),
-    MovieType(assetImage: "assets/svg/Movie Roll.svg", title: "Movies"),
-    MovieType(assetImage: "assets/svg/Cinema.svg", title: "In Theatre"),
-  ];
-
   List<Movie> listMovies = [];
+  List<MovieCollection> listCollection = [];
 
   @override
   void initState() {
@@ -40,6 +33,7 @@ class _Movie_HomeState extends State<MovieHome> {
     final result = await ApiService.fetchPopular();
     setState(() {
       listMovies = result.results;
+      listCollection = listCollectionEntity;
     });
   }
 
@@ -47,245 +41,162 @@ class _Movie_HomeState extends State<MovieHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.centerLeft,
             end: Alignment.centerRight,
             colors: <Color>[
-              Color(0xff2B5876),
-              Color(0xff4E4376),
+              AppColors.sanJuan,
+              AppColors.eastBay,
             ],
             tileMode: TileMode.mirror,
           ),
         ),
         child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SafeArea(
-                child: Padding(
+          child: SafeArea(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
                   padding: const EdgeInsets.only(
                     left: 65,
                     right: 65,
                     top: 24,
                   ),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       RichText(
-                        text: const TextSpan(
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                          ),
+                        text: TextSpan(
+                          style: AppTextStyles.whiteS18Medium,
                           children: <TextSpan>[
-                            TextSpan(text: "Hello, "),
+                            const TextSpan(text: "Hello, "),
                             TextSpan(
                               text: "jane!",
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: AppTextStyles.whiteS18Bold,
                             )
                           ],
                         ),
                       ),
                       const Spacer(),
                       SvgPicture.asset(
-                        "assets/svg/notfication_icon.svg",
+                        AppVectors.icNotification,
                       ),
                     ],
                   ),
                 ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(
-                  top: 20,
-                  left: 50,
-                  right: 50,
-                ),
-                height: 50,
-                decoration: BoxDecoration(
-                  color: const Color(0xffFFFFFF).withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: TextField(
-                  decoration: InputDecoration(
-                    prefixIcon: SizedBox(
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                          top: 14,
-                          right: 11,
-                          bottom: 16,
-                          left: 16,
-                        ),
-                        child: SvgPicture.asset(
-                          "assets/svg/Search_icon.svg",
-                          placeholderBuilder: (BuildContext context) =>
-                              const CircularProgressIndicator(),
-                        ),
+                Container(
+                  margin: const EdgeInsets.only(
+                    top: 20,
+                    left: 50,
+                    right: 50,
+                  ),
+                  padding: const EdgeInsets.only(
+                    top: 14,
+                    right: 17,
+                    bottom: 14,
+                  ),
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: AppColors.white20,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      prefixIcon: SvgPicture.asset(
+                        AppVectors.icSearch,
                       ),
-                    ),
-                    hintText: "Search",
-                    hintStyle: const TextStyle(
-                      color: Colors.white54,
-                    ),
-                    suffixIcon: Padding(
-                      padding: const EdgeInsets.only(
-                        top: 14,
-                        right: 14,
-                        bottom: 14,
-                      ),
-                      child: SizedBox(
-                        width: 34,
+                      hintText: "Search",
+                      contentPadding: const EdgeInsets.only(bottom: 10),
+                      hintStyle: AppTextStyles.white50S18Medium,
+                      suffixIcon: SizedBox(
+                        width: 1,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            SizedBox(
-                              width: 1,
-                              child: SvgPicture.asset(
-                                "assets/svg/Line 1.svg",
-                              ),
+                            SvgPicture.asset(
+                              AppVectors.icLine1,
                             ),
-                            SizedBox(
-                              width: 16,
-                              height: 24,
-                              child: SvgPicture.asset(
-                                "assets/svg/voich_icon.svg",
-                              ),
+                            SvgPicture.asset(
+                              AppVectors.icVoice,
                             ),
                           ],
                         ),
                       ),
                     ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(15.0),
-                      ),
-                      borderSide: BorderSide(
-                        color: const Color(0xffFFFFFF).withOpacity(0.2),
-                      ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 50,
+                    top: 26,
+                    bottom: 15,
+                  ),
+                  child: Text(
+                    "Most Popular",
+                    style: AppTextStyles.whiteS18Bold,
+                  ),
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  height: 150,
+                  child: slideShowTop(
+                    listMovie: listMovies,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 17,
+                    bottom: 20,
+                  ),
+                  child: indicator(listMovie: listMovies),
+                ),
+                SizedBox(
+                  height: 110,
+                  child: Center(
+                    child: ListView.separated(
+                      itemCount: listCollection.length,
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      physics: const NeverScrollableScrollPhysics(),
+                      separatorBuilder: (context, index) {
+                        return const SizedBox(width: 12);
+                      },
+                      itemBuilder: (context, index) {
+                        return SizedBox(
+                          child: itemCategory(
+                            listCollection[index],
+                          ),
+                        );
+                      },
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(15.0),
-                      ),
-                      borderSide: BorderSide(
-                        color: const Color(0xffFFFFFF).withOpacity(0.2),
-                      ),
-                    ),
                   ),
                 ),
-              ),
-              const Padding(
-                padding: EdgeInsets.only(
-                  left: 50,
-                  top: 26,
-                  bottom: 15,
-                ),
-                child: Text(
-                  "Most Popular",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 50,
+                    top: 26,
+                    bottom: 15,
+                  ),
+                  child: Text(
+                    "Upcoming releases",
+                    style: AppTextStyles.whiteS18Bold,
                   ),
                 ),
-              ),
-              SizedBox(
-                width: double.infinity,
-                height: 150,
-                child: slideShowTop(
-                  listMovie: listMovies,
-                  current: currentPos,
+                SizedBox(
+                  child: slideShowBottom(listMovies),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                  top: 17,
-                  bottom: 20,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: listMovie.map(
-                    (url) {
-                      int index = listMovie.indexOf(url);
-                      return Container(
-                        width: 8.0,
-                        height: 8.0,
-                        margin: const EdgeInsets.symmetric(
-                          vertical: 10.0,
-                          horizontal: 2.0,
-                        ),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: currentPos == index
-                              ? const Color(0xff64ABDB)
-                              : const Color(0xff826EC8),
-                        ),
-                      );
-                    },
-                  ).toList(),
-                ),
-              ),
-              SizedBox(
-                height: 110,
-                child: Center(
-                  child: ListView.separated(
-                    itemCount: listImage.length,
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    physics: const NeverScrollableScrollPhysics(),
-                    separatorBuilder: (context, index) {
-                      return const SizedBox(width: 12);
-                    },
-                    itemBuilder: (context, index) {
-                      return SizedBox(
-                        child: itemCategory(
-                          listImage[index],
-                        ),
-                      );
-                    },
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 18,
+                    bottom: 20,
                   ),
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.only(
-                  left: 50,
-                  top: 26,
-                  bottom: 15,
-                ),
-                child: Text(
-                  "Upcoming releases",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              SizedBox(
-                child: slideShowBottom(listMovies, currentPos),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: listMovie.map(
-                  (url) {
-                    int index = listMovie.indexOf(url);
-                    return Container(
-                      width: 8.0,
-                      height: 8.0,
-                      margin: const EdgeInsets.symmetric(
-                        vertical: 10.0,
-                        horizontal: 2.0,
-                      ),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color:
-                            currentPos == index ? const Color(0xff64ABDB) : const Color(0xff826EC8),
-                      ),
-                    );
-                  },
-                ).toList(),
-              ),
-            ],
+                  child: indicator(listMovie: listMovies),
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -294,7 +205,6 @@ class _Movie_HomeState extends State<MovieHome> {
 
   Widget slideShowTop({
     List<Movie> listMovie,
-    int current,
   }) {
     return listMovie.isEmpty
         ? const SizedBox()
@@ -304,7 +214,7 @@ class _Movie_HomeState extends State<MovieHome> {
               autoPlay: true,
               onPageChanged: (index, reason) {
                 setState(() {
-                  current = index;
+                  currentPos = index;
                 });
               },
             ),
@@ -319,7 +229,39 @@ class _Movie_HomeState extends State<MovieHome> {
           );
   }
 
-  Widget slideShowBottom(List<Movie> list, int current) {
+  Widget indicator({
+    List<Movie> listMovie,
+  }) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: listMovies.map(
+        (url) {
+          int index = listMovies.indexOf(url);
+          return Container(
+            width: 8.0,
+            height: 8.0,
+            margin: const EdgeInsets.symmetric(
+              vertical: 10.0,
+              horizontal: 2.0,
+            ),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: <Color>[
+                  currentPos == index ? AppColors.havelockBlue : AppColors.havelockBlue30,
+                  currentPos == index ? AppColors.blueMarguerite : AppColors.blueMarguerite30,
+                ],
+              ),
+            ),
+          );
+        },
+      ).toList(),
+    );
+  }
+
+  Widget slideShowBottom(List<Movie> list) {
     return list.isEmpty
         ? const SizedBox()
         : CarouselSlider.builder(
@@ -328,7 +270,7 @@ class _Movie_HomeState extends State<MovieHome> {
               autoPlay: true,
               onPageChanged: (index, reason) {
                 setState(() {
-                  current = index;
+                  currentPos = index;
                 });
               },
               viewportFraction: 0.5,
@@ -344,15 +286,15 @@ class _Movie_HomeState extends State<MovieHome> {
           );
   }
 
-  Widget itemCategory(MovieType movieType) {
+  Widget itemCategory(MovieCollection movieType) {
     return Container(
       width: 70,
       height: 95,
       decoration: BoxDecoration(
-        color: const Color(0xffFFFFFF).withOpacity(0.2),
+        color: AppColors.white20,
         border: Border.all(
           width: 1,
-          color: const Color(0xffFFFFFF).withOpacity(0.2),
+          color: AppColors.white20,
         ),
         borderRadius:
             const BorderRadius.all(Radius.circular(15.0) //                 <--- border radius here
@@ -373,13 +315,7 @@ class _Movie_HomeState extends State<MovieHome> {
               top: 20,
               bottom: 15,
             ),
-            child: Text(
-              movieType.title,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 10,
-              ),
-            ),
+            child: Text(movieType.title, style: AppTextStyles.whiteS10Medium),
           )
         ],
       ),
@@ -395,5 +331,9 @@ class _Movie_HomeState extends State<MovieHome> {
 * 3. làm custom độ dài list cast √
 * 4. Sửa lại các icon Svg lấy chưa đúng √
 * 5. Back 1 lần về luôn màn home từ màn detail √
-* 6.
+*
+*
+*
+* 6. Chỉnh sửa style
+* 7. Tối ưu lại các thẻ
 * */
