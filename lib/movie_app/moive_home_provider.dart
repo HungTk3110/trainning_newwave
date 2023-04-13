@@ -1,44 +1,37 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 import 'package:training_newwave/configs/app_colors.dart';
 import 'package:training_newwave/configs/app_styles.dart';
 import 'package:training_newwave/configs/app_vectors.dart';
+import 'package:training_newwave/model/enums/loading_status.dart';
 import 'package:training_newwave/model/movie_collection_entity.dart';
 import 'package:training_newwave/model/popular_entity.dart';
-import 'package:training_newwave/movie_app/networks/api_service.dart';
+import 'package:training_newwave/movie_app/provider/home_provider.dart';
+import 'package:training_newwave/movie_app/widget/image_carouseslide_provider.dart';
 import 'package:training_newwave/movie_app/widget/indicator.dart';
 import 'package:training_newwave/movie_app/widget/item_category_home.dart';
 
-import '../widget/image_carouseslide.dart';
-
-class MovieHome extends StatefulWidget {
-  const MovieHome({Key key}) : super(key: key);
+class MovieHomeProvider extends StatefulWidget {
+  const MovieHomeProvider({Key key}) : super(key: key);
 
   @override
-  State<MovieHome> createState() => _Movie_HomeState();
+  State<MovieHomeProvider> createState() => _Movie_HomeState();
 }
 
 // ignore: camel_case_types
-class _Movie_HomeState extends State<MovieHome> {
+class _Movie_HomeState extends State<MovieHomeProvider> {
   int currentPosTop = 0;
   int currentPosBottom = 0;
 
-  List<Movie> listMovies = [];
   List<MovieCollection> listCollection = [];
 
   @override
   void initState() {
     super.initState();
     listCollection = listCollectionEntity;
-    fetchListMovie();
-  }
-
-  void fetchListMovie() async {
-    final result = await ApiService.fetchPopular();
-    setState(() {
-      listMovies = result.results;
-    });
+    Provider.of<HomeProvider>(context, listen: false).getAllMovies();
   }
 
   @override
@@ -146,8 +139,18 @@ class _Movie_HomeState extends State<MovieHome> {
                 SizedBox(
                   width: double.infinity,
                   height: 150,
-                  child: slideShowTop(
-                    listMovie: listMovies,
+                  child: Selector<HomeProvider, LoadingStatus>(
+                    selector: (_, provider) => provider.loadListPopularStatus,
+                    builder: (context, loadListPopularStatus, child) {
+                      List<Movie> listMovie =
+                          Provider.of<HomeProvider>(context, listen: false)
+                              .listMovies;
+                      return loadListPopularStatus == LoadingStatus.loading
+                          ? const SizedBox()
+                          : slideShowTop(
+                              listMovie: listMovie,
+                            );
+                    },
                   ),
                 ),
                 Padding(
@@ -155,7 +158,18 @@ class _Movie_HomeState extends State<MovieHome> {
                     top: 17,
                     bottom: 20,
                   ),
-                  child: Indicator(listMovie: listMovies, currentPos: currentPosTop),
+                  child: Selector<HomeProvider, LoadingStatus>(
+                    selector: (_, provider) => provider.loadListPopularStatus,
+                    builder: (context, loadListPopularStatus, child) {
+                      List<Movie> listMovie =
+                          Provider.of<HomeProvider>(context, listen: false)
+                              .listMovies;
+                      return loadListPopularStatus == LoadingStatus.loading
+                          ? const SizedBox()
+                          : Indicator(
+                              listMovie: listMovie, currentPos: currentPosTop);
+                    },
+                  ),
                 ),
                 SizedBox(
                   height: 110,
@@ -189,14 +203,36 @@ class _Movie_HomeState extends State<MovieHome> {
                     style: AppTextStyles.whiteS18Bold,
                   ),
                 ),
-                slideShowBottom(listMovies),
+                Selector<HomeProvider, LoadingStatus>(
+                  selector: (_, provider) => provider.loadListPopularStatus,
+                  builder: (context, loadListPopularStatus, child) {
+                    List<Movie> listMovie =
+                        Provider.of<HomeProvider>(context, listen: false)
+                            .listMovies;
+                    return loadListPopularStatus == LoadingStatus.loading
+                        ? const SizedBox()
+                        : slideShowBottom(listMovie);
+                  },
+                ),
                 Padding(
                   padding: const EdgeInsets.only(
                     top: 18,
                     bottom: 20,
                   ),
-                  child: Indicator(listMovie: listMovies, currentPos: currentPosBottom),
-                )
+                  child: Selector<HomeProvider, LoadingStatus>(
+                    selector: (_, provider) => provider.loadListPopularStatus,
+                    builder: (context, loadListPopularStatus, child) {
+                      List<Movie> listMovie =
+                          Provider.of<HomeProvider>(context, listen: false)
+                              .listMovies;
+                      return loadListPopularStatus == LoadingStatus.loading
+                          ? const SizedBox()
+                          : Indicator(
+                              listMovie: listMovie,
+                              currentPos: currentPosBottom);
+                    },
+                  ),
+                ),
               ],
             ),
           ),
@@ -221,7 +257,7 @@ class _Movie_HomeState extends State<MovieHome> {
               },
             ),
             itemBuilder: (context, index, realIndex) {
-              return MyImageView(
+              return ItemCarousProvider(
                 movie: listMovie[index],
                 height: 250.0,
                 width: 360.0,
@@ -246,7 +282,7 @@ class _Movie_HomeState extends State<MovieHome> {
               viewportFraction: 0.5,
             ),
             itemBuilder: (context, index, realIndex) {
-              return MyImageView(
+              return ItemCarousProvider(
                 movie: list[index],
                 height: 230.0,
                 width: 170.0,
