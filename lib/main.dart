@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:training_newwave/exercise5/screen1.dart';
-import 'package:training_newwave/movie_app/moive_home.dart';
+import 'package:training_newwave/movie_app_provider/provider/detail_provider.dart';
+import 'package:training_newwave/movie_app_provider/provider/home_provider.dart';
 
 import 'exercise3/exercise3_1.dart';
 import 'exercise4/exercise4.dart';
+import 'movie_app_provider/screens/moive_home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,9 +17,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData.light(),
-      home: const HomeMyApp(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => HomeProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => DetailProvider(),
+        ),
+      ],
+      child: MaterialApp(
+        theme: ThemeData.light(),
+        home: const HomeMyApp(),
+      ),
     );
   }
 }
@@ -29,7 +42,6 @@ class HomeMyApp extends StatefulWidget {
 }
 
 class _HomeMyAppState extends State<HomeMyApp> {
-
   var isThemeLight = true;
 
   @override
@@ -103,7 +115,7 @@ class _HomeMyAppState extends State<HomeMyApp> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>  Screen1(),
+                  builder: (context) => const Screen1(),
                 ),
               );
             },
@@ -124,7 +136,7 @@ class _HomeMyAppState extends State<HomeMyApp> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>  const MovieHome(),
+                  builder: (context) => const MovieHome(),
                 ),
               );
             },
