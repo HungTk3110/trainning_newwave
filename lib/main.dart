@@ -1,6 +1,8 @@
+import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:training_newwave/exercise5/screen1.dart';
+import 'package:training_newwave/movie_app/bloc/simple_bloc_observer.dart';
 import 'package:training_newwave/movie_app/moive_home.dart';
 import 'package:training_newwave/movie_app/provider/detail_provider.dart';
 import 'package:training_newwave/movie_app/provider/home_provider.dart';
@@ -10,6 +12,7 @@ import 'exercise4/exercise4.dart';
 import 'movie_app/moive_home_provider.dart';
 
 void main() {
+  Bloc.observer = const SimpleBlocObserver();
   runApp(const MyApp());
 }
 
