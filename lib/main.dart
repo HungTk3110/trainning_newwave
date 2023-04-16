@@ -1,18 +1,17 @@
-import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:training_newwave/exercise5/screen1.dart';
-import 'package:training_newwave/movie_app/bloc/simple_bloc_observer.dart';
-import 'package:training_newwave/movie_app/moive_home.dart';
+import 'package:training_newwave/movie_app/movie_with_getx/moive_home_getx.dart';
+import 'package:training_newwave/movie_app/movie_with_set_state/moive_home.dart';
 import 'package:training_newwave/movie_app/provider/detail_provider.dart';
 import 'package:training_newwave/movie_app/provider/home_provider.dart';
+import 'package:training_newwave/movie_app/movie_with_bloc_pattern/moive_home_bloc_pattern.dart';
 
 import 'exercise3/exercise3_1.dart';
 import 'exercise4/exercise4.dart';
 import 'movie_app/moive_home_provider.dart';
 
 void main() {
-  Bloc.observer = const SimpleBlocObserver();
   runApp(const MyApp());
 }
 
@@ -162,6 +161,48 @@ class _HomeMyAppState extends State<HomeMyApp> {
                 context,
                 MaterialPageRoute(
                   builder: (context) => const MovieHomeProvider(),
+                ),
+              );
+            },
+          ),
+          TextButton(
+            style: TextButton.styleFrom(
+              backgroundColor: Colors.red,
+            ),
+            child: Builder(
+              builder: (context) {
+                return const Text(
+                  'Movie Ui with bloc pattern',
+                  style: TextStyle(fontSize: 28),
+                );
+              },
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const MovieHomeBlocPattern(),
+                ),
+              );
+            },
+          ),
+          TextButton(
+            style: TextButton.styleFrom(
+              backgroundColor: Colors.red,
+            ),
+            child: Builder(
+              builder: (context) {
+                return const Text(
+                  'Movie Ui with GetX',
+                  style: TextStyle(fontSize: 28),
+                );
+              },
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const MovieHomeGetX(),
                 ),
               );
             },

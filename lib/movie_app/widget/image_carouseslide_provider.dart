@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:training_newwave/configs/app_constant.dart';
 import 'package:training_newwave/configs/app_styles.dart';
 import 'package:training_newwave/model/popular_entity.dart';
-import 'package:training_newwave/movie_app/movie_detail.dart';
 import 'package:training_newwave/movie_app/movie_detail_provider.dart';
 
 class ItemCarousProvider extends StatelessWidget {

@@ -5,15 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:training_newwave/configs/app_constant.dart';
 import 'package:training_newwave/configs/app_styles.dart';
 import 'package:training_newwave/model/popular_entity.dart';
+import 'package:training_newwave/movie_app/movie_with_getx/movie_detail_getx.dart';
 import 'package:training_newwave/movie_app/movie_with_set_state/movie_detail.dart';
 
-class MyImageView extends StatelessWidget {
+class ItemCarousGetX extends StatelessWidget {
   final Movie movie;
   double width;
   double height;
   bool hide = false;
 
-  MyImageView({
+  ItemCarousGetX({
     Key key,
     this.movie,
     this.height,
@@ -33,7 +34,7 @@ class MyImageView extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => MovieDetail(
+              builder: (context) => MovieDetailGetX(
                 id: movie.id,
               ),
             ),

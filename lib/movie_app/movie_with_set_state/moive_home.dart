@@ -10,7 +10,7 @@ import 'package:training_newwave/movie_app/networks/api_service.dart';
 import 'package:training_newwave/movie_app/widget/indicator.dart';
 import 'package:training_newwave/movie_app/widget/item_category_home.dart';
 
-import 'widget/image_carouseslide.dart';
+import '../widget/image_carouseslide.dart';
 
 class MovieHome extends StatefulWidget {
   const MovieHome({Key key}) : super(key: key);

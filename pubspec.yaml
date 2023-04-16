@@ -28,6 +28,8 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  get:
+  flutter_bloc:
   bloc: ^8.1.0
   bloc_concurrency: ^0.2.0
   equatable: ^2.0.3

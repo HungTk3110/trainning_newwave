@@ -5,15 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:training_newwave/configs/app_constant.dart';
 import 'package:training_newwave/configs/app_styles.dart';
 import 'package:training_newwave/model/popular_entity.dart';
-import 'package:training_newwave/movie_app/movie_with_set_state/movie_detail.dart';
+import 'package:training_newwave/movie_app/movie_with_bloc_pattern/movie_detail_bloc_pattern.dart';
 
-class MyImageView extends StatelessWidget {
+class ItemCarousBlocPattern extends StatelessWidget {
   final Movie movie;
   double width;
   double height;
   bool hide = false;
 
-  MyImageView({
+  ItemCarousBlocPattern({
     Key key,
     this.movie,
     this.height,
@@ -33,7 +33,7 @@ class MyImageView extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => MovieDetail(
+              builder: (context) => MovieDetailBlocPattern(
                 id: movie.id,
               ),
             ),
