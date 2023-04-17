@@ -6,8 +6,8 @@ class Screen2 extends StatefulWidget {
   final String textScreen1;
 
   const Screen2({
-    Key key,
-    this.textScreen1,
+    Key? key,
+    required this.textScreen1,
   }) : super(key: key);
 
   @override

@@ -7,7 +7,7 @@ import 'exercise4_2.dart';
 import 'exercise4_3.dart';
 
 class Exercise4 extends StatelessWidget {
-  const Exercise4({Key key}) : super(key: key);
+  const Exercise4({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class Exercise4 extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => const Exercise4_2()));
+                  context, MaterialPageRoute(builder: (context) =>  const Exercise4_2()));
             },
             child: const Text("Feature 2"),
           ),
@@ -49,7 +49,7 @@ class Exercise4 extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => const Exercise4_4()));
+                  context, MaterialPageRoute(builder: (context) =>  const Exercise4_4()));
             },
             child: const Text("Feature 4"),
           ),

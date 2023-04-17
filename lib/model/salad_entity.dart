@@ -4,9 +4,9 @@ class SaladItem {
   String assetImage;
 
   SaladItem({
-    this.title,
-    this.subtitle,
-    this.assetImage,
+    required this.title,
+    required this.subtitle,
+    required this.assetImage,
   });
 }
 

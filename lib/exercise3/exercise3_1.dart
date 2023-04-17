@@ -6,7 +6,7 @@ class TrainingC3 extends StatefulWidget {
 
   var isThemeLight = true;
 
-  TrainingC3({Key key, this.isThemeLight}) : super(key: key);
+  TrainingC3({Key? key, required this.isThemeLight}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {

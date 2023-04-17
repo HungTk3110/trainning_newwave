@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:training_newwave/configs/app_constant.dart';
 import 'package:training_newwave/configs/app_styles.dart';
 import 'package:training_newwave/model/popular_entity.dart';
-import 'package:training_newwave/movie_app/movie_with_bloc_pattern/movie_detail_bloc_pattern.dart';
+import 'package:training_newwave/movie_app/movie_with_bloc/movie_detail/movie_detail_screen.dart';
 
 class ItemCarousBlocPattern extends StatelessWidget {
   final Movie movie;
@@ -14,11 +14,11 @@ class ItemCarousBlocPattern extends StatelessWidget {
   bool hide = false;
 
   ItemCarousBlocPattern({
-    Key key,
-    this.movie,
-    this.height,
-    this.width,
-    this.hide,
+    Key? key,
+    required this.movie,
+    required this.height,
+    required this.width,
+    required this.hide,
   }) : super(key: key);
 
   @override
@@ -33,7 +33,7 @@ class ItemCarousBlocPattern extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => MovieDetailBlocPattern(
+              builder: (context) => MovieDetailScreen(
                 id: movie.id,
               ),
             ),

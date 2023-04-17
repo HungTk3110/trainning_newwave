@@ -7,10 +7,10 @@ class Screen4 extends StatefulWidget {
   final String textScreen3;
 
   const Screen4({
-    Key key,
-    this.textScreen1,
-    this.textScreen2,
-    this.textScreen3,
+    Key? key,
+    required this.textScreen1,
+    required this.textScreen2,
+    required this.textScreen3,
   }) : super(key: key);
 
   @override

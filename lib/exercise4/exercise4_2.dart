@@ -4,7 +4,7 @@ import 'package:training_newwave/configs/app_constant.dart';
 
 // ignore: camel_case_types
 class Exercise4_2 extends StatelessWidget {
-  const Exercise4_2({Key key}) : super(key: key);
+  const Exercise4_2({Key? key}) : super(key: key);
 
 
   @override

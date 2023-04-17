@@ -7,7 +7,7 @@ import 'widget/video_player.dart';
 
 // ignore: camel_case_types
 class Exercise4_4 extends StatefulWidget {
-  const Exercise4_4({Key key}) : super(key: key);
+  const Exercise4_4({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -17,8 +17,8 @@ class Exercise4_4 extends StatefulWidget {
 
 class _VideoAppState extends State<Exercise4_4> {
 
-  VideoPlayerController _controller;
-  YoutubePlayerController _ytbPlayerController;
+  late VideoPlayerController _controller;
+  late YoutubePlayerController _ytbPlayerController;
 
   @override
   void initState() {
@@ -30,7 +30,7 @@ class _VideoAppState extends State<Exercise4_4> {
       });
     _ytbPlayerController = YoutubePlayerController(
       initialVideoId: YoutubePlayer.convertUrlToId(
-          "https://www.youtube.com/watch?v=YBRkVCRP1Gw"),
+          "https://www.youtube.com/watch?v=YBRkVCRP1Gw").toString(),
       flags: const YoutubePlayerFlags(
         mute: false,
         autoPlay: true,

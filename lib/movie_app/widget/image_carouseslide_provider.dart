@@ -14,11 +14,11 @@ class ItemCarousProvider extends StatelessWidget {
   bool hide = false;
 
   ItemCarousProvider({
-    Key key,
-    this.movie,
-    this.height,
-    this.width,
-    this.hide,
+    Key? key,
+    required this.movie,
+    required this.height,
+    required this.width,
+    required this.hide,
   }) : super(key: key);
 
   @override

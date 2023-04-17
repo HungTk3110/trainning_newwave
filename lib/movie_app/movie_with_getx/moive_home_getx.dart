@@ -13,7 +13,7 @@ import 'package:training_newwave/movie_app/widget/indicator.dart';
 import 'package:training_newwave/movie_app/widget/item_category_home.dart';
 
 class MovieHomeGetX extends StatefulWidget {
-  const MovieHomeGetX({Key key}) : super(key: key);
+  const MovieHomeGetX({Key? key}) : super(key: key);
 
   @override
   State<MovieHomeGetX> createState() => _Movie_HomeState();
@@ -208,7 +208,7 @@ class _Movie_HomeState extends State<MovieHomeGetX> {
   }
 
   Widget slideShowTop({
-    List<Movie> listMovie,
+    required List<Movie> listMovie,
   }) {
     return listMovie.isEmpty
         ? const SizedBox()

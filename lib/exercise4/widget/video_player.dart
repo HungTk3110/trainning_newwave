@@ -5,8 +5,8 @@ import 'package:video_player/video_player.dart';
 class Video_Player extends StatefulWidget {
   VideoPlayerController controller;
   Video_Player({
-    Key key,
-    this.controller,
+    Key? key,
+    required this.controller,
   }) : super(key: key);
 
   @override

@@ -17,8 +17,8 @@ class MovieDetailProvider extends StatefulWidget {
   final int id;
 
   const MovieDetailProvider({
-    Key key,
-    this.id,
+    Key? key,
+    required this.id,
   }) : super(key: key);
 
   @override
@@ -28,7 +28,7 @@ class MovieDetailProvider extends StatefulWidget {
 class _MovieDetailProviderState extends State<MovieDetailProvider> {
   int lengthListCastMore = 0;
   bool isBottomSheetShowing = true;
-  DetailProvider detailProvider;
+  late DetailProvider detailProvider;
 
   @override
   void initState() {
@@ -99,7 +99,7 @@ class _MovieDetailProviderState extends State<MovieDetailProvider> {
                           ? const SizedBox()
                           : Flexible(
                               child: Text(
-                                detailProvider.detailMovie.title,
+                                detailProvider.detailMovie.title ?? "",
                                 textAlign: TextAlign.center,
                                 style: AppTextStyles.whiteS64Bold,
                               ),
@@ -114,7 +114,7 @@ class _MovieDetailProviderState extends State<MovieDetailProvider> {
                           : Text(
                               Provider.of<DetailProvider>(context, listen: false)
                                   .detailMovie
-                                  .tagline,
+                                  .tagline ?? "",
                               style: AppTextStyles.white50S18Medium,
                             );
                     },
@@ -195,7 +195,7 @@ class _MovieDetailProviderState extends State<MovieDetailProvider> {
                               : Text(
                                   Provider.of<DetailProvider>(context, listen: false)
                                       .detailMovie
-                                      .overview,
+                                      .overview ?? "",
                                   maxLines: 3,
                                   textAlign: TextAlign.start,
                                   style: AppTextStyles.white75S12Medium,
@@ -306,7 +306,7 @@ class _MovieDetailProviderState extends State<MovieDetailProvider> {
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
                   child: CachedNetworkImage(
-                    imageUrl: AppConstant.baseImage + detailMovie.posterPath,
+                    imageUrl: AppConstant.baseImage + (detailMovie.posterPath?? ""),
                     fit: BoxFit.fill,
                   ),
                 ),

@@ -22,7 +22,7 @@ class Exercise4_3 extends StatelessWidget {
     )
   ];
 
-  Exercise4_3({Key key}) : super(key: key);
+  Exercise4_3({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

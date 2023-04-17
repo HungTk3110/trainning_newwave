@@ -15,8 +15,8 @@ class MovieDetail extends StatefulWidget {
   final int id;
 
   const MovieDetail({
-    Key key,
-    this.id,
+    Key? key,
+    required this.id,
   }) : super(key: key);
 
   @override
@@ -24,7 +24,7 @@ class MovieDetail extends StatefulWidget {
 }
 
 class _MovieDetailState extends State<MovieDetail> {
-  DetailMovie detailMovie;
+  late DetailMovie detailMovie;
   List<Cast> listCast = [];
   int lengthListCastMore = 0;
   bool isBottomSheetShowing = true;
@@ -88,13 +88,13 @@ class _MovieDetailState extends State<MovieDetail> {
                         ),
                         Flexible(
                           child: Text(
-                            detailMovie.title,
+                            detailMovie.title ?? "",
                             textAlign: TextAlign.center,
                             style: AppTextStyles.whiteS64Bold,
                           ),
                         ),
                         Text(
-                          detailMovie.tagline,
+                          detailMovie.tagline ?? "",
                           style: AppTextStyles.white50S18Medium,
                         ),
                         Padding(
@@ -156,7 +156,7 @@ class _MovieDetailState extends State<MovieDetail> {
                           padding: const EdgeInsets.only(top: 16),
                           child: Center(
                             child: Text(
-                              detailMovie.overview,
+                              detailMovie.overview ?? "",
                               maxLines: 3,
                               textAlign: TextAlign.start,
                               style: AppTextStyles.white75S12Medium,
@@ -271,7 +271,7 @@ class _MovieDetailState extends State<MovieDetail> {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
               child: CachedNetworkImage(
-                imageUrl: AppConstant.baseImage + detailMovie.posterPath,
+                imageUrl: AppConstant.baseImage + (detailMovie.posterPath ?? ""),
                 fit: BoxFit.fill,
               ),
             ),

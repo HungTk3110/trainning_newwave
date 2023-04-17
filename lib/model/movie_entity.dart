@@ -6,11 +6,11 @@ class MovieEntity {
   String point;
 
   MovieEntity({
-    this.name,
-    this.image,
-    this.describe,
-    this.title,
-    this.point,
+    required this.name,
+    required this.image,
+    required this.describe,
+    required this.title,
+    required this.point,
   });
 }
 

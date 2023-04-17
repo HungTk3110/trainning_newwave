@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:training_newwave/exercise5/screen1.dart';
+import 'package:training_newwave/movie_app/movie_with_bloc/movie_home/movie_home_screen.dart';
 import 'package:training_newwave/movie_app/movie_with_getx/moive_home_getx.dart';
 import 'package:training_newwave/movie_app/movie_with_set_state/moive_home.dart';
 import 'package:training_newwave/movie_app/provider/detail_provider.dart';
 import 'package:training_newwave/movie_app/provider/home_provider.dart';
-import 'package:training_newwave/movie_app/movie_with_bloc_pattern/moive_home_bloc_pattern.dart';
 
 import 'exercise3/exercise3_1.dart';
 import 'exercise4/exercise4.dart';
@@ -16,7 +16,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key key}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
 }
 
 class HomeMyApp extends StatefulWidget {
-  const HomeMyApp({Key key}) : super(key: key);
+  const HomeMyApp({Key? key}) : super(key: key);
 
   @override
   State<HomeMyApp> createState() => _HomeMyAppState();
@@ -181,7 +181,7 @@ class _HomeMyAppState extends State<HomeMyApp> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const MovieHomeBlocPattern(),
+                  builder: (context) => const MovieHomeScreen(),
                 ),
               );
             },

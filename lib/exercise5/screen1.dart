@@ -3,7 +3,7 @@ import 'package:training_newwave/configs/app_constant.dart';
 import 'package:training_newwave/exercise5/screen2.dart';
 
 class Screen1 extends StatefulWidget {
-  const Screen1({Key key}) : super(key: key);
+  const Screen1({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {

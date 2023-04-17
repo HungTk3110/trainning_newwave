@@ -6,8 +6,8 @@ class Youtube_Player extends StatefulWidget {
   YoutubePlayerController ytbPlayerController;
 
   Youtube_Player({
-    Key key,
-    this.ytbPlayerController,
+    Key? key,
+    required this.ytbPlayerController,
   }) : super(key: key);
 
   @override

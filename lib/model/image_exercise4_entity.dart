@@ -4,7 +4,7 @@ class Image_Exercise4_Entity {
   String assetImage;
 
   Image_Exercise4_Entity({
-    this.title,
-    this.assetImage,
+    required this.title,
+    required this.assetImage,
   });
 }

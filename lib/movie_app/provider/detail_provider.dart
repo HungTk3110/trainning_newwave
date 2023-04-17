@@ -8,7 +8,7 @@ class DetailProvider extends ChangeNotifier{
 
   LoadingStatus loadDetailStatus = LoadingStatus.init;
   LoadingStatus loadCastStatus = LoadingStatus.init;
-  DetailMovie detailMovie;
+  late DetailMovie detailMovie;
   List<Cast> listCast = [];
 
   Future<void> getDetailMovie(int id) async {

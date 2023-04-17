@@ -18,7 +18,7 @@ class Exercise4_1 extends StatelessWidget {
     )
   ];
 
-  Exercise4_1({Key key}) : super(key: key);
+  Exercise4_1({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

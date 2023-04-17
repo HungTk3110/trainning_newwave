@@ -9,8 +9,8 @@ class ItemCategoryHome extends StatelessWidget {
   final MovieCollection movieCollection;
 
   const ItemCategoryHome({
-    Key key,
-    this.movieCollection,
+    Key? key,
+    required this.movieCollection,
   }) : super(key: key);
 
   @override

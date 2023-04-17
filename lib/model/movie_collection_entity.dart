@@ -3,8 +3,8 @@ class MovieCollection {
   String assetImage;
 
   MovieCollection({
-    this.title,
-    this.assetImage,
+    required this.title,
+    required this.assetImage,
   });
 }
 

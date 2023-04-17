@@ -13,7 +13,7 @@ import 'package:training_newwave/movie_app/widget/item_category_home.dart';
 import '../widget/image_carouseslide.dart';
 
 class MovieHome extends StatefulWidget {
-  const MovieHome({Key key}) : super(key: key);
+  const MovieHome({Key? key}) : super(key: key);
 
   @override
   State<MovieHome> createState() => _Movie_HomeState();
@@ -206,7 +206,7 @@ class _Movie_HomeState extends State<MovieHome> {
   }
 
   Widget slideShowTop({
-    List<Movie> listMovie,
+    required List<Movie> listMovie,
   }) {
     return listMovie.isEmpty
         ? const SizedBox()
