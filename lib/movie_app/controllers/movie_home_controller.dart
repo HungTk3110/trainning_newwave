@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:training_newwave/model/popular_entity.dart';
 import 'package:training_newwave/movie_app/networks/api_service.dart';
 
-class MovieController extends GetxController {
+class MovieHomeController extends GetxController {
   var listMovies = <Movie>[].obs;
   var loading = true.obs;
 

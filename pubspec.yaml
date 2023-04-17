@@ -42,6 +42,10 @@ dependencies:
   youtube_player_flutter: ^8.1.2
   provider: ^6.0.5
   shared_preferences: ^2.1.0
+  camera:
+  path_provider:
+  path:
+  image_picker: ^0.8.7+3
 
 
   flutter:

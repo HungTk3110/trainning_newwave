@@ -42,7 +42,6 @@ class _Movie_HomeState extends State<MovieHomeScreen> {
       body: BlocProvider(
         create: (context) => _cubit,
         child: BlocBuilder<MovieHomeCubit, MovieHomeState>(
-          bloc: _cubit,
           buildWhen: (previous, current) => previous.loadingStatus != current.loadingStatus,
           builder: (context, state) {
             if (state.loadingStatus == LoadingStatus.loading) {

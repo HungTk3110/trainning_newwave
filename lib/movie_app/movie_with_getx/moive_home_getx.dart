@@ -7,7 +7,7 @@ import 'package:training_newwave/configs/app_styles.dart';
 import 'package:training_newwave/configs/app_vectors.dart';
 import 'package:training_newwave/model/movie_collection_entity.dart';
 import 'package:training_newwave/model/popular_entity.dart';
-import 'package:training_newwave/movie_app/controllers/movie_controller.dart';
+import 'package:training_newwave/movie_app/controllers/movie_home_controller.dart';
 import 'package:training_newwave/movie_app/widget/image_carouseslide_getx.dart';
 import 'package:training_newwave/movie_app/widget/indicator.dart';
 import 'package:training_newwave/movie_app/widget/item_category_home.dart';
@@ -50,8 +50,8 @@ class _Movie_HomeState extends State<MovieHomeGetX> {
         ),
         child: SingleChildScrollView(
           child: SafeArea(
-            child: GetX<MovieController>(
-                init: MovieController(),
+            child: GetX<MovieHomeController>(
+                init: MovieHomeController(),
                 builder: (controller) {
                   return controller.loading.value
                       ? _buildLoading()
