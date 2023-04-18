@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:training_newwave/exercise5/screen1.dart';
-import 'package:training_newwave/exercise7/take_picture.dart';
 import 'package:training_newwave/movie_app/movie_with_bloc/movie_home/movie_home_screen.dart';
 import 'package:training_newwave/movie_app/movie_with_getx/moive_home_getx.dart';
 import 'package:training_newwave/movie_app/movie_with_set_state/moive_home.dart';
 import 'package:training_newwave/movie_app/provider/detail_provider.dart';
 import 'package:training_newwave/movie_app/provider/home_provider.dart';
+import 'package:training_newwave/note_app/ui/home_notes_screen.dart';
 
 import 'exercise3/exercise3_1.dart';
 import 'exercise4/exercise4.dart';
@@ -208,27 +208,27 @@ class _HomeMyAppState extends State<HomeMyApp> {
               );
             },
           ),
-          // TextButton(
-          //   style: TextButton.styleFrom(
-          //     backgroundColor: Colors.red,
-          //   ),
-          //   child: Builder(
-          //     builder: (context) {
-          //       return const Text(
-          //         'Exercise 7',
-          //         style: TextStyle(fontSize: 28),
-          //       );
-          //     },
-          //   ),
-          //   onPressed: () {
-          //     Navigator.push(
-          //       context,
-          //       MaterialPageRoute(
-          //         builder: (context) => const TakePictureScreen(camera: ,),
-          //       ),
-          //     );
-          //   },
-          // ),
+          TextButton(
+            style: TextButton.styleFrom(
+              backgroundColor: Colors.red,
+            ),
+            child: Builder(
+              builder: (context) {
+                return const Text(
+                  'NotesApp',
+                  style: TextStyle(fontSize: 28),
+                );
+              },
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const HomeNoteScreen(),
+                ),
+              );
+            },
+          ),
         ],
       ),
     );

@@ -7,4 +7,11 @@ class AppVectors{
   static const String icImdb = "assets/svg/imdb.svg";
   static const String icShare = "assets/svg/share.svg";
   static const String icFavorite =  "assets/svg/Favorite.svg";
+  static const String icSearchNote = 'assets/svg/search2.svg';
+  static const String icInfor = 'assets/svg/infor.svg';
+  static const String icNoteNull = 'assets/svg/rafiki.svg';
+  static const String icNoteBack = 'assets/svg/back_notes.svg';
+  static const String icNoteSave = 'assets/svg/save.svg';
+  static const String icNoteVisibility = 'assets/svg/visibility.svg';
+  static const String icNoteWarning = 'assets/svg/warning_save.svg';
 }

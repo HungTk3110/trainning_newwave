@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:training_newwave/configs/app_colors.dart';
 
 class AppTextStyles {
   static const TextStyle white = TextStyle(color: Colors.white);
@@ -37,6 +38,11 @@ class AppTextStyles {
     color: Colors.white,
   );
 
+  static TextStyle altoS15Medium = white.copyWith(
+    fontSize: 15,
+    color: AppColors.alto,
+  );
+
   static TextStyle whiteS12bold = white.copyWith(
     fontSize: 12,
     color: Colors.white,
@@ -68,6 +74,52 @@ class AppTextStyles {
     color: Colors.white.withOpacity(0.5),
     fontWeight: FontWeight.bold,
   );
+
+  static TextStyle whiteS20Medium = white.copyWith(
+    fontSize: 20,
+    color: Colors.white,
+  );
+
+  static TextStyle altoS23Medium = white.copyWith(
+    fontSize: 23,
+    color: AppColors.alto,
+  );
+
+
+  static TextStyle whiteS23Medium = white.copyWith(
+    fontSize: 23,
+    color: AppColors.white,
+  );
+
+  static TextStyle dustyGrayS23Medium = white.copyWith(
+    fontSize: 23,
+    color: AppColors.dustyGray,
+  );
+
+
+  static TextStyle blackS12Medium = white.copyWith(
+    fontSize: 25,
+    color: Colors.black,
+  );
+
+
+  static TextStyle whiteS43Medium = white.copyWith(
+    fontSize: 43,
+    color: Colors.white,
+  );
+
+
+  static TextStyle dustyGrayS48Medium = white.copyWith(
+    fontSize: 48,
+    color: AppColors.dustyGray,
+  );
+
+
+  static TextStyle whiteS48Medium = white.copyWith(
+    fontSize: 48,
+    color: AppColors.white,
+  );
+
 
   static TextStyle whiteS64Bold = white.copyWith(
     fontSize: 64,

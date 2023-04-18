@@ -46,6 +46,7 @@ dependencies:
   path_provider:
   path:
   image_picker: ^0.8.7+3
+  sqflite: ^2.2.6
 
 
   flutter:

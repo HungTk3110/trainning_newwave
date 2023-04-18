@@ -13,4 +13,9 @@ class AppColors{
   static Color blueMarguerite30 = const Color(0xff826EC8).withOpacity(0.3);
   static Color coldPurple30 = const Color(0xffA6A1E0).withOpacity(0.3);
   static Color ripeLemon = const Color(0xffF5C518);
+  static Color mineShaft = const Color(0xff3B3B3B);
+  static Color mineShaftApprox = const Color(0xff252525);
+  static Color alto = const Color(0xffCFCFCF);
+  static Color dustyGray = const Color(0xff9A9A9A);
+  static Color jungleGreen = const Color(0xff30BE71);
 }
