@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:training_newwave/configs/app_colors.dart';
 import 'package:training_newwave/configs/app_styles.dart';
 import 'package:training_newwave/configs/app_vectors.dart';
+import 'package:training_newwave/note_app/bloc/note_cubit.dart';
 import 'package:training_newwave/note_app/database/database_helper.dart';
 
 class CreateNotesScreen extends StatefulWidget {
@@ -17,6 +18,13 @@ class CreateNotesScreen extends StatefulWidget {
 class _CreateNotesScreenState extends State<CreateNotesScreen> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
+  late final NoteCubit _noteCubit;
+
+  @override
+  void initState() {
+    super.initState();
+    _noteCubit = NoteCubit();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,50 +38,52 @@ class _CreateNotesScreenState extends State<CreateNotesScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               appBarCraeteNote(),
-              SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        left: 24,
-                        right: 24,
-                        top: 40,
-                      ),
-                      child: TextField(
-                        controller: _titleController,
-                        textCapitalization: TextCapitalization.sentences,
-                        keyboardType: TextInputType.multiline,
-                        maxLines: null,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Title',
-                          hintStyle: AppTextStyles.dustyGrayS48Medium,
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 24,
+                          right: 24,
+                          top: 40,
                         ),
-                        style: AppTextStyles.whiteS48Medium,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        left: 24,
-                        right: 24,
-                        top: 40,
-                      ),
-                      child: TextField(
-                        controller: _descriptionController,
-                        textCapitalization: TextCapitalization.sentences,
-                        keyboardType: TextInputType.multiline,
-                        maxLines: null,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Type something...',
-                          hintStyle: AppTextStyles.dustyGrayS23Medium,
-                          fillColor: AppColors.dustyGray,
+                        child: TextField(
+                          controller: _titleController,
+                          textCapitalization: TextCapitalization.sentences,
+                          keyboardType: TextInputType.multiline,
+                          maxLines: null,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'Title',
+                            hintStyle: AppTextStyles.dustyGrayS48Medium,
+                          ),
+                          style: AppTextStyles.whiteS48Medium,
                         ),
-                        style: AppTextStyles.whiteS23Medium,
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 24,
+                          right: 24,
+                          top: 40,
+                        ),
+                        child: TextField(
+                          controller: _descriptionController,
+                          textCapitalization: TextCapitalization.sentences,
+                          keyboardType: TextInputType.multiline,
+                          maxLines: null,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'Type something...',
+                            hintStyle: AppTextStyles.dustyGrayS23Medium,
+                            fillColor: AppColors.dustyGray,
+                          ),
+                          style: AppTextStyles.whiteS23Medium,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -85,7 +95,10 @@ class _CreateNotesScreenState extends State<CreateNotesScreen> {
 
   Widget appBarCraeteNote() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 25),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 25,
+        vertical: 18,
+      ),
       child: Row(
         children: [
           Container(
@@ -183,7 +196,8 @@ class _CreateNotesScreenState extends State<CreateNotesScreen> {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: Text('Discard', style: AppTextStyles.whiteS18Medium),
+                      child:
+                          Text('Discard', style: AppTextStyles.whiteS18Medium),
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -191,6 +205,7 @@ class _CreateNotesScreenState extends State<CreateNotesScreen> {
                       ),
                       onPressed: () {
                         addItem();
+                        Navigator.pop(context);
                         Navigator.pop(context);
                       },
                       child: Text('Save', style: AppTextStyles.whiteS18Medium),
@@ -213,7 +228,7 @@ class _CreateNotesScreenState extends State<CreateNotesScreen> {
       Colors.cyan.value,
     ];
     final random = Random();
-    await DatabaseHelper.createItem(
+    await _noteCubit.insertNote(
       _titleController.text,
       _descriptionController.text,
       listColor[random.nextInt(listColor.length)],
@@ -222,6 +237,7 @@ class _CreateNotesScreenState extends State<CreateNotesScreen> {
 
   // Update an existing data
   Future<void> updateItem(int id) async {
-    await DatabaseHelper.updateItem(id, _titleController.text, _descriptionController.text);
+    await DatabaseHelper.updateItem(
+        id, _titleController.text, _descriptionController.text);
   }
 }
