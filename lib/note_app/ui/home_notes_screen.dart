@@ -33,8 +33,7 @@ class _HomeNoteScreenState extends State<HomeNoteScreen> {
         create: (context) => _noteCubit,
         child: BlocBuilder<NoteCubit, NoteSate>(
           bloc: _noteCubit,
-          buildWhen: (previous, current) =>
-              previous.loadingStatus != current.loadingStatus,
+          buildWhen: (previous, current) => previous.loadingStatus != current.loadingStatus,
           builder: (context, state) {
             return Container(
               width: double.infinity,
@@ -71,67 +70,23 @@ class _HomeNoteScreenState extends State<HomeNoteScreen> {
                                   child: ListView.separated(
                                     itemCount: state.listNote?.length ?? 0,
                                     scrollDirection: Axis.vertical,
-                                    physics:
-                                        const AlwaysScrollableScrollPhysics(),
-                                    separatorBuilder:
-                                        (BuildContext context, int index) {
+                                    physics: const AlwaysScrollableScrollPhysics(),
+                                    separatorBuilder: (BuildContext context, int index) {
                                       return const SizedBox(
                                         height: 23,
                                       );
                                     },
                                     itemBuilder: (context, index) {
-                                      int color =
-                                          state.listNote?[index]['color'];
+                                      int color = int.parse(state.listNote?[index]['color']);
                                       return Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 25),
+                                        padding: const EdgeInsets.symmetric(horizontal: 25),
                                         child: Dismissible(
                                           key: UniqueKey(),
-                                          confirmDismiss: (DismissDirection
-                                              direction) async {
-                                            return await showDialog(
-                                              context: context,
-                                              builder: (BuildContext context) {
-                                                return AlertDialog(
-                                                  content: const Text(
-                                                    "Are you sure you wish to delete this note?",
-                                                    style:
-                                                        TextStyle(fontSize: 19),
-                                                  ),
-                                                  actions: <Widget>[
-                                                    MaterialButton(
-                                                      onPressed: () => {
-                                                        _noteCubit.deleteNote(
-                                                            state.listNote?[
-                                                                index]['id']),
-                                                        Navigator.of(context)
-                                                            .pop(true)
-                                                      },
-                                                      child: const Text(
-                                                        "DELETE",
-                                                        style: TextStyle(
-                                                            color:
-                                                                Colors.black),
-                                                      ),
-                                                    ),
-                                                    MaterialButton(
-                                                      onPressed: () =>
-                                                          Navigator.of(context)
-                                                              .pop(false),
-                                                      child: const Text(
-                                                        "CANCEL",
-                                                        style: TextStyle(
-                                                            color:
-                                                                Colors.black),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                );
-                                              },
-                                            );
+                                          confirmDismiss: (_) async {
+                                            return await openDialogDelete(context: context,id:
+                                            state.listNote?[index]['id']);
                                           },
-                                          direction:
-                                              DismissDirection.horizontal,
+                                          direction: DismissDirection.horizontal,
                                           background: Container(
                                             margin: const EdgeInsets.only(left: 25),
                                             decoration: BoxDecoration(
@@ -150,14 +105,12 @@ class _HomeNoteScreenState extends State<HomeNoteScreen> {
                                               vertical: 25,
                                             ),
                                             decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
+                                              borderRadius: BorderRadius.circular(10),
                                               color: Color(color),
                                             ),
                                             child: Text(
                                               state.listNote?[index]["title"],
-                                              style:
-                                                  AppTextStyles.blackS12Medium,
+                                              style: AppTextStyles.blackS12Medium,
                                             ),
                                           ),
                                         ),
@@ -235,6 +188,69 @@ class _HomeNoteScreenState extends State<HomeNoteScreen> {
             ),
           )
         ],
+      ),
+    );
+  }
+
+  Future openDialogDelete({required BuildContext context, required int id}) {
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        backgroundColor: AppColors.mineShaftApprox,
+        content: Container(
+          width: 330,
+          height: 236,
+          padding: const EdgeInsets.symmetric(
+            horizontal: 28,
+            vertical: 38,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                AppVectors.icNoteWarning,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 25),
+                child: Text(
+                  "Delete this note?",
+                  style: AppTextStyles.altoS23Medium,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 24),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red, // foreground
+                      ),
+                      onPressed: () {
+                        _noteCubit.deleteNote(id);
+                        Navigator.pop(context);
+                      },
+                      child: Text('Delete', style: AppTextStyles.whiteS18Medium),
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.jungleGreen, // foreground
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text('Cancel', style: AppTextStyles.whiteS18Medium),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
