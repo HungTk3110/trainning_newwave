@@ -1,14 +1,22 @@
-class Note {
-  int id;
-  String title;
-  String describe;
-  int color;
+class NoteEntity {
+  int? id;
+  String? title;
+  String? describe;
+  int? color;
 
-  Note.fromDbMap(Map<String, dynamic> map)
-      : id = map['id'],
-        title = map['title'],
-        describe = map['describe'],
-        color = map['color'];
+  NoteEntity({
+    this.id,
+    this.title,
+    this.color,
+    this.describe,
+  });
+
+  NoteEntity.fromDbMap(dynamic obj) {
+    id = obj['id'];
+    title = obj['title'];
+    describe = obj['describe'];
+    color = obj['color'];
+  }
 
   Map<String, dynamic> toDbMap() {
     var map = <String, dynamic>{};

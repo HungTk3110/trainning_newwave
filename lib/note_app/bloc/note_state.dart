@@ -2,7 +2,7 @@ part of 'note_cubit.dart';
 
 class NoteSate extends Equatable {
   final LoadingStatus loadingStatus;
-  final List<Map<String, dynamic>>? listNote;
+  final List<NoteEntity>? listNote;
 
   const NoteSate({
     this.loadingStatus = LoadingStatus.init,
@@ -17,7 +17,7 @@ class NoteSate extends Equatable {
 
   NoteSate copyWith({
     LoadingStatus? loadingStatus,
-    List<Map<String, dynamic>>? listNote,
+    List<NoteEntity>? listNote,
   }) {
     return NoteSate(
       loadingStatus: loadingStatus ?? this.loadingStatus,

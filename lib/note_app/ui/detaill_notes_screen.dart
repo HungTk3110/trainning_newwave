@@ -3,25 +3,34 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:training_newwave/configs/app_colors.dart';
 import 'package:training_newwave/configs/app_styles.dart';
 import 'package:training_newwave/configs/app_vectors.dart';
-import 'package:training_newwave/note_app/bloc/note_cubit.dart';
+import 'package:training_newwave/model/note_entity.dart';
 import 'package:training_newwave/note_app/database/note_database_helper.dart';
 
 // ignore: must_be_immutable
 class DetailNotesScreen extends StatefulWidget {
   int id;
 
-  DetailNotesScreen({Key? key,required this.id,}) : super(key: key);
+  DetailNotesScreen({
+    Key? key,
+    required this.id,
+  }) : super(key: key);
 
   @override
   State<DetailNotesScreen> createState() => _DetailNotesScreenState();
 }
 
 class _DetailNotesScreenState extends State<DetailNotesScreen> {
-  dynamic data;
+  final dbHelper = NoteDatabaseHelper.instance;
+  late NoteEntity noteEntity;
 
   @override
   void initState() {
     super.initState();
+    _refreshData();
+  }
+
+  void _refreshData() async {
+    // noteEntity = dbHelper.
   }
 
   @override
@@ -48,7 +57,7 @@ class _DetailNotesScreenState extends State<DetailNotesScreen> {
                           top: 40,
                         ),
                         child: Text(
-                          "",
+                          widget.id.toString(),
                           style: AppTextStyles.whiteS48Medium,
                         ),
                       ),

@@ -145,7 +145,9 @@ class _CreateNotesScreenState extends State<CreateNotesScreen> {
             padding: const EdgeInsets.all(13),
             margin: const EdgeInsets.only(left: 22),
             child: InkWell(
-              onTap: () => {openDialogSave(context)},
+              onTap: () => {
+                openDialogSave(context),
+              },
               child: SvgPicture.asset(
                 AppVectors.icNoteSave,
               ),
@@ -196,8 +198,7 @@ class _CreateNotesScreenState extends State<CreateNotesScreen> {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child:
-                          Text('Discard', style: AppTextStyles.whiteS18Medium),
+                      child: Text('Discard', style: AppTextStyles.whiteS18Medium),
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -206,7 +207,7 @@ class _CreateNotesScreenState extends State<CreateNotesScreen> {
                       onPressed: () {
                         addItem();
                         Navigator.pop(context);
-                        Navigator.pop(context);
+                        Navigator.of(context).pop(true);
                       },
                       child: Text('Save', style: AppTextStyles.whiteS18Medium),
                     )
@@ -228,7 +229,7 @@ class _CreateNotesScreenState extends State<CreateNotesScreen> {
       Colors.cyan.value,
     ];
     final random = Random();
-    await _noteCubit.insertNote(
+    await _noteCubit.addNote(
       _titleController.text,
       _descriptionController.text,
       listColor[random.nextInt(listColor.length)],
@@ -237,7 +238,6 @@ class _CreateNotesScreenState extends State<CreateNotesScreen> {
 
   // Update an existing data
   Future<void> updateItem(int id) async {
-    await DatabaseHelper.updateItem(
-        id, _titleController.text, _descriptionController.text);
+    await DatabaseHelper.updateItem(id, _titleController.text, _descriptionController.text);
   }
 }

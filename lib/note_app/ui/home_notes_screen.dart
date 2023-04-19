@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -8,6 +9,7 @@ import 'package:training_newwave/configs/app_vectors.dart';
 import 'package:training_newwave/model/enums/loading_status.dart';
 import 'package:training_newwave/note_app/bloc/note_cubit.dart';
 import 'package:training_newwave/note_app/ui/create_notes_screen.dart';
+import 'package:training_newwave/note_app/ui/detaill_notes_screen.dart';
 
 class HomeNoteScreen extends StatefulWidget {
   const HomeNoteScreen({Key? key}) : super(key: key);
@@ -32,9 +34,11 @@ class _HomeNoteScreenState extends State<HomeNoteScreen> {
       body: BlocProvider(
         create: (context) => _noteCubit,
         child: BlocBuilder<NoteCubit, NoteSate>(
-          bloc: _noteCubit,
           buildWhen: (previous, current) => previous.loadingStatus != current.loadingStatus,
           builder: (context, state) {
+            if (kDebugMode) {
+              print(state.listNote?.length.toString());
+            }
             return Container(
               width: double.infinity,
               height: double.infinity,
@@ -77,14 +81,15 @@ class _HomeNoteScreenState extends State<HomeNoteScreen> {
                                       );
                                     },
                                     itemBuilder: (context, index) {
-                                      int color = int.parse(state.listNote?[index]['color']);
+                                      int color = state.listNote?[index].color ?? 0;
                                       return Padding(
                                         padding: const EdgeInsets.symmetric(horizontal: 25),
                                         child: Dismissible(
                                           key: UniqueKey(),
                                           confirmDismiss: (_) async {
-                                            return await openDialogDelete(context: context,id:
-                                            state.listNote?[index]['id']);
+                                            return await openDialogDelete(
+                                                context: context,
+                                                id: state.listNote?[index].id ?? 0);
                                           },
                                           direction: DismissDirection.horizontal,
                                           background: Container(
@@ -98,19 +103,30 @@ class _HomeNoteScreenState extends State<HomeNoteScreen> {
                                               color: Colors.white,
                                             ),
                                           ),
-                                          child: Container(
-                                            width: double.infinity,
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 45,
-                                              vertical: 25,
-                                            ),
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(10),
-                                              color: Color(color),
-                                            ),
-                                            child: Text(
-                                              state.listNote?[index]["title"],
-                                              style: AppTextStyles.blackS12Medium,
+                                          child: InkWell(
+                                            onTap: () => {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) => DetailNotesScreen(
+                                                      id: state.listNote?[index].id ?? 0),
+                                                ),
+                                              ),
+                                            },
+                                            child: Container(
+                                              width: double.infinity,
+                                              padding: const EdgeInsets.symmetric(
+                                                horizontal: 45,
+                                                vertical: 25,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(10),
+                                                color: Color(color),
+                                              ),
+                                              child: Text(
+                                                state.listNote?[index].title ?? "",
+                                                style: AppTextStyles.blackS12Medium,
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -131,13 +147,17 @@ class _HomeNoteScreenState extends State<HomeNoteScreen> {
           bottom: 30,
         ),
         child: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(
+          onPressed: () async {
+            final result = await Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => const CreateNotesScreen(),
               ),
             );
+
+            if (result is bool) {
+              _noteCubit.getAllNote();
+            }
           },
           backgroundColor: AppColors.mineShaftApprox,
           child: const Icon(Icons.add_rounded),
