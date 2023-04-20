@@ -99,7 +99,7 @@ class NoteDatabaseHelper {
     List<NoteEntity> listNote = [];
     try {
       Database db = await instance.database;
-      var data = await db.query(table, where: '$columnTitle = ?', whereArgs: [str]);
+      var data = await db.rawQuery("SELECT * FROM $table WHERE $columnTitle LIKE '%$str%'");
       for (int i = 0; i < data.length; i++) {
         final note = NoteEntity.fromDbMap(data[i]);
         listNote.add(note);

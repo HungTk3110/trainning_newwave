@@ -98,48 +98,48 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
       ),
       child: Row(
         children: [
-          Container(
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-              color: AppColors.mineShaft,
-              borderRadius: BorderRadius.circular(15),
-            ),
-            padding: const EdgeInsets.symmetric(
-              horizontal: 18,
-              vertical: 13,
-            ),
-            child: InkWell(
-              onTap: () => {
-                Navigator.pop(context,true),
-              },
+          InkWell(
+            onTap: () => {
+              Navigator.pop(context,true),
+            },
+            child: Container(
+              width: 50,
+              height: 50,
+              decoration: BoxDecoration(
+                color: AppColors.mineShaft,
+                borderRadius: BorderRadius.circular(15),
+              ),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 18,
+                vertical: 13,
+              ),
               child: SvgPicture.asset(
                 AppVectors.icNoteBack,
               ),
             ),
           ),
           const Spacer(),
-          Container(
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-              color: AppColors.mineShaft,
-              borderRadius: BorderRadius.circular(15),
-            ),
-            padding: const EdgeInsets.all(13),
-            child: InkWell(
-              onTap: () async {
-                final result = await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => NotesCreateScreen(id: id),
-                  ),
-                );
+          InkWell(
+            onTap: () async {
+              final result = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NotesCreateScreen(id: id),
+                ),
+              );
 
-                if (result == true) {
-                  _detailCubit.getNote();
-                }
-              },
+              if (result == true) {
+                _detailCubit.getNote();
+              }
+            },
+            child: Container(
+              width: 50,
+              height: 50,
+              decoration: BoxDecoration(
+                color: AppColors.mineShaft,
+                borderRadius: BorderRadius.circular(15),
+              ),
+              padding: const EdgeInsets.all(13),
               child: SvgPicture.asset(
                 AppVectors.icNoteEdit,
               ),

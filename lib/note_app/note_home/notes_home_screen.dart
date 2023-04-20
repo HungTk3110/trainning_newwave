@@ -35,7 +35,8 @@ class _NoteHomeScreenState extends State<NoteHomeScreen> {
       body: BlocProvider(
         create: (context) => _noteCubit,
         child: BlocBuilder<NoteHomeCubit, NoteHomeSate>(
-          buildWhen: (previous, current) => previous.statusLoadAll != current.statusLoadAll,
+          buildWhen: (previous, current) =>
+              previous.statusLoadAll != current.statusLoadAll,
           builder: (context, state) {
             if (kDebugMode) {
               print(state.listNote?.length.toString());
@@ -55,8 +56,11 @@ class _NoteHomeScreenState extends State<NoteHomeScreen> {
                                 const Spacer(
                                   flex: 1,
                                 ),
-                                Image.asset(
-                                  AppImages.imgNoteNull,
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 32),
+                                  child: Image.asset(
+                                    AppImages.imgNoteNull,
+                                  ),
                                 ),
                                 Text(
                                   "Create your first note !",
@@ -77,25 +81,33 @@ class _NoteHomeScreenState extends State<NoteHomeScreen> {
                                     child: ListView.separated(
                                       itemCount: state.listNote?.length ?? 0,
                                       scrollDirection: Axis.vertical,
-                                      physics: const AlwaysScrollableScrollPhysics(),
-                                      separatorBuilder: (BuildContext context, int index) {
+                                      physics:
+                                          const AlwaysScrollableScrollPhysics(),
+                                      separatorBuilder:
+                                          (BuildContext context, int index) {
                                         return const SizedBox(
                                           height: 23,
                                         );
                                       },
                                       itemBuilder: (context, index) {
-                                        int color = state.listNote?[index].color ?? 0;
+                                        int color =
+                                            state.listNote?[index].color ?? 0;
                                         return Padding(
-                                          padding: const EdgeInsets.symmetric(horizontal: 25),
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 25),
                                           child: Dismissible(
-                                            onDismissed: (direction){
-                                              _noteCubit.deleteNote(state.listNote?[index].id ?? 0);
+                                            onDismissed: (direction) {
+                                              _noteCubit.deleteNote(
+                                                  state.listNote?[index].id ??
+                                                      0);
                                             },
                                             key: UniqueKey(),
-                                            direction: DismissDirection.horizontal,
+                                            direction:
+                                                DismissDirection.horizontal,
                                             background: Container(
                                               decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(10),
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
                                                 color: Colors.red,
                                               ),
                                               child: const Icon(
@@ -104,28 +116,42 @@ class _NoteHomeScreenState extends State<NoteHomeScreen> {
                                               ),
                                             ),
                                             child: InkWell(
-                                              onTap: () => {
-                                                Navigator.push(
+                                              onTap: () async {
+                                                final result =
+                                                    await Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
-                                                    builder: (context) => NoteDetailScreen(
-                                                        id: state.listNote?[index].id ?? 0),
+                                                    builder: (context) =>
+                                                        NoteDetailScreen(
+                                                            id: state
+                                                                    .listNote?[
+                                                                        index]
+                                                                    .id ??
+                                                                0),
                                                   ),
-                                                ),
+                                                );
+                                                if (result == true) {
+                                                  _noteCubit.getAllNote();
+                                                }
                                               },
                                               child: Container(
                                                 width: double.infinity,
-                                                padding: const EdgeInsets.symmetric(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
                                                   horizontal: 45,
                                                   vertical: 25,
                                                 ),
                                                 decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(10),
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
                                                   color: Color(color),
                                                 ),
                                                 child: Text(
-                                                  state.listNote?[index].title ?? "",
-                                                  style: AppTextStyles.blackS12Medium,
+                                                  state.listNote?[index]
+                                                          .title ??
+                                                      "",
+                                                  style: AppTextStyles
+                                                      .blackS12Medium,
                                                 ),
                                               ),
                                             ),
@@ -195,7 +221,7 @@ class _NoteHomeScreenState extends State<NoteHomeScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => NoteSearchScreen(),
+                    builder: (context) => const NoteSearchScreen(),
                   ),
                 );
               },
@@ -224,7 +250,6 @@ class _NoteHomeScreenState extends State<NoteHomeScreen> {
       ),
     );
   }
-
 
   Future openDialog(BuildContext context) {
     return showDialog(

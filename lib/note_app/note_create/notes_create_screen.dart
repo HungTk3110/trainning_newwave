@@ -36,7 +36,8 @@ class _NotesCreateScreenState extends State<NotesCreateScreen> {
       body: BlocProvider(
         create: (context) => _noteCubit,
         child: BlocBuilder<NoteCreateCubit, NoteCreateSate>(
-          buildWhen: (previous, current) => previous.statusGet != current.statusGet,
+          buildWhen: (previous, current) =>
+              previous.statusGet != current.statusGet,
           builder: (context, state) {
             if (widget.id != null) {
               _titleController.text = state.note?.title ?? "";
@@ -65,9 +66,10 @@ class _NotesCreateScreenState extends State<NotesCreateScreen> {
                             children: [
                               TextField(
                                 controller: _titleController,
-                                textCapitalization: TextCapitalization.sentences,
                                 keyboardType: TextInputType.multiline,
                                 maxLines: null,
+                                autofocus: true,
+                                textInputAction: TextInputAction.done,
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
                                   hintText: 'Title',
@@ -79,9 +81,9 @@ class _NotesCreateScreenState extends State<NotesCreateScreen> {
                                 padding: const EdgeInsets.only(top: 36),
                                 child: TextField(
                                   controller: _descriptionController,
-                                  textCapitalization: TextCapitalization.sentences,
                                   keyboardType: TextInputType.multiline,
                                   maxLines: null,
+                                  textInputAction: TextInputAction.done,
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
                                     hintText: 'Type something...',
@@ -116,19 +118,19 @@ class _NotesCreateScreenState extends State<NotesCreateScreen> {
       ),
       child: Row(
         children: [
-          Container(
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-              color: AppColors.mineShaft,
-              borderRadius: BorderRadius.circular(15),
-            ),
-            padding: const EdgeInsets.symmetric(
-              horizontal: 18,
-              vertical: 13,
-            ),
-            child: InkWell(
-              onTap: () => {Navigator.pop(context, true)},
+          InkWell(
+            onTap: () => {Navigator.pop(context, true)},
+            child: Container(
+              width: 50,
+              height: 50,
+              decoration: BoxDecoration(
+                color: AppColors.mineShaft,
+                borderRadius: BorderRadius.circular(15),
+              ),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 18,
+                vertical: 13,
+              ),
               child: SvgPicture.asset(
                 AppVectors.icNoteBack,
               ),
@@ -150,19 +152,19 @@ class _NotesCreateScreenState extends State<NotesCreateScreen> {
               ),
             ),
           ),
-          Container(
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-              color: AppColors.mineShaft,
-              borderRadius: BorderRadius.circular(15),
-            ),
-            padding: const EdgeInsets.all(13),
-            margin: const EdgeInsets.only(left: 22),
-            child: InkWell(
-              onTap: () => {
-                openDialogSave(context),
-              },
+          InkWell(
+            onTap: () => {
+              openDialogSave(context),
+            },
+            child: Container(
+              width: 50,
+              height: 50,
+              decoration: BoxDecoration(
+                color: AppColors.mineShaft,
+                borderRadius: BorderRadius.circular(15),
+              ),
+              padding: const EdgeInsets.all(13),
+              margin: const EdgeInsets.only(left: 22),
               child: SvgPicture.asset(
                 AppVectors.icNoteSave,
               ),
@@ -213,16 +215,21 @@ class _NotesCreateScreenState extends State<NotesCreateScreen> {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: Text('Discard', style: AppTextStyles.whiteS18Medium),
+                      child:
+                          Text('Discard', style: AppTextStyles.whiteS18Medium),
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.jungleGreen, // foreground
                       ),
                       onPressed: () {
-                        saveItem();
-                        Navigator.pop(context);
-                        Navigator.of(context).pop(true);
+                        if(widget.id == null){
+                          saveItem();
+                          Navigator.of(context)..pop()..pop(true);
+                        }else{
+                          saveItem();
+                          Navigator.of(context)..pop()..pop()..pop(true);
+                        }
                       },
                       child: Text('Save', style: AppTextStyles.whiteS18Medium),
                     )
