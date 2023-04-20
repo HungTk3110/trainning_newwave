@@ -62,37 +62,51 @@ class NoteDatabaseHelper {
         final note = NoteEntity.fromDbMap(data[i]);
         listNote.add(note);
       }
-      // for (var item in data) {
-      //   listNote.add(NoteEntity.fromDbMap(item));
-      // }
-
-      print("do dai: ${listNote.length}");
       return listNote;
-
     } catch (e) {
       return [];
     }
   }
-
-  // Future<NoteEntity> queryNote(int id) async {
-  //   Database db = await instance.database;
-  //   var query = Sqflite.firstIntValue(
-  //       await db.rawQuery('SELECT COUNT(*) FROM $table')) ;
-  // }
 
   Future<int> queryNoteCount() async {
     Database db = await instance.database;
     return Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM $table')) ?? 0;
   }
 
-  Future<int> updateNote(Map<String, dynamic> note) async {
+  Future<void> updateNote(Map<String, dynamic> note) async {
     Database db = await instance.database;
     int id = note[columnId];
-    return await db.update(table, note, where: '$columnId = ?', whereArgs: [id]);
+    await db.update(table, note, where: '$columnId = ?', whereArgs: [id]);
   }
 
-  Future<int> deleteNote(int id) async {
+  Future<void> deleteNote(int id) async {
     Database db = await instance.database;
-    return await db.delete(table, where: '$columnId = ?', whereArgs: [id]);
+    await db.delete(table, where: '$columnId = ?', whereArgs: [id]);
+  }
+
+  Future<NoteEntity> getNote(int id) async {
+    try {
+      Database db = await instance.database;
+      var data = await db.query(table, where: '$columnId = ?', whereArgs: [id], limit: 1);
+      final result = NoteEntity.fromDbMap(data[0]);
+      return result;
+    } catch (e) {
+      return NoteEntity();
+    }
+  }
+
+  Future<List<NoteEntity>> searchNote(String str) async {
+    List<NoteEntity> listNote = [];
+    try {
+      Database db = await instance.database;
+      var data = await db.query(table, where: '$columnTitle = ?', whereArgs: [str]);
+      for (int i = 0; i < data.length; i++) {
+        final note = NoteEntity.fromDbMap(data[i]);
+        listNote.add(note);
+      }
+      return listNote;
+    } catch (e) {
+      return [];
+    }
   }
 }

@@ -1,93 +1,106 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:training_newwave/configs/app_colors.dart';
 import 'package:training_newwave/configs/app_styles.dart';
 import 'package:training_newwave/configs/app_vectors.dart';
-import 'package:training_newwave/note_app/bloc/note_cubit.dart';
-import 'package:training_newwave/note_app/database/database_helper.dart';
+import 'package:training_newwave/note_app/note_create/note_create_cubit.dart';
 
-class CreateNotesScreen extends StatefulWidget {
-  const CreateNotesScreen({Key? key}) : super(key: key);
+// ignore: must_be_immutable
+class NotesCreateScreen extends StatefulWidget {
+  int? id;
+
+  NotesCreateScreen({Key? key, this.id}) : super(key: key);
 
   @override
-  State<CreateNotesScreen> createState() => _CreateNotesScreenState();
+  State<NotesCreateScreen> createState() => _NotesCreateScreenState();
 }
 
-class _CreateNotesScreenState extends State<CreateNotesScreen> {
+class _NotesCreateScreenState extends State<NotesCreateScreen> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-  late final NoteCubit _noteCubit;
+  late final NoteCreateCubit _noteCubit;
 
   @override
   void initState() {
     super.initState();
-    _noteCubit = NoteCubit();
+    _noteCubit = NoteCreateCubit();
+    _noteCubit.getNote(widget.id ?? 0);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        color: AppColors.mineShaftApprox,
-        child: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              appBarCraeteNote(),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 24,
-                          right: 24,
-                          top: 40,
-                        ),
-                        child: TextField(
-                          controller: _titleController,
-                          textCapitalization: TextCapitalization.sentences,
-                          keyboardType: TextInputType.multiline,
-                          maxLines: null,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Title',
-                            hintStyle: AppTextStyles.dustyGrayS48Medium,
+      body: BlocProvider(
+        create: (context) => _noteCubit,
+        child: BlocBuilder<NoteCreateCubit, NoteCreateSate>(
+          buildWhen: (previous, current) => previous.statusGet != current.statusGet,
+          builder: (context, state) {
+            if (widget.id != null) {
+              _titleController.text = state.note?.title ?? "";
+              _descriptionController.text = state.note?.describe ?? "";
+            }
+            return Container(
+              width: double.infinity,
+              height: double.infinity,
+              color: AppColors.mineShaftApprox,
+              child: SafeArea(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    appBarCraeteNote(),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.only(
+                            left: 28,
+                            right: 28,
+                            bottom: 10,
                           ),
-                          style: AppTextStyles.whiteS48Medium,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              TextField(
+                                controller: _titleController,
+                                textCapitalization: TextCapitalization.sentences,
+                                keyboardType: TextInputType.multiline,
+                                maxLines: null,
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: 'Title',
+                                  hintStyle: AppTextStyles.dustyGrayS48Medium,
+                                ),
+                                style: AppTextStyles.whiteS48Medium,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 36),
+                                child: TextField(
+                                  controller: _descriptionController,
+                                  textCapitalization: TextCapitalization.sentences,
+                                  keyboardType: TextInputType.multiline,
+                                  maxLines: null,
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText: 'Type something...',
+                                    hintStyle: AppTextStyles.dustyGrayS23Medium,
+                                    fillColor: AppColors.dustyGray,
+                                  ),
+                                  style: AppTextStyles.whiteS23Medium,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 24,
-                          right: 24,
-                          top: 40,
-                        ),
-                        child: TextField(
-                          controller: _descriptionController,
-                          textCapitalization: TextCapitalization.sentences,
-                          keyboardType: TextInputType.multiline,
-                          maxLines: null,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Type something...',
-                            hintStyle: AppTextStyles.dustyGrayS23Medium,
-                            fillColor: AppColors.dustyGray,
-                          ),
-                          style: AppTextStyles.whiteS23Medium,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );
@@ -95,9 +108,11 @@ class _CreateNotesScreenState extends State<CreateNotesScreen> {
 
   Widget appBarCraeteNote() {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 25,
-        vertical: 18,
+      padding: const EdgeInsets.only(
+        left: 24,
+        right: 24,
+        top: 8,
+        bottom: 36,
       ),
       child: Row(
         children: [
@@ -113,7 +128,7 @@ class _CreateNotesScreenState extends State<CreateNotesScreen> {
               vertical: 13,
             ),
             child: InkWell(
-              onTap: () => {Navigator.pop(context)},
+              onTap: () => {Navigator.pop(context, true)},
               child: SvgPicture.asset(
                 AppVectors.icNoteBack,
               ),
@@ -205,7 +220,7 @@ class _CreateNotesScreenState extends State<CreateNotesScreen> {
                         backgroundColor: AppColors.jungleGreen, // foreground
                       ),
                       onPressed: () {
-                        addItem();
+                        saveItem();
                         Navigator.pop(context);
                         Navigator.of(context).pop(true);
                       },
@@ -221,7 +236,7 @@ class _CreateNotesScreenState extends State<CreateNotesScreen> {
     );
   }
 
-  Future<void> addItem() async {
+  Future<void> saveItem() async {
     List<int> listColor = [
       Colors.pinkAccent.value,
       Colors.blue.value,
@@ -229,15 +244,19 @@ class _CreateNotesScreenState extends State<CreateNotesScreen> {
       Colors.cyan.value,
     ];
     final random = Random();
-    await _noteCubit.addNote(
-      _titleController.text,
-      _descriptionController.text,
-      listColor[random.nextInt(listColor.length)],
-    );
-  }
-
-  // Update an existing data
-  Future<void> updateItem(int id) async {
-    await DatabaseHelper.updateItem(id, _titleController.text, _descriptionController.text);
+    if (widget.id == null) {
+      await _noteCubit.addNote(
+        _titleController.text,
+        _descriptionController.text,
+        listColor[random.nextInt(listColor.length)],
+      );
+    } else {
+      await _noteCubit.updateNote(
+        id: widget.id ?? 0,
+        title: _titleController.text,
+        describe: _descriptionController.text,
+        color: listColor[random.nextInt(listColor.length)],
+      );
+    }
   }
 }

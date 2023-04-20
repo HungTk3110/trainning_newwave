@@ -18,4 +18,5 @@ class AppColors{
   static Color alto = const Color(0xffCFCFCF);
   static Color dustyGray = const Color(0xff9A9A9A);
   static Color jungleGreen = const Color(0xff30BE71);
+  static Color silver = const Color(0xffCCCCCC);
 }

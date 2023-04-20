@@ -15,4 +15,5 @@ class AppVectors{
   static const String icNoteVisibility = 'assets/svg/visibility.svg';
   static const String icNoteWarning = 'assets/svg/warning_save.svg';
   static const String icNoteEdit = 'assets/svg/mode.svg';
+  static const String icNoteClear = 'assets/svg/close.svg';
 }
