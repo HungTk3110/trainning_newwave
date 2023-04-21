@@ -6,7 +6,6 @@ class AppTextStyles {
 
   static const TextStyle black = TextStyle(color: Colors.black);
 
-
   static TextStyle white50S18Medium = white.copyWith(
     fontSize: 18,
     color: Colors.white.withOpacity(0.5),
@@ -16,7 +15,6 @@ class AppTextStyles {
     fontSize: 8,
     color: Colors.white,
   );
-
 
   static TextStyle white50S8Medium = white.copyWith(
     fontSize: 8,
@@ -55,13 +53,10 @@ class AppTextStyles {
     fontWeight: FontWeight.bold,
   );
 
-
-
   static TextStyle whiteS18Medium = white.copyWith(
     fontSize: 18,
     color: Colors.white,
   );
-  
 
   static TextStyle whiteS18Bold = white.copyWith(
     fontSize: 18,
@@ -90,7 +85,6 @@ class AppTextStyles {
     color: AppColors.alto,
   );
 
-
   static TextStyle whiteS23Medium = white.copyWith(
     fontSize: 23,
     color: AppColors.white,
@@ -101,35 +95,29 @@ class AppTextStyles {
     color: AppColors.dustyGray,
   );
 
-
   static TextStyle blackS12Medium = white.copyWith(
     fontSize: 25,
     color: Colors.black,
   );
-
 
   static TextStyle whiteS43Medium = white.copyWith(
     fontSize: 43,
     color: Colors.white,
   );
 
-
   static TextStyle dustyGrayS48Medium = white.copyWith(
     fontSize: 48,
     color: AppColors.dustyGray,
   );
-
 
   static TextStyle whiteS48Medium = white.copyWith(
     fontSize: 48,
     color: AppColors.white,
   );
 
-
   static TextStyle whiteS64Bold = white.copyWith(
     fontSize: 64,
     color: Colors.white,
     fontWeight: FontWeight.bold,
   );
-
 }

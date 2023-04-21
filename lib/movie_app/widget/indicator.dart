@@ -36,8 +36,12 @@ class Indicator extends StatelessWidget {
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
               colors: <Color>[
-                currentPos == index ? AppColors.havelockBlue : AppColors.havelockBlue30,
-                currentPos == index ? AppColors.blueMarguerite : AppColors.blueMarguerite30,
+                currentPos == index
+                    ? AppColors.havelockBlue
+                    : AppColors.havelockBlue30,
+                currentPos == index
+                    ? AppColors.blueMarguerite
+                    : AppColors.blueMarguerite30,
               ],
             ),
           ),

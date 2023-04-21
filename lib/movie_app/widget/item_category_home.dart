@@ -24,9 +24,9 @@ class ItemCategoryHome extends StatelessWidget {
           width: 1,
           color: AppColors.white20,
         ),
-        borderRadius:
-            const BorderRadius.all(Radius.circular(15.0) //                 <--- border radius here
-                ),
+        borderRadius: const BorderRadius.all(
+            Radius.circular(15.0) //                 <--- border radius here
+            ),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,

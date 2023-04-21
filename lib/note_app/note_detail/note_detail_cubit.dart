@@ -7,11 +7,11 @@ import 'package:training_newwave/note_app/database/note_database_helper.dart';
 part 'note_detail_state.dart';
 
 class NoteDetailCubit extends Cubit<NoteDetailSate> {
-  int id;
-  NoteDetailCubit({required this.id}) : super(const NoteDetailSate());
+  NoteDetailCubit() : super(const NoteDetailSate());
+
   final dbHelper = NoteDatabaseHelper.instance;
 
-  Future<void> getNote() async {
+  Future<void> getNote(int id) async {
     emit(
       state.copyWith(
         loadingStatus: LoadingStatus.loading,
@@ -27,7 +27,6 @@ class NoteDetailCubit extends Cubit<NoteDetailSate> {
           note: response,
         ),
       );
-
     } catch (e) {
       emit(
         state.copyWith(
@@ -36,5 +35,4 @@ class NoteDetailCubit extends Cubit<NoteDetailSate> {
       );
     }
   }
-
 }

@@ -1,6 +1,5 @@
 part of 'note_detail_cubit.dart';
 
-
 class NoteDetailSate extends Equatable {
   final LoadingStatus loadingStatus;
   final NoteEntity? note;
@@ -12,9 +11,9 @@ class NoteDetailSate extends Equatable {
 
   @override
   List<Object?> get props => [
-    loadingStatus,
-    note,
-  ];
+        loadingStatus,
+        note,
+      ];
 
   NoteDetailSate copyWith({
     LoadingStatus? loadingStatus,

@@ -1,31 +1,31 @@
 part of 'note_home_cubit.dart';
 
 class NoteHomeSate extends Equatable {
-  final LoadingStatus statusLoadAll;
-  final LoadingStatus statusDelete;
+  final LoadingStatus loadingStatus;
+  final LoadingStatus deleteStatus;
   final List<NoteEntity>? listNote;
 
   const NoteHomeSate({
-    this.statusLoadAll = LoadingStatus.init,
-    this.statusDelete = LoadingStatus.init,
+    this.loadingStatus = LoadingStatus.init,
+    this.deleteStatus = LoadingStatus.init,
     this.listNote,
   });
 
   @override
   List<Object?> get props => [
-    statusLoadAll,
-    statusDelete,
-    listNote,
-  ];
+        loadingStatus,
+        deleteStatus,
+        listNote,
+      ];
 
   NoteHomeSate copyWith({
-    LoadingStatus? statusLoadAll,
-    LoadingStatus? statusDelete ,
+    LoadingStatus? loadingStatus,
+    LoadingStatus? deleteStatus,
     List<NoteEntity>? listNote,
   }) {
     return NoteHomeSate(
-      statusLoadAll: statusLoadAll ?? this.statusLoadAll,
-      statusDelete: statusDelete ?? this.statusDelete,
+      loadingStatus: loadingStatus ?? this.loadingStatus,
+      deleteStatus: deleteStatus ?? this.deleteStatus,
       listNote: listNote ?? this.listNote,
     );
   }

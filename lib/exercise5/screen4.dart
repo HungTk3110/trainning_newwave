@@ -97,7 +97,9 @@ class StatelessScreen4 extends State<Screen4> with WidgetsBindingObserver {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 55),
                   child: Text(
-                    isLogin ? "Login Success" : "Key1: $key1\nKey2: $key2\nKey3: $key3",
+                    isLogin
+                        ? "Login Success"
+                        : "Key1: $key1\nKey2: $key2\nKey3: $key3",
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       color: Colors.white,
@@ -108,7 +110,8 @@ class StatelessScreen4 extends State<Screen4> with WidgetsBindingObserver {
                 const SizedBox(height: 20),
                 OutlinedButton(
                   style: OutlinedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
                     side: const BorderSide(color: Colors.red),
                     minimumSize: const Size(300, 50),
                   ),
@@ -176,7 +179,8 @@ class StatelessScreen4 extends State<Screen4> with WidgetsBindingObserver {
   }
 
   void _updateData() {
-    final renderBox = containerKey.currentContext?.findRenderObject() as RenderBox;
+    final renderBox =
+        containerKey.currentContext?.findRenderObject() as RenderBox;
     final position = renderBox.localToGlobal(Offset.zero);
     setState(() {
       height = renderBox.size.height;

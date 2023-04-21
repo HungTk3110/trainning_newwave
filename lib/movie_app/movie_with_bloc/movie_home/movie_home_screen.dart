@@ -42,7 +42,8 @@ class _Movie_HomeState extends State<MovieHomeScreen> {
       body: BlocProvider(
         create: (context) => _cubit,
         child: BlocBuilder<MovieHomeCubit, MovieHomeState>(
-          buildWhen: (previous, current) => previous.loadingStatus != current.loadingStatus,
+          buildWhen: (previous, current) =>
+              previous.loadingStatus != current.loadingStatus,
           builder: (context, state) {
             if (state.loadingStatus == LoadingStatus.loading) {
               return _buildLoading();
@@ -121,7 +122,8 @@ class _Movie_HomeState extends State<MovieHomeScreen> {
                               suffixIcon: SizedBox(
                                 width: 1,
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     SvgPicture.asset(
                                       AppVectors.icLine1,
@@ -202,7 +204,8 @@ class _Movie_HomeState extends State<MovieHomeScreen> {
                             bottom: 20,
                           ),
                           child: Indicator(
-                              listMovie: state.popular!.results, currentPos: currentPosBottom),
+                              listMovie: state.popular!.results,
+                              currentPos: currentPosBottom),
                         )
                       ],
                     ),

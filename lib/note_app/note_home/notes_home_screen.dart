@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -32,137 +31,112 @@ class _NoteHomeScreenState extends State<NoteHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.mineShaftApprox,
       body: BlocProvider(
         create: (context) => _noteCubit,
         child: BlocBuilder<NoteHomeCubit, NoteHomeSate>(
           buildWhen: (previous, current) =>
-              previous.statusLoadAll != current.statusLoadAll,
+              previous.loadingStatus != current.loadingStatus ||
+              previous.deleteStatus != current.deleteStatus,
           builder: (context, state) {
-            if (kDebugMode) {
-              print(state.listNote?.length.toString());
-            }
-            return Container(
+            debugPrint(state.listNote?.length.toString());
+            return SizedBox(
               width: double.infinity,
               height: double.infinity,
-              color: AppColors.mineShaftApprox,
-              child: state.statusLoadAll == LoadingStatus.loading
-                  ? _buildLoading()
+              child: state.loadingStatus == LoadingStatus.loading
+                  ? _buildLoading(
+
+              )
                   : SafeArea(
-                      child: state.listNote?.isEmpty ?? true
-                          ? Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                appHomeBar(),
-                                const Spacer(
-                                  flex: 1,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 32),
-                                  child: Image.asset(
-                                    AppImages.imgNoteNull,
-                                  ),
-                                ),
-                                Text(
-                                  "Create your first note !",
-                                  style: AppTextStyles.whiteS20Medium,
-                                ),
-                                const Spacer(
-                                  flex: 2,
-                                ),
-                              ],
-                            )
-                          : Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                appHomeBar(),
-                                Expanded(
-                                  child: Padding(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          appHomeBar(),
+                          Expanded(
+                            child: state.listNote?.isEmpty ?? true
+                                ? Center(
+                                  child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 32),
+                                          child: Image.asset(
+                                            AppImages.imgNoteNull,
+                                          ),
+                                        ),
+                                        Text(
+                                          "Create your first note !",
+                                          style: AppTextStyles.whiteS20Medium,
+                                        ),
+                                      ],
+                                    ),
+                                )
+                                : ListView.separated(
+                                    itemCount: state.listNote?.length ?? 0,
                                     padding: const EdgeInsets.only(bottom: 10),
-                                    child: ListView.separated(
-                                      itemCount: state.listNote?.length ?? 0,
-                                      scrollDirection: Axis.vertical,
-                                      physics:
-                                          const AlwaysScrollableScrollPhysics(),
-                                      separatorBuilder:
-                                          (BuildContext context, int index) {
-                                        return const SizedBox(
-                                          height: 23,
-                                        );
-                                      },
-                                      itemBuilder: (context, index) {
-                                        int color =
-                                            state.listNote?[index].color ?? 0;
-                                        return Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 25),
-                                          child: Dismissible(
-                                            onDismissed: (direction) {
-                                              _noteCubit.deleteNote(
-                                                  state.listNote?[index].id ??
-                                                      0);
-                                            },
-                                            key: UniqueKey(),
-                                            direction:
-                                                DismissDirection.horizontal,
-                                            background: Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                color: Colors.red,
-                                              ),
-                                              child: const Icon(
-                                                Icons.delete_rounded,
-                                                color: Colors.white,
-                                              ),
+                                    separatorBuilder: (BuildContext context, int index) {
+                                      return const SizedBox(
+                                        height: 23,
+                                      );
+                                    },
+                                    itemBuilder: (context, index) {
+                                      int color = state.listNote?[index].color ?? 0;
+                                      return Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 25),
+                                        child: Dismissible(
+                                          onDismissed: (direction) {
+                                            _noteCubit.deleteNote(state.listNote?[index].id ?? 0);
+                                          },
+                                          key: UniqueKey(),
+                                          direction: DismissDirection.horizontal,
+                                          background: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(10),
+                                              color: Colors.red,
                                             ),
-                                            child: InkWell(
-                                              onTap: () async {
-                                                final result =
-                                                    await Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        NoteDetailScreen(
-                                                            id: state
-                                                                    .listNote?[
-                                                                        index]
-                                                                    .id ??
-                                                                0),
-                                                  ),
-                                                );
-                                                if (result == true) {
-                                                  _noteCubit.getAllNote();
-                                                }
-                                              },
-                                              child: Container(
-                                                width: double.infinity,
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                  horizontal: 45,
-                                                  vertical: 25,
+                                            child: const Icon(
+                                              Icons.delete_rounded,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          child: InkWell(
+                                            onTap: () async {
+                                              final result = await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) => NoteDetailScreen(
+                                                      id: state.listNote?[index].id ?? 0),
                                                 ),
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  color: Color(color),
-                                                ),
-                                                child: Text(
-                                                  state.listNote?[index]
-                                                          .title ??
-                                                      "",
-                                                  style: AppTextStyles
-                                                      .blackS12Medium,
-                                                ),
+                                              );
+
+                                              if (result == true) {
+                                                _noteCubit.getAllNote();
+                                              }
+                                            },
+                                            child: Container(
+                                              width: double.infinity,
+                                              padding: const EdgeInsets.symmetric(
+                                                horizontal: 45,
+                                                vertical: 25,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(10),
+                                                color: Color(color),
+                                              ),
+                                              child: Text(
+                                                state.listNote?[index].title ?? "",
+                                                style: AppTextStyles.blackS12Medium,
                                               ),
                                             ),
                                           ),
-                                        );
-                                      },
-                                    ),
+                                        ),
+                                      );
+                                    },
                                   ),
-                                ),
-                              ],
-                            ),
+                          ),
+                        ],
+                      ),
                     ),
             );
           },
@@ -305,5 +279,7 @@ class _NoteHomeScreenState extends State<NoteHomeScreen> {
     );
   }
 
-  Widget _buildLoading() => const Center(child: CircularProgressIndicator());
+  Widget _buildLoading() => const Center(
+        child: CircularProgressIndicator(),
+      );
 }

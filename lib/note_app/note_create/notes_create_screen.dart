@@ -6,28 +6,44 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:training_newwave/configs/app_colors.dart';
 import 'package:training_newwave/configs/app_styles.dart';
 import 'package:training_newwave/configs/app_vectors.dart';
+import 'package:training_newwave/model/enums/loading_status.dart';
 import 'package:training_newwave/note_app/note_create/note_create_cubit.dart';
 
-// ignore: must_be_immutable
 class NotesCreateScreen extends StatefulWidget {
-  int? id;
+  final int? id;
 
-  NotesCreateScreen({Key? key, this.id}) : super(key: key);
+  const NotesCreateScreen({
+    Key? key,
+    this.id,
+  }) : super(key: key);
 
   @override
   State<NotesCreateScreen> createState() => _NotesCreateScreenState();
 }
 
 class _NotesCreateScreenState extends State<NotesCreateScreen> {
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
+  late TextEditingController _titleController;
+
+  late TextEditingController _descriptionController;
   late final NoteCreateCubit _noteCubit;
 
   @override
   void initState() {
     super.initState();
     _noteCubit = NoteCreateCubit();
-    _noteCubit.getNote(widget.id ?? 0);
+
+    _init();
+  }
+
+  void _init() async {
+    await _noteCubit.getNote(widget.id ?? 0);
+    if (widget.id != null) {
+      _titleController = TextEditingController(text: _noteCubit.state.note?.title ?? "");
+      _descriptionController = TextEditingController(text: _noteCubit.state.note?.describe ?? "");
+    } else {
+      _titleController = TextEditingController();
+      _descriptionController = TextEditingController();
+    }
   }
 
   @override
@@ -36,72 +52,69 @@ class _NotesCreateScreenState extends State<NotesCreateScreen> {
       body: BlocProvider(
         create: (context) => _noteCubit,
         child: BlocBuilder<NoteCreateCubit, NoteCreateSate>(
-          buildWhen: (previous, current) =>
-              previous.statusGet != current.statusGet,
+          buildWhen: (previous, current) => previous.statusGet != current.statusGet,
           builder: (context, state) {
-            if (widget.id != null) {
-              _titleController.text = state.note?.title ?? "";
-              _descriptionController.text = state.note?.describe ?? "";
-            }
-            return Container(
-              width: double.infinity,
-              height: double.infinity,
-              color: AppColors.mineShaftApprox,
-              child: SafeArea(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    appBarCraeteNote(),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        child: Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.only(
-                            left: 28,
-                            right: 28,
-                            bottom: 10,
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              TextField(
-                                controller: _titleController,
-                                keyboardType: TextInputType.multiline,
-                                maxLines: null,
-                                autofocus: true,
-                                textInputAction: TextInputAction.done,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: 'Title',
-                                  hintStyle: AppTextStyles.dustyGrayS48Medium,
+            return state.statusGet == LoadingStatus.loading
+                ? SizedBox()
+                : Container(
+                    width: double.infinity,
+                    height: double.infinity,
+                    color: AppColors.mineShaftApprox,
+                    child: SafeArea(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          appBarCraeteNote(),
+                          Expanded(
+                            child: SingleChildScrollView(
+                              child: Container(
+                                width: double.infinity,
+                                padding: const EdgeInsets.only(
+                                  left: 28,
+                                  right: 28,
+                                  bottom: 10,
                                 ),
-                                style: AppTextStyles.whiteS48Medium,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 36),
-                                child: TextField(
-                                  controller: _descriptionController,
-                                  keyboardType: TextInputType.multiline,
-                                  maxLines: null,
-                                  textInputAction: TextInputAction.done,
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: 'Type something...',
-                                    hintStyle: AppTextStyles.dustyGrayS23Medium,
-                                    fillColor: AppColors.dustyGray,
-                                  ),
-                                  style: AppTextStyles.whiteS23Medium,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    TextField(
+                                      controller: _titleController,
+                                      keyboardType: TextInputType.multiline,
+                                      maxLines: null,
+                                      autofocus: true,
+                                      textInputAction: TextInputAction.done,
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintText: 'Title',
+                                        hintStyle: AppTextStyles.dustyGrayS48Medium,
+                                      ),
+                                      style: AppTextStyles.whiteS48Medium,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 36),
+                                      child: TextField(
+                                        controller: _descriptionController,
+                                        keyboardType: TextInputType.multiline,
+                                        maxLines: null,
+                                        textInputAction: TextInputAction.done,
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          hintText: 'Type something...',
+                                          hintStyle: AppTextStyles.dustyGrayS23Medium,
+                                          fillColor: AppColors.dustyGray,
+                                        ),
+                                        style: AppTextStyles.whiteS23Medium,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
+                            ),
                           ),
-                        ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-              ),
-            );
+                  );
           },
         ),
       ),
@@ -215,20 +228,24 @@ class _NotesCreateScreenState extends State<NotesCreateScreen> {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child:
-                          Text('Discard', style: AppTextStyles.whiteS18Medium),
+                      child: Text('Discard', style: AppTextStyles.whiteS18Medium),
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.jungleGreen, // foreground
                       ),
                       onPressed: () {
-                        if(widget.id == null){
+                        if (widget.id == null) {
                           saveItem();
-                          Navigator.of(context)..pop()..pop(true);
-                        }else{
+                          Navigator.of(context)
+                            ..pop()
+                            ..pop(true);
+                        } else {
                           saveItem();
-                          Navigator.of(context)..pop()..pop()..pop(true);
+                          Navigator.of(context)
+                            ..pop()
+                            ..pop()
+                            ..pop(true);
                         }
                       },
                       child: Text('Save', style: AppTextStyles.whiteS18Medium),

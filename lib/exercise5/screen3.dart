@@ -104,8 +104,8 @@ class StatelessScreen3 extends State<Screen3> {
                       MaterialPageRoute(
                         builder: (context) => Screen4(
                           textScreen1: widget.textScreen1,
-                            textScreen2: widget.textScreen2,
-                            textScreen3: passScreen3.text,
+                          textScreen2: widget.textScreen2,
+                          textScreen3: passScreen3.text,
                         ),
                       ),
                     );

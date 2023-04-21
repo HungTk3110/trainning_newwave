@@ -61,7 +61,8 @@ class _MovieDetailGetXState extends State<MovieDetailGetX> {
           child: GetX<MovieDetailController>(
             init: MovieDetailController(id: widget.id),
             builder: (controller) {
-              return controller.loadCast.value == true && controller.loadDetail.value == true
+              return controller.loadCast.value == true &&
+                      controller.loadDetail.value == true
                   ? _buildLoading()
                   : Container(
                       decoration: BoxDecoration(
@@ -139,9 +140,10 @@ class _MovieDetailGetXState extends State<MovieDetailGetX> {
                                             AppVectors.icImdb,
                                           ),
                                           Text(
-                                            controller
-                                                .detailMovie.value.voteAverage
-                                                .toString() ?? "",
+                                            controller.detailMovie.value
+                                                    .voteAverage
+                                                    .toString() ??
+                                                "",
                                             style: AppTextStyles.blackS12bold,
                                           ),
                                         ],
@@ -276,7 +278,7 @@ class _MovieDetailGetXState extends State<MovieDetailGetX> {
                   height: MediaQuery.of(context).size.height,
                   child: CachedNetworkImage(
                     imageUrl: AppConstant.baseImage +
-                        (controller.detailMovie.value!.posterPath?? ""),
+                        (controller.detailMovie.value!.posterPath ?? ""),
                     fit: BoxFit.fill,
                   ),
                 );

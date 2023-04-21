@@ -18,7 +18,8 @@ class NoteDatabaseHelper {
 
   NoteDatabaseHelper._privateConstructor();
 
-  static final NoteDatabaseHelper instance = NoteDatabaseHelper._privateConstructor();
+  static final NoteDatabaseHelper instance =
+      NoteDatabaseHelper._privateConstructor();
 
   static Database? _database;
 
@@ -32,7 +33,8 @@ class NoteDatabaseHelper {
   _initDatabase() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, _databaseName);
-    return await openDatabase(path, version: _databaseVersion, onCreate: _onCreate);
+    return await openDatabase(path,
+        version: _databaseVersion, onCreate: _onCreate);
   }
 
   Future _onCreate(Database db, int version) async {
@@ -70,7 +72,9 @@ class NoteDatabaseHelper {
 
   Future<int> queryNoteCount() async {
     Database db = await instance.database;
-    return Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM $table')) ?? 0;
+    return Sqflite.firstIntValue(
+            await db.rawQuery('SELECT COUNT(*) FROM $table')) ??
+        0;
   }
 
   Future<void> updateNote(Map<String, dynamic> note) async {
@@ -87,7 +91,8 @@ class NoteDatabaseHelper {
   Future<NoteEntity> getNote(int id) async {
     try {
       Database db = await instance.database;
-      var data = await db.query(table, where: '$columnId = ?', whereArgs: [id], limit: 1);
+      var data = await db.query(table,
+          where: '$columnId = ?', whereArgs: [id], limit: 1);
       final result = NoteEntity.fromDbMap(data[0]);
       return result;
     } catch (e) {
@@ -99,7 +104,8 @@ class NoteDatabaseHelper {
     List<NoteEntity> listNote = [];
     try {
       Database db = await instance.database;
-      var data = await db.rawQuery("SELECT * FROM $table WHERE $columnTitle LIKE '%$str%'");
+      var data = await db
+          .rawQuery("SELECT * FROM $table WHERE $columnTitle LIKE '%$str%'");
       for (int i = 0; i < data.length; i++) {
         final note = NoteEntity.fromDbMap(data[i]);
         listNote.add(note);

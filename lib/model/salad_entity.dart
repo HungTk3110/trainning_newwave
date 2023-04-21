@@ -47,4 +47,3 @@ List<SaladItem> saladItems = [
     assetImage: "assets/images/img1.jpg",
   ),
 ];
-

@@ -26,8 +26,8 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
   @override
   void initState() {
     super.initState();
-    _detailCubit = NoteDetailCubit(id: widget.id);
-    _detailCubit.getNote();
+    _detailCubit = NoteDetailCubit();
+    _detailCubit.getNote(widget.id);
   }
 
   @override
@@ -36,7 +36,8 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
       body: BlocProvider(
         create: (context) => _detailCubit,
         child: BlocBuilder<NoteDetailCubit, NoteDetailSate>(
-          buildWhen: (previous, current) => previous.loadingStatus != current.loadingStatus,
+          buildWhen: (previous, current) =>
+              previous.loadingStatus != current.loadingStatus,
           builder: (context, state) {
             return Container(
               width: double.infinity,
@@ -46,7 +47,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    appBarCraeteNote(state.note?.id ?? 0),
+                    appBarCraeteNote(),
                     Expanded(
                       child: SingleChildScrollView(
                         child: Container(
@@ -88,7 +89,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
     );
   }
 
-  Widget appBarCraeteNote(int id) {
+  Widget appBarCraeteNote() {
     return Padding(
       padding: const EdgeInsets.only(
         left: 24,
@@ -100,7 +101,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
         children: [
           InkWell(
             onTap: () => {
-              Navigator.pop(context,true),
+              Navigator.pop(context, true),
             },
             child: Container(
               width: 50,
@@ -124,12 +125,12 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
               final result = await Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => NotesCreateScreen(id: id),
+                  builder: (context) => NotesCreateScreen(id: widget.id),
                 ),
               );
 
               if (result == true) {
-                _detailCubit.getNote();
+                _detailCubit.getNote(widget.id);
               }
             },
             child: Container(

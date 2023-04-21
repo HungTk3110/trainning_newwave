@@ -6,7 +6,6 @@ import 'package:training_newwave/configs/app_constant.dart';
 class Exercise4_2 extends StatelessWidget {
   const Exercise4_2({Key? key}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -55,7 +54,8 @@ class Exercise4_2 extends StatelessWidget {
                         fit: BoxFit.cover,
                         placeholder: (context, url) =>
                             const CircularProgressIndicator(),
-                        errorWidget: (context, url, error) => const Icon(Icons.error),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
                       ),
                     ),
                   ),

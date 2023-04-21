@@ -13,7 +13,7 @@ class NoteHomeCubit extends Cubit<NoteHomeSate> {
   Future<void> getAllNote() async {
     emit(
       state.copyWith(
-        statusLoadAll: LoadingStatus.loading,
+        loadingStatus: LoadingStatus.loading,
       ),
     );
 
@@ -22,15 +22,14 @@ class NoteHomeCubit extends Cubit<NoteHomeSate> {
 
       emit(
         state.copyWith(
-          statusLoadAll: LoadingStatus.success,
           listNote: response,
+          loadingStatus: LoadingStatus.success,
         ),
       );
-
     } catch (e) {
       emit(
         state.copyWith(
-          statusLoadAll: LoadingStatus.failure,
+          loadingStatus: LoadingStatus.failure,
         ),
       );
     }
@@ -39,9 +38,10 @@ class NoteHomeCubit extends Cubit<NoteHomeSate> {
   Future<void> deleteNote(int id) async {
     emit(
       state.copyWith(
-        statusDelete: LoadingStatus.loading,
+        deleteStatus: LoadingStatus.loading,
       ),
     );
+
     try {
       await dbHelper.deleteNote(id);
       final response = await dbHelper.queryAllNotes();
@@ -49,13 +49,13 @@ class NoteHomeCubit extends Cubit<NoteHomeSate> {
       emit(
         state.copyWith(
           listNote: response,
-          statusDelete: LoadingStatus.success,
+          deleteStatus: LoadingStatus.success,
         ),
       );
     } catch (e) {
       emit(
         state.copyWith(
-          statusDelete: LoadingStatus.failure,
+          deleteStatus: LoadingStatus.failure,
         ),
       );
     }

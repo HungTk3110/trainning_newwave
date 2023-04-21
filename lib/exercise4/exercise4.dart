@@ -13,13 +13,13 @@ class Exercise4 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround ,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           ElevatedButton(
             onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) =>  Exercise4_1()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => Exercise4_1()));
             },
             child: const Text("Feature 1"),
           ),
@@ -28,8 +28,8 @@ class Exercise4 extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) =>  const Exercise4_2()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const Exercise4_2()));
             },
             child: const Text("Feature 2"),
           ),
@@ -38,8 +38,8 @@ class Exercise4 extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) =>  Exercise4_3()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => Exercise4_3()));
             },
             child: const Text("Feature 3"),
           ),
@@ -48,8 +48,8 @@ class Exercise4 extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) =>  const Exercise4_4()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const Exercise4_4()));
             },
             child: const Text("Feature 4"),
           ),

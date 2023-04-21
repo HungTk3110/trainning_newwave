@@ -112,9 +112,11 @@ class _MovieDetailProviderState extends State<MovieDetailProvider> {
                       return loadDetailStatus == LoadingStatus.loading
                           ? const SizedBox()
                           : Text(
-                              Provider.of<DetailProvider>(context, listen: false)
-                                  .detailMovie
-                                  .tagline ?? "",
+                              Provider.of<DetailProvider>(context,
+                                          listen: false)
+                                      .detailMovie
+                                      .tagline ??
+                                  "",
                               style: AppTextStyles.white50S18Medium,
                             );
                     },
@@ -154,12 +156,15 @@ class _MovieDetailProviderState extends State<MovieDetailProvider> {
                                   AppVectors.icImdb,
                                 ),
                                 Selector<DetailProvider, LoadingStatus>(
-                                  selector: (_, provider) => provider.loadDetailStatus,
+                                  selector: (_, provider) =>
+                                      provider.loadDetailStatus,
                                   builder: (context, loadDetailStatus, child) {
-                                    return loadDetailStatus == LoadingStatus.loading
+                                    return loadDetailStatus ==
+                                            LoadingStatus.loading
                                         ? const SizedBox()
                                         : Text(
-                                            Provider.of<DetailProvider>(context, listen: false)
+                                            Provider.of<DetailProvider>(context,
+                                                    listen: false)
                                                 .detailMovie
                                                 .voteAverage
                                                 .toString(),
@@ -193,9 +198,11 @@ class _MovieDetailProviderState extends State<MovieDetailProvider> {
                           return loadDetailStatus == LoadingStatus.loading
                               ? const SizedBox()
                               : Text(
-                                  Provider.of<DetailProvider>(context, listen: false)
-                                      .detailMovie
-                                      .overview ?? "",
+                                  Provider.of<DetailProvider>(context,
+                                              listen: false)
+                                          .detailMovie
+                                          .overview ??
+                                      "",
                                   maxLines: 3,
                                   textAlign: TextAlign.start,
                                   style: AppTextStyles.white75S12Medium,
@@ -231,12 +238,16 @@ class _MovieDetailProviderState extends State<MovieDetailProvider> {
                       child: Selector<DetailProvider, LoadingStatus>(
                         selector: (_, provider) => provider.loadCastStatus,
                         builder: (context, loadCastStatus, child) {
-                          List<Cast> listCast =
-                              Provider.of<DetailProvider>(context, listen: false).listCast;
+                          List<Cast> listCast = Provider.of<DetailProvider>(
+                                  context,
+                                  listen: false)
+                              .listCast;
                           return loadCastStatus == LoadingStatus.loading
                               ? const SizedBox()
                               : ListView.separated(
-                                  itemCount: listCast.length - 4 <= 0 ? listCast.length : 5,
+                                  itemCount: listCast.length - 4 <= 0
+                                      ? listCast.length
+                                      : 5,
                                   shrinkWrap: true,
                                   scrollDirection: Axis.horizontal,
                                   padding: EdgeInsets.zero,
@@ -247,28 +258,33 @@ class _MovieDetailProviderState extends State<MovieDetailProvider> {
                                   itemBuilder: (context, index) {
                                     if (index == 4) {
                                       return Column(
-                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
                                         children: [
                                           Container(
                                             width: 50,
                                             height: 50,
                                             decoration: BoxDecoration(
                                               color: AppColors.white20,
-                                              borderRadius: BorderRadius.circular(15),
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
                                             ),
                                             child: Center(
                                               child: Text(
                                                 "+ ${listCast.length - 4}",
-                                                style: AppTextStyles.whiteS18Medium,
+                                                style: AppTextStyles
+                                                    .whiteS18Medium,
                                               ),
                                             ),
                                           ),
                                           Padding(
-                                            padding: const EdgeInsets.only(top: 8),
+                                            padding:
+                                                const EdgeInsets.only(top: 8),
                                             child: Text('',
                                                 maxLines: 2,
                                                 textAlign: TextAlign.center,
-                                                style: AppTextStyles.whiteS8Medium),
+                                                style: AppTextStyles
+                                                    .whiteS8Medium),
                                           ),
                                         ],
                                       );
@@ -298,7 +314,8 @@ class _MovieDetailProviderState extends State<MovieDetailProvider> {
     return Selector<DetailProvider, LoadingStatus>(
       selector: (_, provider) => provider.loadDetailStatus,
       builder: (context, loadDetailStatus, child) {
-        DetailMovie detailMovie = Provider.of<DetailProvider>(context, listen: false).detailMovie;
+        DetailMovie detailMovie =
+            Provider.of<DetailProvider>(context, listen: false).detailMovie;
         return loadDetailStatus == LoadingStatus.loading
             ? const SizedBox()
             : Scaffold(
@@ -306,7 +323,8 @@ class _MovieDetailProviderState extends State<MovieDetailProvider> {
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
                   child: CachedNetworkImage(
-                    imageUrl: AppConstant.baseImage + (detailMovie.posterPath?? ""),
+                    imageUrl:
+                        AppConstant.baseImage + (detailMovie.posterPath ?? ""),
                     fit: BoxFit.fill,
                   ),
                 ),

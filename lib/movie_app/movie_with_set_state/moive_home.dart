@@ -155,7 +155,8 @@ class _Movie_HomeState extends State<MovieHome> {
                     top: 17,
                     bottom: 20,
                   ),
-                  child: Indicator(listMovie: listMovies, currentPos: currentPosTop),
+                  child: Indicator(
+                      listMovie: listMovies, currentPos: currentPosTop),
                 ),
                 SizedBox(
                   height: 110,
@@ -195,7 +196,8 @@ class _Movie_HomeState extends State<MovieHome> {
                     top: 18,
                     bottom: 20,
                   ),
-                  child: Indicator(listMovie: listMovies, currentPos: currentPosBottom),
+                  child: Indicator(
+                      listMovie: listMovies, currentPos: currentPosBottom),
                 )
               ],
             ),

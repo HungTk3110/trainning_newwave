@@ -86,7 +86,8 @@ class _NoteSearchScreenState extends State<NoteSearchScreen> {
                                               horizontal: 25),
                                           child: InkWell(
                                             onTap: () async {
-                                            final result = await Navigator.push(
+                                              final result =
+                                                  await Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (context) =>
@@ -97,10 +98,10 @@ class _NoteSearchScreenState extends State<NoteSearchScreen> {
                                                   ),
                                                 ),
                                               );
-                                            if (result == true){
-                                              if (!mounted) return;
-                                              Navigator.of(context).pop(true);
-                                            }
+                                              if (result == true) {
+                                                if (!mounted) return;
+                                                Navigator.of(context).pop(true);
+                                              }
                                             },
                                             child: Container(
                                               width: double.infinity,

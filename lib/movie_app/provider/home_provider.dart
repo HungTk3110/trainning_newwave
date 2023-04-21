@@ -4,7 +4,6 @@ import 'package:training_newwave/model/popular_entity.dart';
 import 'package:training_newwave/movie_app/networks/api_service.dart';
 
 class HomeProvider extends ChangeNotifier {
-
   List<Movie> listMovies = [];
   LoadingStatus loadListPopularStatus = LoadingStatus.init;
 

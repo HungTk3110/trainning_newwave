@@ -117,7 +117,8 @@ class _MovieDetailState extends State<MovieDetail> {
                                 ),
                               ),
                               Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 8),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8),
                                 height: 24,
                                 margin: const EdgeInsets.only(left: 16),
                                 decoration: BoxDecoration(
@@ -126,7 +127,8 @@ class _MovieDetailState extends State<MovieDetail> {
                                 ),
                                 child: Center(
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
                                     children: [
                                       SvgPicture.asset(
                                         AppVectors.icImdb,
@@ -188,7 +190,8 @@ class _MovieDetailState extends State<MovieDetail> {
                           child: SizedBox(
                             height: 122,
                             child: ListView.separated(
-                              itemCount: lengthListCastMore < 1 ? listCast.length : 5,
+                              itemCount:
+                                  lengthListCastMore < 1 ? listCast.length : 5,
                               shrinkWrap: true,
                               scrollDirection: Axis.horizontal,
                               padding: EdgeInsets.zero,
@@ -206,7 +209,8 @@ class _MovieDetailState extends State<MovieDetail> {
                                         height: 50,
                                         decoration: BoxDecoration(
                                           color: AppColors.white20,
-                                          borderRadius: BorderRadius.circular(15),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
                                         ),
                                         child: Center(
                                           child: Text(
@@ -271,7 +275,8 @@ class _MovieDetailState extends State<MovieDetail> {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
               child: CachedNetworkImage(
-                imageUrl: AppConstant.baseImage + (detailMovie.posterPath ?? ""),
+                imageUrl:
+                    AppConstant.baseImage + (detailMovie.posterPath ?? ""),
                 fit: BoxFit.fill,
               ),
             ),

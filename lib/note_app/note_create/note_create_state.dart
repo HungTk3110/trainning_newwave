@@ -15,9 +15,9 @@ class NoteCreateSate extends Equatable {
 
   @override
   List<Object?> get props => [
-    statusAdd,
-    statusGet,
-    statusUpdate,
+        statusAdd,
+        statusGet,
+        statusUpdate,
         note,
       ];
 

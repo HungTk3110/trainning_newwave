@@ -56,8 +56,8 @@ class NoteCreateCubit extends Cubit<NoteCreateSate> {
 
       emit(
         state.copyWith(
-          statusGet: LoadingStatus.success,
           note: response,
+          statusGet: LoadingStatus.success,
         ),
       );
     } catch (e) {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class AppColors{
-  static const Color white = Color(0xFFFFFFFF);
+class AppColors {
+  static Color white = const Color(0xFFFFFFFF);
   static Color white20 = const Color(0xFFFFFFFF).withOpacity(0.2);
   static Color white50 = const Color(0xFFFFFFFF).withOpacity(0.5);
   static Color white75 = const Color(0xFFFFFFFF).withOpacity(0.75);

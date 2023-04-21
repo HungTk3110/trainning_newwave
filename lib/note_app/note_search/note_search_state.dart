@@ -13,14 +13,14 @@ class NoteSearchSate extends Equatable {
 
   @override
   List<Object?> get props => [
-    statusLoadAll,
-    statusDelete,
-    listNote,
-  ];
+        statusLoadAll,
+        statusDelete,
+        listNote,
+      ];
 
   NoteSearchSate copyWith({
     LoadingStatus? statusLoadAll,
-    LoadingStatus? statusDelete ,
+    LoadingStatus? statusDelete,
     List<NoteEntity>? listNote,
   }) {
     return NoteSearchSate(

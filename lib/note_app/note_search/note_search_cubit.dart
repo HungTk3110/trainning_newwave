@@ -26,7 +26,6 @@ class NoteSearchCubit extends Cubit<NoteSearchSate> {
           listNote: response,
         ),
       );
-
     } catch (e) {
       emit(
         state.copyWith(

@@ -23,7 +23,8 @@ class Popular {
 
   factory Popular.fromJson(Map<String, dynamic> json) => Popular(
         page: json["page"],
-        results: List<Movie>.from(json["results"].map((x) => Movie.fromJson(x))),
+        results:
+            List<Movie>.from(json["results"].map((x) => Movie.fromJson(x))),
         totalPages: json["total_pages"],
         totalResults: json["total_results"],
       );
@@ -74,7 +75,8 @@ class Movie {
         backdropPath: json["backdrop_path"],
         genreIds: List<int>.from(json["genre_ids"].map((x) => x)),
         id: json["id"],
-        originalLanguage: originalLanguageValues.map[json["original_language"]]!,
+        originalLanguage:
+            originalLanguageValues.map[json["original_language"]]!,
         originalTitle: json["original_title"],
         overview: json["overview"],
         popularity: json["popularity"]?.toDouble(),
@@ -107,8 +109,11 @@ class Movie {
 
 enum OriginalLanguage { EN, ES, KO }
 
-final originalLanguageValues =
-    EnumValues({"en": OriginalLanguage.EN, "es": OriginalLanguage.ES, "ko": OriginalLanguage.KO});
+final originalLanguageValues = EnumValues({
+  "en": OriginalLanguage.EN,
+  "es": OriginalLanguage.ES,
+  "ko": OriginalLanguage.KO
+});
 
 class EnumValues<T> {
   Map<String, T> map;

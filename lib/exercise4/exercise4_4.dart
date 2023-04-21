@@ -16,7 +16,6 @@ class Exercise4_4 extends StatefulWidget {
 }
 
 class _VideoAppState extends State<Exercise4_4> {
-
   late VideoPlayerController _controller;
   late YoutubePlayerController _ytbPlayerController;
 
@@ -30,7 +29,8 @@ class _VideoAppState extends State<Exercise4_4> {
       });
     _ytbPlayerController = YoutubePlayerController(
       initialVideoId: YoutubePlayer.convertUrlToId(
-          "https://www.youtube.com/watch?v=YBRkVCRP1Gw").toString(),
+              "https://www.youtube.com/watch?v=YBRkVCRP1Gw")
+          .toString(),
       flags: const YoutubePlayerFlags(
         mute: false,
         autoPlay: true,

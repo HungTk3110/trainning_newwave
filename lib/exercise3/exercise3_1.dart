@@ -3,7 +3,6 @@ import 'package:training_newwave/model/salad_entity.dart';
 
 // ignore: must_be_immutable
 class TrainingC3 extends StatefulWidget {
-
   var isThemeLight = true;
 
   TrainingC3({Key? key, required this.isThemeLight}) : super(key: key);
