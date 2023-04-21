@@ -44,9 +44,7 @@ class _NoteHomeScreenState extends State<NoteHomeScreen> {
               width: double.infinity,
               height: double.infinity,
               child: state.loadingStatus == LoadingStatus.loading
-                  ? _buildLoading(
-
-              )
+                  ? _buildLoading()
                   : SafeArea(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
