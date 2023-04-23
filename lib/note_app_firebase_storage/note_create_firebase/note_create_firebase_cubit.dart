@@ -2,13 +2,14 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:training_newwave/model/enums/loading_status.dart';
 import 'package:training_newwave/model/note_entity.dart';
-import 'package:training_newwave/note_app/database/note_database_helper.dart';
+import 'package:training_newwave/note_app_firebase_storage/firebase/firebase_helper.dart';
 
-part 'note_create_state.dart';
+part 'note_create_firebase_state.dart';
 
-class NoteCreateCubit extends Cubit<NoteCreateSate> {
-  NoteCreateCubit() : super(const NoteCreateSate());
-  final dbHelper = NoteDatabaseHelper.instance;
+class NoteCreateFirebaseCubit extends Cubit<NoteCreateFirebaseSate> {
+  NoteCreateFirebaseCubit() : super(const NoteCreateFirebaseSate());
+
+  final firebaseHelper = FireBaseHelper();
 
   Future<void> addNote(
     String title,
@@ -22,13 +23,11 @@ class NoteCreateCubit extends Cubit<NoteCreateSate> {
     );
 
     try {
-      Map<String, dynamic> note = {
-        NoteDatabaseHelper.columnTitle: title,
-        NoteDatabaseHelper.columnDescribe: describe,
-        NoteDatabaseHelper.columnColor: color
-      };
-
-      await dbHelper.insertNote(note);
+      await firebaseHelper.addNote(
+        title: title,
+        describe: describe,
+        color: color,
+      );
 
       emit(
         state.copyWith(
@@ -52,11 +51,11 @@ class NoteCreateCubit extends Cubit<NoteCreateSate> {
     );
 
     try {
-      final response = await dbHelper.getNote(id);
+      // final response = await dbHelper.getNote(id);
 
       emit(
         state.copyWith(
-          note: response,
+          // note: response,
           statusGet: LoadingStatus.success,
         ),
       );
@@ -89,12 +88,12 @@ class NoteCreateCubit extends Cubit<NoteCreateSate> {
       //   NoteDatabaseHelper.columnColor: color
       // };
 
-      await dbHelper.updateNote(NoteEntity(
-        id: id,
-        title: title,
-        describe: describe,
-        color: color,
-      ).toDbMap());
+      // await dbHelper.updateNote(NoteEntity(
+      //   id: id,
+      //   title: title,
+      //   describe: describe,
+      //   color: color,
+      // ).toDbMap());
 
       emit(
         state.copyWith(

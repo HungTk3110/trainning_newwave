@@ -7,44 +7,29 @@ import 'package:training_newwave/configs/app_colors.dart';
 import 'package:training_newwave/configs/app_styles.dart';
 import 'package:training_newwave/configs/app_vectors.dart';
 import 'package:training_newwave/model/enums/loading_status.dart';
-import 'package:training_newwave/note_app/note_create/note_create_cubit.dart';
 import 'package:training_newwave/note_app_firebase_storage/note_create_firebase/note_create_firebase_cubit.dart';
 
-class NotesCreateScreen extends StatefulWidget {
-  final int? id;
+class NotesCreateFirebaseScreen extends StatefulWidget {
 
-  const NotesCreateScreen({
+  const NotesCreateFirebaseScreen({
     Key? key,
-    this.id,
   }) : super(key: key);
 
   @override
-  State<NotesCreateScreen> createState() => _NotesCreateScreenState();
+  State<NotesCreateFirebaseScreen> createState() => _NotesCreateFirebaseScreenState();
 }
 
-class _NotesCreateScreenState extends State<NotesCreateScreen> {
+class _NotesCreateFirebaseScreenState extends State<NotesCreateFirebaseScreen> {
   late TextEditingController _titleController;
-
   late TextEditingController _descriptionController;
-  late final NoteCreateCubit _noteCubit;
+  late final NoteCreateFirebaseCubit _noteCubit;
 
   @override
   void initState() {
     super.initState();
-    _noteCubit = NoteCreateCubit();
-
-    _init();
-  }
-
-  void _init() async {
-    await _noteCubit.getNote(widget.id ?? 0);
-    if (widget.id != null) {
-      _titleController = TextEditingController(text: _noteCubit.state.note?.title ?? "");
-      _descriptionController = TextEditingController(text: _noteCubit.state.note?.describe ?? "");
-    } else {
-      _titleController = TextEditingController();
-      _descriptionController = TextEditingController();
-    }
+    _noteCubit = NoteCreateFirebaseCubit();
+    _titleController = TextEditingController();
+    _descriptionController = TextEditingController();
   }
 
   @override
@@ -52,7 +37,7 @@ class _NotesCreateScreenState extends State<NotesCreateScreen> {
     return Scaffold(
       body: BlocProvider(
         create: (context) => _noteCubit,
-        child: BlocBuilder<NoteCreateCubit, NoteCreateSate>(
+        child: BlocBuilder<NoteCreateFirebaseCubit, NoteCreateFirebaseSate>(
           buildWhen: (previous, current) => previous.statusGet != current.statusGet,
           builder: (context, state) {
             return state.statusGet == LoadingStatus.loading
@@ -236,18 +221,10 @@ class _NotesCreateScreenState extends State<NotesCreateScreen> {
                         backgroundColor: AppColors.jungleGreen, // foreground
                       ),
                       onPressed: () {
-                        if (widget.id == null) {
                           saveItem();
                           Navigator.of(context)
                             ..pop()
                             ..pop(true);
-                        } else {
-                          saveItem();
-                          Navigator.of(context)
-                            ..pop()
-                            ..pop()
-                            ..pop(true);
-                        }
                       },
                       child: Text('Save', style: AppTextStyles.whiteS18Medium),
                     )
@@ -269,19 +246,10 @@ class _NotesCreateScreenState extends State<NotesCreateScreen> {
       Colors.cyan.value,
     ];
     final random = Random();
-    if (widget.id == null) {
       await _noteCubit.addNote(
         _titleController.text,
         _descriptionController.text,
         listColor[random.nextInt(listColor.length)],
       );
-    } else {
-      await _noteCubit.updateNote(
-        id: widget.id ?? 0,
-        title: _titleController.text,
-        describe: _descriptionController.text,
-        color: listColor[random.nextInt(listColor.length)],
-      );
-    }
   }
 }

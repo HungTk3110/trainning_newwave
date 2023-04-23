@@ -47,7 +47,9 @@ dependencies:
   path:
   image_picker: ^0.8.7+3
   sqflite: ^2.2.6
-
+  firebase_core: ^1.8.0
+  cloud_firestore: ^2.5.4
+  firebase_core_platform_interface: 4.5.1
 
   flutter:
     sdk: flutter
