@@ -13,7 +13,7 @@ class NoteSearchCubit extends Cubit<NoteSearchSate> {
   Future<void> searchNote(String str) async {
     emit(
       state.copyWith(
-        statusLoadAll: LoadingStatus.loading,
+        loadingStatus: LoadingStatus.loading,
       ),
     );
 
@@ -22,14 +22,14 @@ class NoteSearchCubit extends Cubit<NoteSearchSate> {
 
       emit(
         state.copyWith(
-          statusLoadAll: LoadingStatus.success,
+          loadingStatus: LoadingStatus.success,
           listNote: response,
         ),
       );
     } catch (e) {
       emit(
         state.copyWith(
-          statusLoadAll: LoadingStatus.failure,
+          loadingStatus: LoadingStatus.failure,
         ),
       );
     }

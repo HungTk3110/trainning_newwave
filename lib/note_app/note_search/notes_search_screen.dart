@@ -32,7 +32,7 @@ class _NoteSearchScreenState extends State<NoteSearchScreen> {
         create: (context) => _noteCubit,
         child: BlocBuilder<NoteSearchCubit, NoteSearchSate>(
           buildWhen: (previous, current) =>
-              previous.statusLoadAll != current.statusLoadAll,
+              previous.loadingStatus != current.loadingStatus,
           builder: (context, state) {
             if (kDebugMode) {
               print(state.listNote?.length.toString());
@@ -41,7 +41,7 @@ class _NoteSearchScreenState extends State<NoteSearchScreen> {
               width: double.infinity,
               height: double.infinity,
               color: AppColors.mineShaftApprox,
-              child: state.statusLoadAll == LoadingStatus.loading
+              child: state.loadingStatus == LoadingStatus.loading
                   ? _buildLoading()
                   : SafeArea(
                       child: state.listNote?.isEmpty ?? true
@@ -52,7 +52,7 @@ class _NoteSearchScreenState extends State<NoteSearchScreen> {
                                 const Spacer(
                                   flex: 1,
                                 ),
-                                state.statusLoadAll == LoadingStatus.init
+                                state.loadingStatus == LoadingStatus.init
                                     ? const SizedBox()
                                     : searchNotFound(),
                                 const Spacer(

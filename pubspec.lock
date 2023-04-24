@@ -429,6 +429,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.17.0"
+  isar:
+    dependency: "direct main"
+    description:
+      name: isar
+      sha256: aef9b9dd6ea4f5fca1f6fdc38e76010e4762cdb1400169d99a0b42e8f71e4f8a
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.0"
   js:
     dependency: transitive
     description:

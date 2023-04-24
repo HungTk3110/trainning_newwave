@@ -1,10 +1,10 @@
-part of 'note_search_cubit.dart';
+part of 'note_search_firebase_cubit.dart';
 
-class NoteSearchSate extends Equatable {
+class NoteSearchFirebaseSate extends Equatable {
   final LoadingStatus loadingStatus;
   final List<NoteEntity>? listNote;
 
-  const NoteSearchSate({
+  const NoteSearchFirebaseSate({
     this.loadingStatus = LoadingStatus.init,
     this.listNote,
   });
@@ -15,11 +15,11 @@ class NoteSearchSate extends Equatable {
         listNote,
       ];
 
-  NoteSearchSate copyWith({
+  NoteSearchFirebaseSate copyWith({
     LoadingStatus? loadingStatus,
     List<NoteEntity>? listNote,
   }) {
-    return NoteSearchSate(
+    return NoteSearchFirebaseSate(
       loadingStatus: loadingStatus ?? this.loadingStatus,
       listNote: listNote ?? this.listNote,
     );

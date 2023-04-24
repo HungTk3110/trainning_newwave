@@ -6,12 +6,14 @@ import 'package:training_newwave/configs/app_images.dart';
 import 'package:training_newwave/configs/app_styles.dart';
 import 'package:training_newwave/configs/app_vectors.dart';
 import 'package:training_newwave/model/enums/loading_status.dart';
-import 'package:training_newwave/note_app/note_create/notes_create_screen.dart';
-import 'package:training_newwave/note_app/note_detail/note_detail_screen.dart';
-import 'package:training_newwave/note_app/note_home/note_home_cubit.dart';
 import 'package:training_newwave/note_app/note_search/notes_search_screen.dart';
 import 'package:training_newwave/note_app_firebase_storage/note_create_firebase/notes_create_firebase_screen.dart';
+import 'package:training_newwave/note_app_firebase_storage/note_edit_firebase/notes_edit_firebase_screen.dart';
 import 'package:training_newwave/note_app_firebase_storage/note_home_firebase/note_home_firebase_cubit.dart';
+import 'package:training_newwave/note_app_firebase_storage/note_search_firebase/notes_search_firebase_screen.dart';
+import 'package:training_newwave/note_app_firebase_storage/widget/loading_widget.dart';
+
+import '../widget/item_note_widget.dart';
 
 class NoteHomeFirebaseScreen extends StatefulWidget {
   const NoteHomeFirebaseScreen({Key? key}) : super(key: key);
@@ -46,7 +48,7 @@ class _NoteHomeFirebaseScreenState extends State<NoteHomeFirebaseScreen> {
               width: double.infinity,
               height: double.infinity,
               child: state.loadingStatus == LoadingStatus.loading
-                  ? _buildLoading()
+                  ? const LoadingWidget()
                   : SafeArea(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,7 +57,7 @@ class _NoteHomeFirebaseScreenState extends State<NoteHomeFirebaseScreen> {
                           Expanded(
                             child: state.listNote?.isEmpty ?? true
                                 ? Center(
-                                  child: Column(
+                                    child: Column(
                                       mainAxisAlignment: MainAxisAlignment.start,
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
@@ -71,7 +73,7 @@ class _NoteHomeFirebaseScreenState extends State<NoteHomeFirebaseScreen> {
                                         ),
                                       ],
                                     ),
-                                )
+                                  )
                                 : ListView.separated(
                                     itemCount: state.listNote?.length ?? 0,
                                     padding: const EdgeInsets.only(bottom: 10),
@@ -105,8 +107,8 @@ class _NoteHomeFirebaseScreenState extends State<NoteHomeFirebaseScreen> {
                                               final result = await Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
-                                                  builder: (context) => NoteDetailScreen(
-                                                      id: state.listNote?[index].id ?? 0),
+                                                  builder: (context) => NotesEditFirebaseScreen(
+                                                      id: state.listNote?[index].id),
                                                 ),
                                               );
 
@@ -114,20 +116,9 @@ class _NoteHomeFirebaseScreenState extends State<NoteHomeFirebaseScreen> {
                                                 _noteCubit.getAllNote();
                                               }
                                             },
-                                            child: Container(
-                                              width: double.infinity,
-                                              padding: const EdgeInsets.symmetric(
-                                                horizontal: 45,
-                                                vertical: 25,
-                                              ),
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(10),
-                                                color: Color(color),
-                                              ),
-                                              child: Text(
-                                                state.listNote?[index].title ?? "",
-                                                style: AppTextStyles.blackS12Medium,
-                                              ),
+                                            child: ItemNoteWidget(
+                                              title: state.listNote?[index].title ?? "",
+                                              color: color,
                                             ),
                                           ),
                                         ),
@@ -195,7 +186,7 @@ class _NoteHomeFirebaseScreenState extends State<NoteHomeFirebaseScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const NoteSearchScreen(),
+                    builder: (context) => const NoteSearchFirebaseScreen(),
                   ),
                 );
               },
@@ -278,8 +269,4 @@ class _NoteHomeFirebaseScreenState extends State<NoteHomeFirebaseScreen> {
       ),
     );
   }
-
-  Widget _buildLoading() => const Center(
-        child: CircularProgressIndicator(),
-      );
 }
