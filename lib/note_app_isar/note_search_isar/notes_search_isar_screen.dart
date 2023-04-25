@@ -5,29 +5,29 @@ import 'package:training_newwave/configs/app_colors.dart';
 import 'package:training_newwave/configs/app_images.dart';
 import 'package:training_newwave/configs/app_styles.dart';
 import 'package:training_newwave/model/enums/loading_status.dart';
-import 'package:training_newwave/note_app_firebase_storage/note_edit_firebase/notes_edit_firebase_screen.dart';
-import 'package:training_newwave/note_app_firebase_storage/note_search_firebase/note_search_firebase_cubit.dart';
 import 'package:training_newwave/note_app_firebase_storage/widget/loading_widget.dart';
+import 'package:training_newwave/note_app_isar/note_edit_isar/notes_edit_isar_screen.dart';
+import 'package:training_newwave/note_app_isar/note_search_isar/note_search_isar_cubit.dart';
 
 import '../widget/item_note_isar_widget.dart';
 
-class NoteSearchFirebaseScreen extends StatefulWidget {
-  const NoteSearchFirebaseScreen({
+class NoteSearchIsarScreen extends StatefulWidget {
+  const NoteSearchIsarScreen({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<NoteSearchFirebaseScreen> createState() => _NoteSearchFirebaseScreenState();
+  State<NoteSearchIsarScreen> createState() => _NoteSearchIsarScreenState();
 }
 
-class _NoteSearchFirebaseScreenState extends State<NoteSearchFirebaseScreen> {
-  late final NoteSearchFirebaseCubit _noteCubit;
+class _NoteSearchIsarScreenState extends State<NoteSearchIsarScreen> {
+  late final NoteSearchIsarCubit _noteCubit;
   final TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _noteCubit = NoteSearchFirebaseCubit();
+    _noteCubit = NoteSearchIsarCubit();
   }
 
   @override
@@ -36,7 +36,7 @@ class _NoteSearchFirebaseScreenState extends State<NoteSearchFirebaseScreen> {
       backgroundColor: AppColors.mineShaftApprox,
       body: BlocProvider(
         create: (context) => _noteCubit,
-        child: BlocBuilder<NoteSearchFirebaseCubit, NoteSearchFirebaseSate>(
+        child: BlocBuilder<NoteSearchIsarCubit, NoteSearchIsarSate>(
           buildWhen: (previous, current) => previous.loadingStatus != current.loadingStatus,
           builder: (context, state) {
             if (kDebugMode) {
@@ -74,8 +74,8 @@ class _NoteSearchFirebaseScreenState extends State<NoteSearchFirebaseScreen> {
                                               final result = await Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
-                                                  builder: (context) => NotesEditFirebaseScreen(
-                                                    id: state.listNote?[index].id ?? "",
+                                                  builder: (context) => NotesEditIsarScreen(
+                                                    id: state.listNote?[index].id ?? 0,
                                                   ),
                                                 ),
                                               );

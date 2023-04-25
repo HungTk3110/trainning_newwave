@@ -1,10 +1,10 @@
 part of 'note_search_isar_cubit.dart';
 
-class NoteSearchFirebaseSate extends Equatable {
+class NoteSearchIsarSate extends Equatable {
   final LoadingStatus loadingStatus;
-  final List<NoteEntity>? listNote;
+  final List<NoteIsarEntity>? listNote;
 
-  const NoteSearchFirebaseSate({
+  const NoteSearchIsarSate({
     this.loadingStatus = LoadingStatus.init,
     this.listNote,
   });
@@ -15,11 +15,11 @@ class NoteSearchFirebaseSate extends Equatable {
         listNote,
       ];
 
-  NoteSearchFirebaseSate copyWith({
+  NoteSearchIsarSate copyWith({
     LoadingStatus? loadingStatus,
-    List<NoteEntity>? listNote,
+    List<NoteIsarEntity>? listNote,
   }) {
-    return NoteSearchFirebaseSate(
+    return NoteSearchIsarSate(
       loadingStatus: loadingStatus ?? this.loadingStatus,
       listNote: listNote ?? this.listNote,
     );

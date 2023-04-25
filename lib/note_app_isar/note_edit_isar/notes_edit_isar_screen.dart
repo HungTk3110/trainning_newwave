@@ -3,43 +3,45 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:isar/isar.dart';
 import 'package:training_newwave/configs/app_colors.dart';
 import 'package:training_newwave/configs/app_styles.dart';
 import 'package:training_newwave/configs/app_vectors.dart';
 import 'package:training_newwave/model/enums/loading_status.dart';
-import 'package:training_newwave/note_app_firebase_storage/note_edit_firebase/note_edit_firebase_cubit.dart';
+import 'package:training_newwave/model/note_isar_entity.dart';
 import 'package:training_newwave/note_app_firebase_storage/widget/loading_widget.dart';
+import 'package:training_newwave/note_app_isar/note_edit_isar/note_edit_isar_cubit.dart';
 
-class NotesEditFirebaseScreen extends StatefulWidget {
-  final String id;
+class NotesEditIsarScreen extends StatefulWidget {
+  final Id id;
 
-  const NotesEditFirebaseScreen({
+  const NotesEditIsarScreen({
     Key? key,
     required this.id,
   }) : super(key: key);
 
   @override
-  State<NotesEditFirebaseScreen> createState() => _NotesEditFirebaseScreenState();
+  State<NotesEditIsarScreen> createState() => _NotesEditIsarScreenState();
 }
 
-class _NotesEditFirebaseScreenState extends State<NotesEditFirebaseScreen> {
+class _NotesEditIsarScreenState extends State<NotesEditIsarScreen> {
   late TextEditingController _titleController;
 
   late TextEditingController _descriptionController;
-  late final NoteEditFirebaseCubit _noteCubit;
+  late final NoteEditIsarCubit _noteCubit;
 
   @override
   void initState() {
     super.initState();
-    _noteCubit = NoteEditFirebaseCubit();
+    _noteCubit = NoteEditIsarCubit();
 
     _init();
   }
 
   void _init() async {
     await _noteCubit.getNote(widget.id);
-      _titleController = TextEditingController(text: _noteCubit.state.note?.title ?? "");
-      _descriptionController = TextEditingController(text: _noteCubit.state.note?.describe ?? "");
+    _titleController = TextEditingController(text: _noteCubit.state.note?.title ?? "");
+    _descriptionController = TextEditingController(text: _noteCubit.state.note?.describe ?? "");
   }
 
   @override
@@ -48,7 +50,7 @@ class _NotesEditFirebaseScreenState extends State<NotesEditFirebaseScreen> {
       backgroundColor: AppColors.mineShaftApprox,
       body: BlocProvider(
         create: (context) => _noteCubit,
-        child: BlocBuilder<NoteEditFirebaseCubit, NoteEditFirebaseSate>(
+        child: BlocBuilder<NoteEditIsarCubit, NoteEditIsarSate>(
           buildWhen: (previous, current) => previous.loadingStatus != current.loadingStatus,
           builder: (context, state) {
             return state.loadingStatus == LoadingStatus.loading
@@ -60,7 +62,7 @@ class _NotesEditFirebaseScreenState extends State<NotesEditFirebaseScreen> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          appBarCraeteNote(),
+                          appBarCraeteNote(note: state.note ?? NoteIsarEntity()),
                           Expanded(
                             child: SingleChildScrollView(
                               child: Container(
@@ -117,7 +119,9 @@ class _NotesEditFirebaseScreenState extends State<NotesEditFirebaseScreen> {
     );
   }
 
-  Widget appBarCraeteNote() {
+  Widget appBarCraeteNote({
+    required NoteIsarEntity note,
+  }) {
     return Padding(
       padding: const EdgeInsets.only(
         left: 24,
@@ -148,7 +152,10 @@ class _NotesEditFirebaseScreenState extends State<NotesEditFirebaseScreen> {
           const Spacer(),
           InkWell(
             onTap: () => {
-              openDialogSave(context),
+              openDialogSave(
+                context: context,
+                note: note,
+              ),
             },
             child: Container(
               width: 50,
@@ -169,7 +176,10 @@ class _NotesEditFirebaseScreenState extends State<NotesEditFirebaseScreen> {
     );
   }
 
-  Future openDialogSave(BuildContext context) {
+  Future openDialogSave({
+    required BuildContext context,
+    required NoteIsarEntity note,
+  }) {
     return showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -215,11 +225,12 @@ class _NotesEditFirebaseScreenState extends State<NotesEditFirebaseScreen> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.jungleGreen, // foreground
                       ),
-                      onPressed: () {
-                          saveItem();
-                          Navigator.of(context)
-                            ..pop()
-                            ..pop(true);
+                      onPressed: () async{
+                        await saveItem(note: note);
+                        if (!mounted) return;
+                        Navigator.of(context)
+                          ..pop()
+                          ..pop(true);
                       },
                       child: Text('Save', style: AppTextStyles.whiteS18Medium),
                     )
@@ -233,7 +244,9 @@ class _NotesEditFirebaseScreenState extends State<NotesEditFirebaseScreen> {
     );
   }
 
-  Future<void> saveItem() async {
+  Future<void> saveItem({
+    required NoteIsarEntity note,
+  }) async {
     List<int> listColor = [
       Colors.pinkAccent.value,
       Colors.blue.value,
@@ -241,11 +254,13 @@ class _NotesEditFirebaseScreenState extends State<NotesEditFirebaseScreen> {
       Colors.cyan.value,
     ];
     final random = Random();
-      await _noteCubit.updateNote(
-        id: widget.id,
-        title: _titleController.text,
-        describe: _descriptionController.text,
-        color: listColor[random.nextInt(listColor.length)],
-      );
+    await _noteCubit.updateNote(
+      note: note,
+      title: _titleController.text,
+      describe: _descriptionController.text,
+      color: listColor[random.nextInt(
+        listColor.length,
+      )],
+    );
   }
 }

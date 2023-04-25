@@ -1,7 +1,9 @@
 import 'package:isar/isar.dart';
+part 'note_isar_entity.g.dart';
 
 @collection
 class NoteIsarEntity {
+
   Id id = Isar.autoIncrement;
   String? title;
   String? describe;

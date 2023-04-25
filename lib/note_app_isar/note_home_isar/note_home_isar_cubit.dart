@@ -1,13 +1,15 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:isar/isar.dart';
 import 'package:training_newwave/model/enums/loading_status.dart';
-import 'package:training_newwave/model/note_entity.dart';
-import 'package:training_newwave/note_app_firebase_storage/firebase/firebase_helper.dart';
+import 'package:training_newwave/model/note_isar_entity.dart';
+import 'package:training_newwave/note_app_isar/isar/isar_helper.dart';
 
 part 'note_home_isar_state.dart';
 
-class NoteHomeFirebaseCubit extends Cubit<NoteHomeFirebaseSate> {
-  NoteHomeFirebaseCubit() : super(const NoteHomeFirebaseSate());
+class NoteHomeIsarCubit extends Cubit<NoteHomeIsarSate> {
+  NoteHomeIsarCubit() : super(const NoteHomeIsarSate());
+  IsarHelper isarHelper = IsarHelper.instance;
 
   Future<void> getAllNote() async {
     emit(
@@ -17,7 +19,7 @@ class NoteHomeFirebaseCubit extends Cubit<NoteHomeFirebaseSate> {
     );
 
     try {
-      final response = await FireBaseHelper().getAllNote();
+      final response = await isarHelper.getAllNote();
 
       emit(
         state.copyWith(
@@ -34,7 +36,7 @@ class NoteHomeFirebaseCubit extends Cubit<NoteHomeFirebaseSate> {
     }
   }
 
-  Future<void> deleteNote(String id) async {
+  Future<void> deleteNote(Id id) async {
     emit(
       state.copyWith(
         deleteStatus: LoadingStatus.loading,
@@ -42,8 +44,8 @@ class NoteHomeFirebaseCubit extends Cubit<NoteHomeFirebaseSate> {
     );
 
     try {
-      await FireBaseHelper().deleteNote(id);
-      final response = await FireBaseHelper().getAllNote();
+      await isarHelper.deleteNoteById(id);
+      final response = await isarHelper.getAllNote();
 
       emit(
         state.copyWith(

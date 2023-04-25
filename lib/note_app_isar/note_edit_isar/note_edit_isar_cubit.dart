@@ -1,17 +1,17 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:isar/isar.dart';
 import 'package:training_newwave/model/enums/loading_status.dart';
-import 'package:training_newwave/model/note_entity.dart';
-import 'package:training_newwave/note_app/database/note_database_helper.dart';
-import 'package:training_newwave/note_app_firebase_storage/firebase/firebase_helper.dart';
+import 'package:training_newwave/model/note_isar_entity.dart';
+import 'package:training_newwave/note_app_isar/isar/isar_helper.dart';
 
 part 'note_edit_isar_state.dart';
 
-class NoteEditFirebaseCubit extends Cubit<NoteEditFirebaseSate> {
-  NoteEditFirebaseCubit() : super(const NoteEditFirebaseSate());
+class NoteEditIsarCubit extends Cubit<NoteEditIsarSate> {
+  NoteEditIsarCubit() : super(const NoteEditIsarSate());
+  IsarHelper isarHelper = IsarHelper.instance;
 
-
-  Future<void> getNote(String id) async {
+  Future<void> getNote(Id id) async {
     emit(
       state.copyWith(
         loadingStatus: LoadingStatus.loading,
@@ -19,7 +19,7 @@ class NoteEditFirebaseCubit extends Cubit<NoteEditFirebaseSate> {
     );
 
     try {
-      final response = await FireBaseHelper().getNoteById(id);
+      final response = await isarHelper.getNoteById(id);
 
       emit(
         state.copyWith(
@@ -37,7 +37,7 @@ class NoteEditFirebaseCubit extends Cubit<NoteEditFirebaseSate> {
   }
 
   Future<void> updateNote({
-    required String id,
+    required NoteIsarEntity note,
     required String title,
     required String describe,
     required int color,
@@ -49,12 +49,12 @@ class NoteEditFirebaseCubit extends Cubit<NoteEditFirebaseSate> {
     );
 
     try {
-      await FireBaseHelper().updateNoteById( id,NoteEntity(
-        id: id,
+      await isarHelper.updateNote(
+        note: note,
         title: title,
         describe: describe,
         color: color,
-      ).toDbMap());
+      );
 
       emit(
         state.copyWith(

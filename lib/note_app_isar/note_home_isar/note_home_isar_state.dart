@@ -1,11 +1,11 @@
 part of 'note_home_isar_cubit.dart';
 
-class NoteHomeFirebaseSate extends Equatable {
+class NoteHomeIsarSate extends Equatable {
   final LoadingStatus loadingStatus;
   final LoadingStatus deleteStatus;
-  final List<NoteEntity>? listNote;
+  final List<NoteIsarEntity>? listNote;
 
-  const NoteHomeFirebaseSate({
+  const NoteHomeIsarSate({
     this.loadingStatus = LoadingStatus.init,
     this.deleteStatus = LoadingStatus.init,
     this.listNote,
@@ -18,12 +18,12 @@ class NoteHomeFirebaseSate extends Equatable {
         listNote,
       ];
 
-  NoteHomeFirebaseSate copyWith({
+  NoteHomeIsarSate copyWith({
     LoadingStatus? loadingStatus,
     LoadingStatus? deleteStatus,
-    List<NoteEntity>? listNote,
+    List<NoteIsarEntity>? listNote,
   }) {
-    return NoteHomeFirebaseSate(
+    return NoteHomeIsarSate(
       loadingStatus: loadingStatus ?? this.loadingStatus,
       deleteStatus: deleteStatus ?? this.deleteStatus,
       listNote: listNote ?? this.listNote,

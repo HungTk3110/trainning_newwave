@@ -1,11 +1,11 @@
 part of 'note_edit_isar_cubit.dart';
 
-class NoteEditFirebaseSate extends Equatable {
+class NoteEditIsarSate extends Equatable {
   final LoadingStatus loadingStatus;
   final LoadingStatus loadingStatusUpdate;
-  final NoteEntity? note;
+  final NoteIsarEntity? note;
 
-  const NoteEditFirebaseSate({
+  const NoteEditIsarSate({
     this.loadingStatus = LoadingStatus.init,
     this.loadingStatusUpdate = LoadingStatus.init,
     this.note,
@@ -18,12 +18,12 @@ class NoteEditFirebaseSate extends Equatable {
         note,
       ];
 
-  NoteEditFirebaseSate copyWith({
+  NoteEditIsarSate copyWith({
     LoadingStatus? loadingStatus,
     LoadingStatus? loadingStatusUpdate,
-    NoteEntity? note,
+    NoteIsarEntity? note,
   }) {
-    return NoteEditFirebaseSate(
+    return NoteEditIsarSate(
       loadingStatus: loadingStatus ?? this.loadingStatus,
       loadingStatusUpdate: loadingStatusUpdate ?? this.loadingStatusUpdate,
       note: note ?? this.note,

@@ -28,12 +28,15 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  get:
+  flutter:
+    sdk: flutter
+  intl: any
+  get: any
   flutter_bloc:
-#  bloc: ^8.1.0
-#  bloc_concurrency: ^0.2.0
+  #  bloc: ^8.1.0
+  #  bloc_concurrency: ^0.2.0
   equatable: ^2.0.5
-  http:
+  http: any
   rounded_background_text: ^0.3.0
   carousel_slider:
   cached_network_image: ^3.2.3
@@ -42,19 +45,16 @@ dependencies:
   youtube_player_flutter: ^8.1.2
   provider: ^6.0.5
   shared_preferences: ^2.1.0
-  camera:
-  path_provider:
-  path:
+  camera: any
+  path_provider: any
+  path: any
   image_picker: ^0.8.7+3
   sqflite: ^2.2.6
   firebase_core: ^1.8.0
   cloud_firestore: ^2.5.4
   firebase_core_platform_interface: 4.5.1
   isar: ^3.1.0
-
-  flutter:
-    sdk: flutter
-  intl:
+  isar_flutter_libs: ^3.1.0
 
 
 
@@ -62,7 +62,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   device_preview: ^1.1.0
-  isar_flutter_libs: ^3.1.0
+
 
 dev_dependencies:
   flutter_test:

@@ -7,27 +7,26 @@ import 'package:training_newwave/configs/app_colors.dart';
 import 'package:training_newwave/configs/app_styles.dart';
 import 'package:training_newwave/configs/app_vectors.dart';
 import 'package:training_newwave/model/enums/loading_status.dart';
-import 'package:training_newwave/note_app_firebase_storage/note_create_firebase/note_create_firebase_cubit.dart';
+import 'package:training_newwave/note_app_isar/note_create_isar/note_create_isar_cubit.dart';
 
-class NotesCreateFirebaseScreen extends StatefulWidget {
-
-  const NotesCreateFirebaseScreen({
+class NotesCreateIsarScreen extends StatefulWidget {
+  const NotesCreateIsarScreen({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<NotesCreateFirebaseScreen> createState() => _NotesCreateFirebaseScreenState();
+  State<NotesCreateIsarScreen> createState() => _NotesCreateIsarScreenState();
 }
 
-class _NotesCreateFirebaseScreenState extends State<NotesCreateFirebaseScreen> {
+class _NotesCreateIsarScreenState extends State<NotesCreateIsarScreen> {
   late TextEditingController _titleController;
   late TextEditingController _descriptionController;
-  late final NoteCreateFirebaseCubit _noteCubit;
+  late final NoteCreateIsarCubit _noteCubit;
 
   @override
   void initState() {
     super.initState();
-    _noteCubit = NoteCreateFirebaseCubit();
+    _noteCubit = NoteCreateIsarCubit();
     _titleController = TextEditingController();
     _descriptionController = TextEditingController();
   }
@@ -37,10 +36,10 @@ class _NotesCreateFirebaseScreenState extends State<NotesCreateFirebaseScreen> {
     return Scaffold(
       body: BlocProvider(
         create: (context) => _noteCubit,
-        child: BlocBuilder<NoteCreateFirebaseCubit, NoteCreateFirebaseSate>(
-          buildWhen: (previous, current) => previous.statusGet != current.statusGet,
+        child: BlocBuilder<NoteCreateIsarCubit, NoteCreateIsarSate>(
+          buildWhen: (previous, current) => previous.loadingStatus != current.loadingStatus,
           builder: (context, state) {
-            return state.statusGet == LoadingStatus.loading
+            return state.loadingStatus == LoadingStatus.loading
                 ? const SizedBox()
                 : Container(
                     width: double.infinity,
@@ -220,11 +219,12 @@ class _NotesCreateFirebaseScreenState extends State<NotesCreateFirebaseScreen> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.jungleGreen, // foreground
                       ),
-                      onPressed: () {
-                          saveItem();
-                          Navigator.of(context)
-                            ..pop()
-                            ..pop(true);
+                      onPressed: () async{
+                        await saveItem();
+                        if (!mounted) return;
+                        Navigator.of(context)
+                          ..pop()
+                          ..pop(true);
                       },
                       child: Text('Save', style: AppTextStyles.whiteS18Medium),
                     )
@@ -246,10 +246,10 @@ class _NotesCreateFirebaseScreenState extends State<NotesCreateFirebaseScreen> {
       Colors.cyan.value,
     ];
     final random = Random();
-      await _noteCubit.addNote(
-        _titleController.text,
-        _descriptionController.text,
-        listColor[random.nextInt(listColor.length)],
-      );
+    await _noteCubit.addNote(
+      _titleController.text,
+      _descriptionController.text,
+      listColor[random.nextInt(listColor.length)],
+    );
   }
 }

@@ -1,23 +1,70 @@
 import 'package:isar/isar.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:training_newwave/model/note_isar_entity.dart';
+class IsarHelper {
 
-class FireBaseHelper {
-  static final FireBaseHelper _instance = FireBaseHelper._internal();
-
-  factory FireBaseHelper() => _instance;
-
-  FireBaseHelper._internal();
-
+  IsarHelper._privateConstructor();
+  static final IsarHelper instance = IsarHelper._privateConstructor();
   late Isar isar;
 
-  Future<Isar> init() async {
-
+  Future<void> init() async {
+    final dir = await getApplicationDocumentsDirectory();
     isar = await Isar.open(
-      [NoteIsarEntitySChema],
+      [NoteIsarEntitySchema],
+      directory: dir.path,
       inspector: true,
-      directory: '',
     );
+  }
 
-    return isar;
+  Future<List<NoteIsarEntity>> getAllNote() async {
+    final allNote = await isar.noteIsarEntitys.where().findAll();
+    return allNote;
+  }
+
+  Future<NoteIsarEntity?> getNoteById(Id id) async {
+    final note = isar.noteIsarEntitys.getSync(id);
+    return note;
+  }
+
+  Future<void> insertNote({
+    required String title,
+    required String describe,
+    required int color,
+  }) async {
+    final note = NoteIsarEntity()
+      ..title = title
+      ..describe = describe
+      ..color = color;
+    await isar.writeTxn(() async {
+      await isar.noteIsarEntitys.put(note);
+    });
+  }
+
+  Future<void> deleteNoteById(Id id) async {
+    await isar.writeTxn(() async {
+      await isar.noteIsarEntitys.delete(id);
+    });
+  }
+
+  Future<void> updateNote({
+    required NoteIsarEntity note,
+    required String title,
+    required String describe,
+    required int color,
+  }) async {
+    await isar.writeTxn(() async {
+
+      note
+      ..title = title
+      ..describe = describe
+      ..color = color;
+
+      await isar.noteIsarEntitys.put(note);
+    });
+  }
+
+  Future<List<NoteIsarEntity>> searchNotesByTitle(String title) async{
+    final searchResult = await isar.noteIsarEntitys.filter().titleStartsWith(title).findAll();
+    return searchResult;
   }
 }

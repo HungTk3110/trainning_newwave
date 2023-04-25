@@ -6,29 +6,29 @@ import 'package:training_newwave/configs/app_images.dart';
 import 'package:training_newwave/configs/app_styles.dart';
 import 'package:training_newwave/configs/app_vectors.dart';
 import 'package:training_newwave/model/enums/loading_status.dart';
-import 'package:training_newwave/note_app/note_search/notes_search_screen.dart';
-import 'package:training_newwave/note_app_firebase_storage/note_create_firebase/notes_create_firebase_screen.dart';
-import 'package:training_newwave/note_app_firebase_storage/note_edit_firebase/notes_edit_firebase_screen.dart';
-import 'package:training_newwave/note_app_firebase_storage/note_home_firebase/note_home_firebase_cubit.dart';
 import 'package:training_newwave/note_app_firebase_storage/note_search_firebase/notes_search_firebase_screen.dart';
 import 'package:training_newwave/note_app_firebase_storage/widget/loading_widget.dart';
+import 'package:training_newwave/note_app_isar/note_create_isar/notes_create_isar_screen.dart';
+import 'package:training_newwave/note_app_isar/note_edit_isar/notes_edit_isar_screen.dart';
+import 'package:training_newwave/note_app_isar/note_home_isar/note_home_isar_cubit.dart';
+import 'package:training_newwave/note_app_isar/note_search_isar/notes_search_isar_screen.dart';
 
 import '../widget/item_note_isar_widget.dart';
 
-class NoteHomeFirebaseScreen extends StatefulWidget {
-  const NoteHomeFirebaseScreen({Key? key}) : super(key: key);
+class NoteHomeIsarScreen extends StatefulWidget {
+  const NoteHomeIsarScreen({Key? key}) : super(key: key);
 
   @override
-  State<NoteHomeFirebaseScreen> createState() => _NoteHomeFirebaseScreenState();
+  State<NoteHomeIsarScreen> createState() => _NoteHomeIsarScreenState();
 }
 
-class _NoteHomeFirebaseScreenState extends State<NoteHomeFirebaseScreen> {
-  late final NoteHomeFirebaseCubit _noteCubit;
+class _NoteHomeIsarScreenState extends State<NoteHomeIsarScreen> {
+  late final NoteHomeIsarCubit _noteCubit;
 
   @override
   void initState() {
     super.initState();
-    _noteCubit = NoteHomeFirebaseCubit();
+    _noteCubit = NoteHomeIsarCubit();
     _noteCubit.getAllNote();
   }
 
@@ -38,7 +38,7 @@ class _NoteHomeFirebaseScreenState extends State<NoteHomeFirebaseScreen> {
       backgroundColor: AppColors.mineShaftApprox,
       body: BlocProvider(
         create: (context) => _noteCubit,
-        child: BlocBuilder<NoteHomeFirebaseCubit, NoteHomeFirebaseSate>(
+        child: BlocBuilder<NoteHomeIsarCubit, NoteHomeIsarSate>(
           buildWhen: (previous, current) =>
               previous.loadingStatus != current.loadingStatus ||
               previous.deleteStatus != current.deleteStatus,
@@ -107,8 +107,8 @@ class _NoteHomeFirebaseScreenState extends State<NoteHomeFirebaseScreen> {
                                               final result = await Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
-                                                  builder: (context) => NotesEditFirebaseScreen(
-                                                      id: state.listNote?[index].id),
+                                                  builder: (context) => NotesEditIsarScreen(
+                                                      id: state.listNote?[index].id ?? 0),
                                                 ),
                                               );
 
@@ -143,7 +143,7 @@ class _NoteHomeFirebaseScreenState extends State<NoteHomeFirebaseScreen> {
             final result = await Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const NotesCreateFirebaseScreen(),
+                builder: (context) => const NotesCreateIsarScreen(),
               ),
             );
 
@@ -186,7 +186,7 @@ class _NoteHomeFirebaseScreenState extends State<NoteHomeFirebaseScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const NoteSearchFirebaseScreen(),
+                    builder: (context) => const NoteSearchIsarScreen(),
                   ),
                 );
               },

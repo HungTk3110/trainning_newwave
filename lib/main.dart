@@ -8,12 +8,17 @@ import 'package:training_newwave/movie_app/provider/detail_provider.dart';
 import 'package:training_newwave/movie_app/provider/home_provider.dart';
 import 'package:training_newwave/note_app/note_home/notes_home_screen.dart';
 import 'package:training_newwave/note_app_firebase_storage/note_home_firebase/notes_home_firebase_screen.dart';
+import 'package:training_newwave/note_app_isar/isar/isar_helper.dart';
+import 'package:training_newwave/note_app_isar/note_home_isar/notes_home_isar_screen.dart';
 
 import 'exercise3/exercise3_1.dart';
 import 'exercise4/exercise4.dart';
 import 'movie_app/moive_home_provider.dart';
 
-void main() {
+Future<void> main() async {
+  final IsarHelper isarHelper = IsarHelper.instance;
+  WidgetsFlutterBinding.ensureInitialized();
+  await isarHelper.init();
   runApp(const MyApp());
 }
 
@@ -48,6 +53,12 @@ class HomeMyApp extends StatefulWidget {
 
 class _HomeMyAppState extends State<HomeMyApp> {
   var isThemeLight = true;
+
+  @override
+  void initState()  {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -247,6 +258,27 @@ class _HomeMyAppState extends State<HomeMyApp> {
                 context,
                 MaterialPageRoute(
                   builder: (context) => const NoteHomeFirebaseScreen(),
+                ),
+              );
+            },
+          ),
+          TextButton(
+            style: TextButton.styleFrom(
+              backgroundColor: Colors.red,
+            ),
+            child: Builder(
+              builder: (context) {
+                return const Text(
+                  'NotesApp With Isar',
+                  style: TextStyle(fontSize: 28),
+                );
+              },
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const NoteHomeIsarScreen(),
                 ),
               );
             },
