@@ -22,10 +22,11 @@ class NoteSearchIsarScreen extends StatefulWidget {
 
 class _NoteSearchIsarScreenState extends State<NoteSearchIsarScreen> {
   late final NoteSearchIsarCubit _noteCubit;
-  final TextEditingController _searchController = TextEditingController();
+  late TextEditingController _searchController;
 
   @override
   void initState() {
+    _searchController = TextEditingController();
     super.initState();
     _noteCubit = NoteSearchIsarCubit();
   }

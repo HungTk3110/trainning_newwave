@@ -118,7 +118,9 @@ class _NotesCreateIsarScreenState extends State<NotesCreateIsarScreen> {
       child: Row(
         children: [
           InkWell(
-            onTap: () => {Navigator.pop(context, true)},
+            onTap: () {
+              Navigator.pop(context, true);
+            },
             child: Container(
               width: 50,
               height: 50,
@@ -246,6 +248,7 @@ class _NotesCreateIsarScreenState extends State<NotesCreateIsarScreen> {
       Colors.amber.value,
       Colors.cyan.value,
     ];
+
     final random = Random();
     await _noteCubit.addNote(
       _titleController.text,

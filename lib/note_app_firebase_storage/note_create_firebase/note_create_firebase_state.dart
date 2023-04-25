@@ -13,14 +13,6 @@ class NoteCreateFirebaseSate extends Equatable {
     this.note,
   });
 
-  @override
-  List<Object?> get props => [
-        statusAdd,
-        statusGet,
-        statusUpdate,
-        note,
-      ];
-
   NoteCreateFirebaseSate copyWith({
     LoadingStatus? statusAdd,
     LoadingStatus? statusGet,
@@ -34,4 +26,12 @@ class NoteCreateFirebaseSate extends Equatable {
       note: note ?? this.note,
     );
   }
+
+  @override
+  List<Object?> get props => [
+    statusAdd,
+    statusGet,
+    statusUpdate,
+    note,
+  ];
 }
