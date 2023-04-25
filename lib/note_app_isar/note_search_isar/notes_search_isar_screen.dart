@@ -51,11 +51,13 @@ class _NoteSearchIsarScreenState extends State<NoteSearchIsarScreen> {
                   children: [
                     appHomeBar(),
                     state.loadingStatus == LoadingStatus.init
-                        ? Expanded(child: Center(child: searchNotFound()))
+                        ? const Expanded(child: SizedBox())
                         : state.loadingStatus == LoadingStatus.loading
                             ? const Expanded(child: LoadingWidget())
                             : state.listNote!.isEmpty
-                                ? Expanded(child: Center(child: searchNotFound()))
+                                ? Expanded(
+                                    child: searchNotFound(),
+                                  )
                                 : Expanded(
                                     child: ListView.separated(
                                       itemCount: state.listNote?.length ?? 0,
@@ -105,6 +107,7 @@ class _NoteSearchIsarScreenState extends State<NoteSearchIsarScreen> {
 
   Widget searchNotFound() {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 22),
@@ -140,10 +143,15 @@ class _NoteSearchIsarScreenState extends State<NoteSearchIsarScreen> {
       ),
       child: TextField(
         controller: _searchController,
+        autofocus: true,
         style: AppTextStyles.silverS20Medium,
         textInputAction: TextInputAction.done,
         onChanged: (value) {
-          _noteCubit.searchNote(value);
+          if (value.isNotEmpty) {
+            _noteCubit.searchNote(value);
+          } else {
+            _noteCubit.clearSearch();
+          }
         },
         decoration: InputDecoration(
           border: InputBorder.none,

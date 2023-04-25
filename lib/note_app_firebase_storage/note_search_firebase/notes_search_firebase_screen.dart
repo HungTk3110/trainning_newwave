@@ -105,6 +105,7 @@ class _NoteSearchFirebaseScreenState extends State<NoteSearchFirebaseScreen> {
 
   Widget searchNotFound() {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 22),

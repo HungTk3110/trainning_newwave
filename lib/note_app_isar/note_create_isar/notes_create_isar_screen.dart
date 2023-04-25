@@ -81,6 +81,7 @@ class _NotesCreateIsarScreenState extends State<NotesCreateIsarScreen> {
                                         controller: _descriptionController,
                                         keyboardType: TextInputType.multiline,
                                         maxLines: null,
+                                        expands: true,
                                         textInputAction: TextInputAction.done,
                                         decoration: InputDecoration(
                                           border: InputBorder.none,
@@ -219,7 +220,7 @@ class _NotesCreateIsarScreenState extends State<NotesCreateIsarScreen> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.jungleGreen, // foreground
                       ),
-                      onPressed: () async{
+                      onPressed: () async {
                         await saveItem();
                         if (!mounted) return;
                         Navigator.of(context)
