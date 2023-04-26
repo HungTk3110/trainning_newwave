@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:training_newwave/exercise3/widget/item_girdview_salad.dart';
 import 'package:training_newwave/model/salad_entity.dart';
+
+import 'widget/item_listview_salad.dart';
 
 // ignore: must_be_immutable
 class TrainingC3 extends StatefulWidget {
   var isThemeLight = true;
 
-  TrainingC3({Key? key, required this.isThemeLight}) : super(key: key);
+   TrainingC3({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -19,44 +24,7 @@ class TrainingC3State extends State<TrainingC3> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: widget.isThemeLight ? Colors.white : Colors.black,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_outlined),
-          color: widget.isThemeLight ? Colors.black : Colors.white,
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        title: Text(
-          "Salad",
-          style: TextStyle(
-            color: widget.isThemeLight ? Colors.black : Colors.white,
-          ),
-        ),
-        actions: <Widget>[
-          Container(
-            margin: const EdgeInsets.only(right: 20.0),
-            child: IconButton(
-              color: Colors.black,
-              onPressed: () {
-                setState(() {
-                  if (widget.isThemeLight) {
-                    widget.isThemeLight = false;
-                  } else {
-                    widget.isThemeLight = true;
-                  }
-                });
-              },
-              icon: Icon(
-                Icons.search,
-                color: widget.isThemeLight ? Colors.black : Colors.white,
-              ),
-            ),
-          )
-        ],
-      ),
+      appBar: _appBarWidget(),
       body: RefreshIndicator(
         onRefresh: () {
           setState(() {
@@ -66,87 +34,26 @@ class TrainingC3State extends State<TrainingC3> {
               isRefresh = true;
             }
           });
-          return Future<void>.delayed(const Duration(microseconds: 600));
+          return Future<void>.delayed(
+            const Duration(microseconds: 600),
+          );
         },
         child: SingleChildScrollView(
           padding: const EdgeInsets.only(bottom: 20),
-          scrollDirection: Axis.vertical,
           child: Column(
             children: <Widget>[
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.25,
-                child: ListView.separated(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  shrinkWrap: true,
-                  itemCount: saladItems.length,
-                  scrollDirection: Axis.horizontal,
-                  separatorBuilder: (BuildContext context, int index) {
-                    return const SizedBox(
-                      width: 16,
-                    );
-                  },
-                  itemBuilder: (BuildContext context, int index) {
-                    return Stack(
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width -
-                              MediaQuery.of(context).padding.left,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            image: DecorationImage(
-                              image: AssetImage(saladItems[index].assetImage),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 10,
-                          left: 10,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              SizedBox(
-                                child: Text(
-                                  saladItems[index].title,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 17.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  maxLines: 2,
-                                ),
-                              ),
-                              SizedBox(
-                                child: Text(
-                                  saladItems[index].subtitle,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15.0,
-                                  ),
-                                  maxLines: 2,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
-                    );
-                  },
-                ),
+              _listViewSaladWidget(
+                listSalad: saladItems,
               ),
-              Container(
+              Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.baseline,
-                  textBaseline: TextBaseline.alphabetic,
                   children: [
                     Text(
                       "Sort by",
                       style: TextStyle(
-                        color:
-                            widget.isThemeLight ? Colors.black : Colors.white,
+                        color: widget.isThemeLight ? Colors.black : Colors.white,
                         fontSize: 20.0,
                       ),
                     ),
@@ -170,91 +77,103 @@ class TrainingC3State extends State<TrainingC3> {
                   ],
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: GridView.builder(
-                  itemCount: saladItems.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 15.0,
-                    childAspectRatio: 1 / 1.3,
-                    mainAxisSpacing: 15.0,
-                  ),
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (BuildContext context, int index) {
-                    return Stack(
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width / 2 -
-                              MediaQuery.of(context).padding.horizontal,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            image: DecorationImage(
-                              image: AssetImage(
-                                saladItems[index].assetImage,
-                              ),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 10,
-                          left: 10,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              SizedBox(
-                                width:
-                                    MediaQuery.of(context).size.width / 2 - 40,
-                                child: Text(
-                                  saladItems[index].title,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 17.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  maxLines: 2,
-                                ),
-                              ),
-                              SizedBox(
-                                child: Text(
-                                  saladItems[index].subtitle,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15.0,
-                                  ),
-                                  maxLines: 2,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        Positioned(
-                          right: 10,
-                          top: 10,
-                          child: Container(
-                            padding: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: isRefresh ? Colors.yellow : Colors.red,
-                            ),
-                            child: Icon(
-                              isRefresh ? Icons.search : Icons.bookmark_border,
-                              color: Colors.white,
-                            ),
-                          ),
-                        )
-                      ],
-                    );
-                  },
-                ),
-              )
+              _girdViewSaladWidget(
+                listSalad: saladItems,
+                isRefresh: isRefresh,
+              ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  PreferredSizeWidget _appBarWidget() {
+    return AppBar(
+      elevation: 0,
+      backgroundColor: widget.isThemeLight ? Colors.white : Colors.black,
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back_outlined),
+        color: widget.isThemeLight ? Colors.black : Colors.white,
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ),
+      title: Text(
+        "Salad",
+        style: TextStyle(
+          color: widget.isThemeLight ? Colors.black : Colors.white,
+        ),
+      ),
+      actions: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(right: 20.0),
+          child: IconButton(
+            color: Colors.black,
+            onPressed: () {
+              setState(() {
+                if (widget.isThemeLight) {
+                  widget.isThemeLight = false;
+                } else {
+                  widget.isThemeLight = true;
+                }
+              });
+            },
+            icon: Icon(
+              Icons.search,
+              color: widget.isThemeLight ? Colors.black : Colors.white,
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget _listViewSaladWidget({
+    required List<SaladItem> listSalad,
+  }) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.2,
+      child: ListView.separated(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        shrinkWrap: true,
+        itemCount: listSalad.length,
+        scrollDirection: Axis.horizontal,
+        separatorBuilder: (BuildContext context, int index) {
+          return const SizedBox(
+            width: 16,
+          );
+        },
+        itemBuilder: (BuildContext context, int index) {
+          return ItemListViewSalad(
+            saladItem: listSalad[index],
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _girdViewSaladWidget({
+    required List<SaladItem> listSalad,
+    required bool isRefresh,
+  }) {
+    return GridView.builder(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      itemCount: saladItems.length,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 15.0,
+        childAspectRatio: 1 / 1.4,
+        mainAxisSpacing: 15.0,
+      ),
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (BuildContext context, int index) {
+        return ItemGirdViewSalad(
+          saladItem: listSalad[index],
+          isRefresh: isRefresh,
+        );
+      },
     );
   }
 }

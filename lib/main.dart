@@ -87,9 +87,7 @@ class _HomeMyAppState extends State<HomeMyApp> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => TrainingC3(
-                    isThemeLight: isThemeLight,
-                  ),
+                  builder: (context) => TrainingC3(),
                 ),
               );
             },
