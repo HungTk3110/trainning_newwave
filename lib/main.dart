@@ -6,7 +6,7 @@ import 'package:training_newwave/movie_app/movie_with_getx/moive_home_getx.dart'
 import 'package:training_newwave/movie_app/movie_with_provider/detail_provider.dart';
 import 'package:training_newwave/movie_app/movie_with_provider/home_provider.dart';
 import 'package:training_newwave/movie_app/movie_with_provider/moive_home_provider.dart';
-import 'package:training_newwave/movie_app/movie_with_set_state/moive_home.dart';
+import 'package:training_newwave/movie_app/movie_with_set_state/movie_home.dart';
 import 'package:training_newwave/note_app/note_home/notes_home_screen.dart';
 import 'package:training_newwave/note_app_firebase_storage/note_home_firebase/notes_home_firebase_screen.dart';
 import 'package:training_newwave/note_app_isar/isar/isar_helper.dart';
