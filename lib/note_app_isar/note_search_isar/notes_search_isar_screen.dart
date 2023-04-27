@@ -1,15 +1,14 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:training_newwave/configs/app_colors.dart';
 import 'package:training_newwave/configs/app_images.dart';
 import 'package:training_newwave/configs/app_styles.dart';
 import 'package:training_newwave/model/enums/loading_status.dart';
+import 'package:training_newwave/model/note_isar_entity.dart';
 import 'package:training_newwave/note_app_firebase_storage/widget/loading_widget.dart';
 import 'package:training_newwave/note_app_isar/note_edit_isar/notes_edit_isar_screen.dart';
 import 'package:training_newwave/note_app_isar/note_search_isar/note_search_isar_cubit.dart';
-
-import '../widget/item_note_isar_widget.dart';
+import 'package:training_newwave/note_app_isar/widget/item_note_isar_widget.dart';
 
 class NoteSearchIsarScreen extends StatefulWidget {
   const NoteSearchIsarScreen({
@@ -38,64 +37,26 @@ class _NoteSearchIsarScreenState extends State<NoteSearchIsarScreen> {
       body: BlocProvider(
         create: (context) => _noteCubit,
         child: BlocBuilder<NoteSearchIsarCubit, NoteSearchIsarSate>(
-          buildWhen: (previous, current) => previous.loadingStatus != current.loadingStatus,
+          buildWhen: (previous, current) =>
+              previous.loadingStatus != current.loadingStatus,
           builder: (context, state) {
-            if (kDebugMode) {
-              print(state.listNote?.length.toString());
-            }
             return SizedBox(
-              width: double.infinity,
-              height: double.infinity,
               child: SafeArea(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     appHomeBar(),
-                    state.loadingStatus == LoadingStatus.init
-                        ? const Expanded(child: SizedBox())
-                        : state.loadingStatus == LoadingStatus.loading
-                            ? const Expanded(child: LoadingWidget())
-                            : state.listNote!.isEmpty
-                                ? Expanded(
-                                    child: searchNotFound(),
-                                  )
-                                : Expanded(
-                                    child: ListView.separated(
-                                      itemCount: state.listNote?.length ?? 0,
-                                      scrollDirection: Axis.vertical,
-                                      physics: const AlwaysScrollableScrollPhysics(),
-                                      separatorBuilder: (BuildContext context, int index) {
-                                        return const SizedBox(
-                                          height: 23,
-                                        );
-                                      },
-                                      itemBuilder: (context, index) {
-                                        return Padding(
-                                          padding: const EdgeInsets.symmetric(horizontal: 25),
-                                          child: InkWell(
-                                            onTap: () async {
-                                              final result = await Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) => NotesEditIsarScreen(
-                                                    id: state.listNote?[index].id ?? 0,
-                                                  ),
-                                                ),
-                                              );
-                                              if (result == true) {
-                                                if (!mounted) return;
-                                                Navigator.of(context).pop(true);
-                                              }
-                                            },
-                                            child: ItemNoteWidget(
-                                              title: state.listNote?[index].title ?? "",
-                                              color: state.listNote?[index].color ?? 0,
-                                            ),
-                                          ),
-                                        );
-                                      },
+                    Expanded(
+                      child: state.loadingStatus == LoadingStatus.init
+                          ? const SizedBox()
+                          : state.loadingStatus == LoadingStatus.loading
+                              ? const LoadingWidget()
+                              : state.listNote!.isEmpty
+                                  ? searchNotFound()
+                                  : _listSearchNoteWidget(
+                                      listNote: state.listNote ?? [],
                                     ),
-                                  ),
+                    ),
                   ],
                 ),
               ),
@@ -170,6 +131,42 @@ class _NoteSearchIsarScreenState extends State<NoteSearchIsarScreen> {
           hintStyle: AppTextStyles.silverS20Medium,
         ),
       ),
+    );
+  }
+
+  Widget _listSearchNoteWidget({required List<NoteIsarEntity> listNote}) {
+    return ListView.separated(
+      itemCount: listNote.length,
+      separatorBuilder: (BuildContext context, int index) {
+        return const SizedBox(
+          height: 23,
+        );
+      },
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25),
+          child: InkWell(
+            onTap: () async {
+              final result = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NotesEditIsarScreen(
+                    id: listNote[index].id,
+                  ),
+                ),
+              );
+              if (result == true) {
+                if (!mounted) return;
+                Navigator.of(context).pop(true);
+              }
+            },
+            child: ItemNoteWidget(
+              title: listNote[index].title ?? "",
+              color: listNote[index].color ?? 0,
+            ),
+          ),
+        );
+      },
     );
   }
 }

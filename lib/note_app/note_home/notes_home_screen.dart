@@ -41,8 +41,6 @@ class _NoteHomeScreenState extends State<NoteHomeScreen> {
           builder: (context, state) {
             debugPrint(state.listNote?.length.toString());
             return SizedBox(
-              width: double.infinity,
-              height: double.infinity,
               child: state.loadingStatus == LoadingStatus.loading
                   ? _buildLoading()
                   : SafeArea(
@@ -150,7 +148,7 @@ class _NoteHomeScreenState extends State<NoteHomeScreen> {
             final result = await Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => NotesCreateScreen(),
+                builder: (context) => const NotesCreateScreen(),
               ),
             );
 

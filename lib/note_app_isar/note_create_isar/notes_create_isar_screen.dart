@@ -37,23 +37,21 @@ class _NotesCreateIsarScreenState extends State<NotesCreateIsarScreen> {
       body: BlocProvider(
         create: (context) => _noteCubit,
         child: BlocBuilder<NoteCreateIsarCubit, NoteCreateIsarSate>(
-          buildWhen: (previous, current) => previous.loadingStatus != current.loadingStatus,
+          buildWhen: (previous, current) =>
+              previous.loadingStatus != current.loadingStatus,
           builder: (context, state) {
             return state.loadingStatus == LoadingStatus.loading
                 ? const SizedBox()
                 : Container(
-                    width: double.infinity,
-                    height: double.infinity,
                     color: AppColors.mineShaftApprox,
                     child: SafeArea(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          appBarCraeteNote(),
+                          appBarCreateNote(),
                           Expanded(
                             child: SingleChildScrollView(
                               child: Container(
-                                width: double.infinity,
                                 padding: const EdgeInsets.only(
                                   left: 28,
                                   right: 28,
@@ -62,34 +60,22 @@ class _NotesCreateIsarScreenState extends State<NotesCreateIsarScreen> {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    TextField(
-                                      controller: _titleController,
-                                      keyboardType: TextInputType.multiline,
-                                      maxLines: null,
-                                      autofocus: true,
-                                      textInputAction: TextInputAction.done,
-                                      decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        hintText: 'Title',
-                                        hintStyle: AppTextStyles.dustyGrayS48Medium,
-                                      ),
-                                      style: AppTextStyles.whiteS48Medium,
+                                    _textInputWidget(
+                                      textHint: 'Title',
+                                      textEditingController: _titleController,
+                                      textStyle: AppTextStyles.whiteS48Medium,
+                                      textStyleHint:
+                                          AppTextStyles.dustyGrayS48Medium,
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 36),
-                                      child: TextField(
-                                        controller: _descriptionController,
-                                        keyboardType: TextInputType.multiline,
-                                        maxLines: null,
-                                        expands: true,
-                                        textInputAction: TextInputAction.done,
-                                        decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          hintText: 'Type something...',
-                                          hintStyle: AppTextStyles.dustyGrayS23Medium,
-                                          fillColor: AppColors.dustyGray,
-                                        ),
-                                        style: AppTextStyles.whiteS23Medium,
+                                      child: _textInputWidget(
+                                        textHint: 'Type something...',
+                                        textEditingController:
+                                            _descriptionController,
+                                        textStyle: AppTextStyles.whiteS23Medium,
+                                        textStyleHint:
+                                            AppTextStyles.dustyGrayS23Medium,
                                       ),
                                     ),
                                   ],
@@ -107,7 +93,7 @@ class _NotesCreateIsarScreenState extends State<NotesCreateIsarScreen> {
     );
   }
 
-  Widget appBarCraeteNote() {
+  Widget appBarCreateNote() {
     return Padding(
       padding: const EdgeInsets.only(
         left: 24,
@@ -216,7 +202,8 @@ class _NotesCreateIsarScreenState extends State<NotesCreateIsarScreen> {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: Text('Discard', style: AppTextStyles.whiteS18Medium),
+                      child:
+                          Text('Discard', style: AppTextStyles.whiteS18Medium),
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -254,6 +241,28 @@ class _NotesCreateIsarScreenState extends State<NotesCreateIsarScreen> {
       _titleController.text,
       _descriptionController.text,
       listColor[random.nextInt(listColor.length)],
+    );
+  }
+
+  Widget _textInputWidget({
+    required String textHint,
+    required TextEditingController textEditingController,
+    required TextStyle textStyle,
+    required TextStyle textStyleHint,
+  }) {
+    return TextField(
+      controller: textEditingController,
+      keyboardType: TextInputType.multiline,
+      maxLines: null,
+      autofocus: true,
+      textInputAction: TextInputAction.done,
+      decoration: InputDecoration(
+        border: InputBorder.none,
+        hintText: textHint,
+        hintStyle: textStyleHint,
+        fillColor: AppColors.dustyGray,
+      ),
+      style: textStyle,
     );
   }
 }

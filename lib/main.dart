@@ -6,6 +6,7 @@ import 'package:training_newwave/movie_app/movie_with_getx/moive_home_getx.dart'
 import 'package:training_newwave/movie_app/movie_with_set_state/moive_home.dart';
 import 'package:training_newwave/movie_app/provider/detail_provider.dart';
 import 'package:training_newwave/movie_app/provider/home_provider.dart';
+import 'package:training_newwave/movie_app/provider/moive_home_provider.dart';
 import 'package:training_newwave/note_app/note_home/notes_home_screen.dart';
 import 'package:training_newwave/note_app_firebase_storage/note_home_firebase/notes_home_firebase_screen.dart';
 import 'package:training_newwave/note_app_isar/isar/isar_helper.dart';
@@ -13,7 +14,6 @@ import 'package:training_newwave/note_app_isar/note_home_isar/notes_home_isar_sc
 
 import 'exercise3/exercise3_1.dart';
 import 'exercise4/exercise4.dart';
-import 'movie_app/moive_home_provider.dart';
 
 Future<void> main() async {
   final IsarHelper isarHelper = IsarHelper.instance;
@@ -55,7 +55,7 @@ class _HomeMyAppState extends State<HomeMyApp> {
   var isThemeLight = true;
 
   @override
-  void initState()  {
+  void initState() {
     // TODO: implement initState
     super.initState();
   }

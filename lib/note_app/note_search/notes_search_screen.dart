@@ -1,12 +1,15 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:training_newwave/configs/app_colors.dart';
 import 'package:training_newwave/configs/app_images.dart';
 import 'package:training_newwave/configs/app_styles.dart';
 import 'package:training_newwave/model/enums/loading_status.dart';
+import 'package:training_newwave/model/note_entity.dart';
 import 'package:training_newwave/note_app/note_detail/note_detail_screen.dart';
 import 'package:training_newwave/note_app/note_search/note_search_cubit.dart';
+import 'package:training_newwave/note_app_isar/widget/item_note_isar_widget.dart';
+import 'package:training_newwave/note_app_isar/widget/loading_isar_widget.dart';
+
 
 class NoteSearchScreen extends StatefulWidget {
   const NoteSearchScreen({Key? key}) : super(key: key);
@@ -28,109 +31,33 @@ class _NoteSearchScreenState extends State<NoteSearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.mineShaftApprox,
       body: BlocProvider(
         create: (context) => _noteCubit,
         child: BlocBuilder<NoteSearchCubit, NoteSearchSate>(
           buildWhen: (previous, current) =>
               previous.loadingStatus != current.loadingStatus,
           builder: (context, state) {
-            if (kDebugMode) {
-              print(state.listNote?.length.toString());
-            }
-            return Container(
-              width: double.infinity,
-              height: double.infinity,
-              color: AppColors.mineShaftApprox,
-              child: state.loadingStatus == LoadingStatus.loading
-                  ? _buildLoading()
-                  : SafeArea(
-                      child: state.listNote?.isEmpty ?? true
-                          ? Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                appHomeBar(),
-                                const Spacer(
-                                  flex: 1,
-                                ),
-                                state.loadingStatus == LoadingStatus.init
-                                    ? const SizedBox()
-                                    : searchNotFound(),
-                                const Spacer(
-                                  flex: 2,
-                                ),
-                              ],
-                            )
-                          : Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                appHomeBar(),
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(bottom: 10),
-                                    child: ListView.separated(
-                                      itemCount: state.listNote?.length ?? 0,
-                                      scrollDirection: Axis.vertical,
-                                      physics:
-                                          const AlwaysScrollableScrollPhysics(),
-                                      separatorBuilder:
-                                          (BuildContext context, int index) {
-                                        return const SizedBox(
-                                          height: 23,
-                                        );
-                                      },
-                                      itemBuilder: (context, index) {
-                                        int color =
-                                            state.listNote?[index].color ?? 0;
-                                        return Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 25),
-                                          child: InkWell(
-                                            onTap: () async {
-                                              final result =
-                                                  await Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      NoteDetailScreen(
-                                                    id: state.listNote?[index]
-                                                            .id ??
-                                                        0,
-                                                  ),
-                                                ),
-                                              );
-                                              if (result == true) {
-                                                if (!mounted) return;
-                                                Navigator.of(context).pop(true);
-                                              }
-                                            },
-                                            child: Container(
-                                              width: double.infinity,
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                horizontal: 45,
-                                                vertical: 25,
-                                              ),
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                color: Color(color),
-                                              ),
-                                              child: Text(
-                                                state.listNote?[index].title ??
-                                                    "",
-                                                style: AppTextStyles
-                                                    .blackS12Medium,
-                                              ),
-                                            ),
-                                          ),
-                                        );
-                                      },
+            return SizedBox(
+              child: SafeArea(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    appHomeBar(),
+                    Expanded(
+                      child: state.loadingStatus == LoadingStatus.init
+                          ? const SizedBox()
+                          : state.loadingStatus == LoadingStatus.loading
+                              ? const LoadingWidget()
+                              : state.listNote!.isEmpty
+                                  ? searchNotFound()
+                                  : _listSearchNoteWidget(
+                                      listNote: state.listNote ?? [],
                                     ),
-                                  ),
-                                ),
-                              ],
-                            ),
                     ),
+                  ],
+                ),
+              ),
             );
           },
         ),
@@ -198,5 +125,39 @@ class _NoteSearchScreenState extends State<NoteSearchScreen> {
     );
   }
 
-  Widget _buildLoading() => const Center(child: CircularProgressIndicator());
+  Widget _listSearchNoteWidget({required List<NoteEntity> listNote}) {
+    return ListView.separated(
+      itemCount: listNote.length,
+      separatorBuilder: (BuildContext context, int index) {
+        return const SizedBox(
+          height: 23,
+        );
+      },
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25),
+          child: InkWell(
+            onTap: () async {
+              final result = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NoteDetailScreen(
+                    id: listNote[index].id,
+                  ),
+                ),
+              );
+              if (result == true) {
+                if (!mounted) return;
+                Navigator.of(context).pop(true);
+              }
+            },
+            child: ItemNoteWidget(
+              title: listNote[index].title ?? "",
+              color: listNote[index].color ?? 0,
+            ),
+          ),
+        );
+      },
+    );
+  }
 }

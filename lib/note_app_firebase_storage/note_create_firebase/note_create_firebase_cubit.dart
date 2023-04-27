@@ -18,7 +18,7 @@ class NoteCreateFirebaseCubit extends Cubit<NoteCreateFirebaseSate> {
   ) async {
     emit(
       state.copyWith(
-        statusAdd: LoadingStatus.loading,
+        loadingStatus: LoadingStatus.loading,
       ),
     );
 
@@ -31,79 +31,13 @@ class NoteCreateFirebaseCubit extends Cubit<NoteCreateFirebaseSate> {
 
       emit(
         state.copyWith(
-          statusAdd: LoadingStatus.success,
+          loadingStatus: LoadingStatus.success,
         ),
       );
     } catch (e) {
       emit(
         state.copyWith(
-          statusAdd: LoadingStatus.failure,
-        ),
-      );
-    }
-  }
-
-  Future<void> getNote(int id) async {
-    emit(
-      state.copyWith(
-        statusGet: LoadingStatus.loading,
-      ),
-    );
-
-    try {
-      // final response = await dbHelper.getNote(id);
-
-      emit(
-        state.copyWith(
-          // note: response,
-          statusGet: LoadingStatus.success,
-        ),
-      );
-    } catch (e) {
-      emit(
-        state.copyWith(
-          statusGet: LoadingStatus.failure,
-        ),
-      );
-    }
-  }
-
-  Future<void> updateNote({
-    required int id,
-    required String title,
-    required String describe,
-    required int color,
-  }) async {
-    emit(
-      state.copyWith(
-        statusUpdate: LoadingStatus.loading,
-      ),
-    );
-
-    try {
-      // Map<String, dynamic> note = {
-      //   NoteDatabaseHelper.columnId: id,
-      //   NoteDatabaseHelper.columnTitle: title,
-      //   NoteDatabaseHelper.columnDescribe: describe,
-      //   NoteDatabaseHelper.columnColor: color
-      // };
-
-      // await dbHelper.updateNote(NoteEntity(
-      //   id: id,
-      //   title: title,
-      //   describe: describe,
-      //   color: color,
-      // ).toDbMap());
-
-      emit(
-        state.copyWith(
-          statusUpdate: LoadingStatus.success,
-        ),
-      );
-    } catch (e) {
-      emit(
-        state.copyWith(
-          statusUpdate: LoadingStatus.failure,
+          loadingStatus: LoadingStatus.failure,
         ),
       );
     }

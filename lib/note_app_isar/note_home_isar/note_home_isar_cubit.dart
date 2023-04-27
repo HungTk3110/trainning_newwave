@@ -39,7 +39,7 @@ class NoteHomeIsarCubit extends Cubit<NoteHomeIsarSate> {
   Future<void> deleteNote(Id id) async {
     emit(
       state.copyWith(
-        deleteStatus: LoadingStatus.loading,
+        loadingDeleteStatus: LoadingStatus.loading,
       ),
     );
 
@@ -50,13 +50,13 @@ class NoteHomeIsarCubit extends Cubit<NoteHomeIsarSate> {
       emit(
         state.copyWith(
           listNote: response,
-          deleteStatus: LoadingStatus.success,
+          loadingDeleteStatus: LoadingStatus.success,
         ),
       );
     } catch (e) {
       emit(
         state.copyWith(
-          deleteStatus: LoadingStatus.failure,
+          loadingDeleteStatus: LoadingStatus.failure,
         ),
       );
     }

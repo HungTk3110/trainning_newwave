@@ -37,7 +37,7 @@ class NoteHomeFirebaseCubit extends Cubit<NoteHomeFirebaseSate> {
   Future<void> deleteNote(String id) async {
     emit(
       state.copyWith(
-        deleteStatus: LoadingStatus.loading,
+        loadingDeleteStatus: LoadingStatus.loading,
       ),
     );
 
@@ -48,13 +48,13 @@ class NoteHomeFirebaseCubit extends Cubit<NoteHomeFirebaseSate> {
       emit(
         state.copyWith(
           listNote: response,
-          deleteStatus: LoadingStatus.success,
+          loadingDeleteStatus: LoadingStatus.success,
         ),
       );
     } catch (e) {
       emit(
         state.copyWith(
-          deleteStatus: LoadingStatus.failure,
+          loadingDeleteStatus: LoadingStatus.failure,
         ),
       );
     }

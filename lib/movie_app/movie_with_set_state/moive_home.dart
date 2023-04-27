@@ -9,6 +9,7 @@ import 'package:training_newwave/model/popular_entity.dart';
 import 'package:training_newwave/movie_app/networks/api_service.dart';
 import 'package:training_newwave/movie_app/widget/indicator.dart';
 import 'package:training_newwave/movie_app/widget/item_category_home.dart';
+import 'package:training_newwave/movie_app/widget/loading_widget.dart';
 
 import '../widget/image_carouseslide.dart';
 
@@ -211,7 +212,7 @@ class _Movie_HomeState extends State<MovieHome> {
     required List<Movie> listMovie,
   }) {
     return listMovie.isEmpty
-        ? const SizedBox()
+        ? const LoadingWidget()
         : CarouselSlider.builder(
             itemCount: listMovie.length,
             options: CarouselOptions(
@@ -235,7 +236,7 @@ class _Movie_HomeState extends State<MovieHome> {
 
   Widget slideShowBottom(List<Movie> list) {
     return list.isEmpty
-        ? const SizedBox()
+        ? const LoadingWidget()
         : CarouselSlider.builder(
             itemCount: list.length,
             options: CarouselOptions(

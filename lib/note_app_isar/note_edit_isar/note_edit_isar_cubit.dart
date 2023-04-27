@@ -44,7 +44,7 @@ class NoteEditIsarCubit extends Cubit<NoteEditIsarSate> {
   }) async {
     emit(
       state.copyWith(
-        loadingStatusUpdate: LoadingStatus.loading,
+        loadingUpdateStatus: LoadingStatus.loading,
       ),
     );
 
@@ -58,13 +58,13 @@ class NoteEditIsarCubit extends Cubit<NoteEditIsarSate> {
 
       emit(
         state.copyWith(
-          loadingStatusUpdate: LoadingStatus.success,
+          loadingUpdateStatus: LoadingStatus.success,
         ),
       );
     } catch (e) {
       emit(
         state.copyWith(
-          loadingStatusUpdate: LoadingStatus.failure,
+          loadingUpdateStatus: LoadingStatus.failure,
         ),
       );
     }

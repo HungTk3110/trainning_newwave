@@ -60,7 +60,7 @@ class _NotesEditFirebaseScreenState extends State<NotesEditFirebaseScreen> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          appBarCraeteNote(),
+                          appBarEditNote(),
                           Expanded(
                             child: SingleChildScrollView(
                               child: Container(
@@ -73,33 +73,22 @@ class _NotesEditFirebaseScreenState extends State<NotesEditFirebaseScreen> {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    TextField(
-                                      controller: _titleController,
-                                      keyboardType: TextInputType.multiline,
-                                      maxLines: null,
-                                      autofocus: true,
-                                      textInputAction: TextInputAction.done,
-                                      decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        hintText: 'Title',
-                                        hintStyle: AppTextStyles.dustyGrayS48Medium,
-                                      ),
-                                      style: AppTextStyles.whiteS48Medium,
+                                    _textInputWidget(
+                                      textHint: 'Title',
+                                      textEditingController: _titleController,
+                                      textStyle: AppTextStyles.whiteS48Medium,
+                                      textStyleHint:
+                                      AppTextStyles.dustyGrayS48Medium,
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 36),
-                                      child: TextField(
-                                        controller: _descriptionController,
-                                        keyboardType: TextInputType.multiline,
-                                        maxLines: null,
-                                        textInputAction: TextInputAction.done,
-                                        decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          hintText: 'Type something...',
-                                          hintStyle: AppTextStyles.dustyGrayS23Medium,
-                                          fillColor: AppColors.dustyGray,
-                                        ),
-                                        style: AppTextStyles.whiteS23Medium,
+                                      child: _textInputWidget(
+                                        textHint: 'Type something...',
+                                        textEditingController:
+                                        _descriptionController,
+                                        textStyle: AppTextStyles.whiteS23Medium,
+                                        textStyleHint:
+                                        AppTextStyles.dustyGrayS23Medium,
                                       ),
                                     ),
                                   ],
@@ -117,7 +106,7 @@ class _NotesEditFirebaseScreenState extends State<NotesEditFirebaseScreen> {
     );
   }
 
-  Widget appBarCraeteNote() {
+  Widget appBarEditNote() {
     return Padding(
       padding: const EdgeInsets.only(
         left: 24,
@@ -247,5 +236,27 @@ class _NotesEditFirebaseScreenState extends State<NotesEditFirebaseScreen> {
         describe: _descriptionController.text,
         color: listColor[random.nextInt(listColor.length)],
       );
+  }
+
+  Widget _textInputWidget({
+    required String textHint,
+    required TextEditingController textEditingController,
+    required TextStyle textStyle,
+    required TextStyle textStyleHint,
+  }) {
+    return TextField(
+      controller: textEditingController,
+      keyboardType: TextInputType.multiline,
+      maxLines: null,
+      autofocus: true,
+      textInputAction: TextInputAction.done,
+      decoration: InputDecoration(
+        border: InputBorder.none,
+        hintText: textHint,
+        hintStyle: textStyleHint,
+        fillColor: AppColors.dustyGray,
+      ),
+      style: textStyle,
+    );
   }
 }

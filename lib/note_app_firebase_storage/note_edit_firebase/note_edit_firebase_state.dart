@@ -2,30 +2,30 @@ part of 'note_edit_firebase_cubit.dart';
 
 class NoteEditFirebaseSate extends Equatable {
   final LoadingStatus loadingStatus;
-  final LoadingStatus loadingStatusUpdate;
+  final LoadingStatus loadingUpdateStatus;
   final NoteEntity? note;
 
   const NoteEditFirebaseSate({
     this.loadingStatus = LoadingStatus.init,
-    this.loadingStatusUpdate = LoadingStatus.init,
+    this.loadingUpdateStatus = LoadingStatus.init,
     this.note,
   });
 
   @override
   List<Object?> get props => [
         loadingStatus,
-        loadingStatusUpdate,
+        loadingUpdateStatus,
         note,
       ];
 
   NoteEditFirebaseSate copyWith({
     LoadingStatus? loadingStatus,
-    LoadingStatus? loadingStatusUpdate,
+    LoadingStatus? loadingUpdateStatus,
     NoteEntity? note,
   }) {
     return NoteEditFirebaseSate(
       loadingStatus: loadingStatus ?? this.loadingStatus,
-      loadingStatusUpdate: loadingStatusUpdate ?? this.loadingStatusUpdate,
+      loadingUpdateStatus: loadingUpdateStatus ?? this.loadingUpdateStatus,
       note: note ?? this.note,
     );
   }

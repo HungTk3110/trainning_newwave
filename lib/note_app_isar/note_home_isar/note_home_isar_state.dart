@@ -2,30 +2,30 @@ part of 'note_home_isar_cubit.dart';
 
 class NoteHomeIsarSate extends Equatable {
   final LoadingStatus loadingStatus;
-  final LoadingStatus deleteStatus;
+  final LoadingStatus loadingDeleteStatus;
   final List<NoteIsarEntity>? listNote;
 
   const NoteHomeIsarSate({
     this.loadingStatus = LoadingStatus.init,
-    this.deleteStatus = LoadingStatus.init,
+    this.loadingDeleteStatus = LoadingStatus.init,
     this.listNote,
   });
 
   @override
   List<Object?> get props => [
         loadingStatus,
-        deleteStatus,
+        loadingDeleteStatus,
         listNote,
       ];
 
   NoteHomeIsarSate copyWith({
     LoadingStatus? loadingStatus,
-    LoadingStatus? deleteStatus,
+    LoadingStatus? loadingDeleteStatus,
     List<NoteIsarEntity>? listNote,
   }) {
     return NoteHomeIsarSate(
       loadingStatus: loadingStatus ?? this.loadingStatus,
-      deleteStatus: deleteStatus ?? this.deleteStatus,
+      loadingDeleteStatus: loadingDeleteStatus ?? this.loadingDeleteStatus,
       listNote: listNote ?? this.listNote,
     );
   }

@@ -8,10 +8,11 @@ import 'package:training_newwave/configs/app_vectors.dart';
 import 'package:training_newwave/model/enums/loading_status.dart';
 import 'package:training_newwave/model/movie_collection_entity.dart';
 import 'package:training_newwave/model/popular_entity.dart';
-import 'package:training_newwave/movie_app/provider/home_provider.dart';
+import 'package:training_newwave/movie_app/movie_with_provider/home_provider.dart';
 import 'package:training_newwave/movie_app/widget/image_carouseslide_provider.dart';
 import 'package:training_newwave/movie_app/widget/indicator.dart';
 import 'package:training_newwave/movie_app/widget/item_category_home.dart';
+import 'package:training_newwave/movie_app/widget/loading_widget.dart';
 
 class MovieHomeProvider extends StatefulWidget {
   const MovieHomeProvider({Key? key}) : super(key: key);
@@ -24,14 +25,15 @@ class MovieHomeProvider extends StatefulWidget {
 class _Movie_HomeState extends State<MovieHomeProvider> {
   int currentPosTop = 0;
   int currentPosBottom = 0;
-
   List<MovieCollection> listCollection = [];
+  late HomeProvider homeProvider;
 
   @override
   void initState() {
     super.initState();
     listCollection = listCollectionEntity;
-    Provider.of<HomeProvider>(context, listen: false).getAllMovies();
+    homeProvider = Provider.of<HomeProvider>(context, listen: false);
+    homeProvider.getAllMovies();
   }
 
   @override
@@ -139,19 +141,20 @@ class _Movie_HomeState extends State<MovieHomeProvider> {
                 SizedBox(
                   width: double.infinity,
                   height: 150,
-                  child: Selector<HomeProvider, LoadingStatus>(
-                    selector: (_, provider) => provider.loadListPopularStatus,
-                    builder: (context, loadListPopularStatus, child) {
-                      List<Movie> listMovie =
-                          Provider.of<HomeProvider>(context, listen: false)
-                              .listMovies;
-                      return loadListPopularStatus == LoadingStatus.loading
-                          ? const SizedBox()
-                          : slideShowTop(
-                              listMovie: listMovie,
-                            );
-                    },
-                  ),
+                  child: homeProvider.listMovies.isEmpty
+                      ? const LoadingWidget()
+                      : Selector<HomeProvider, LoadingStatus>(
+                          selector: (_, provider) =>
+                              provider.loadListPopularStatus,
+                          builder: (context, loadListPopularStatus, child) {
+                            return loadListPopularStatus ==
+                                    LoadingStatus.loading
+                                ? const SizedBox()
+                                : slideShowTop(
+                                    listMovie: homeProvider.listMovies,
+                                  );
+                          },
+                        ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(
@@ -161,13 +164,11 @@ class _Movie_HomeState extends State<MovieHomeProvider> {
                   child: Selector<HomeProvider, LoadingStatus>(
                     selector: (_, provider) => provider.loadListPopularStatus,
                     builder: (context, loadListPopularStatus, child) {
-                      List<Movie> listMovie =
-                          Provider.of<HomeProvider>(context, listen: false)
-                              .listMovies;
                       return loadListPopularStatus == LoadingStatus.loading
                           ? const SizedBox()
                           : Indicator(
-                              listMovie: listMovie, currentPos: currentPosTop);
+                              listMovie: homeProvider.listMovies,
+                              currentPos: currentPosTop);
                     },
                   ),
                 ),
@@ -206,12 +207,9 @@ class _Movie_HomeState extends State<MovieHomeProvider> {
                 Selector<HomeProvider, LoadingStatus>(
                   selector: (_, provider) => provider.loadListPopularStatus,
                   builder: (context, loadListPopularStatus, child) {
-                    List<Movie> listMovie =
-                        Provider.of<HomeProvider>(context, listen: false)
-                            .listMovies;
-                    return loadListPopularStatus == LoadingStatus.loading
-                        ? const SizedBox()
-                        : slideShowBottom(listMovie);
+                    return homeProvider.listMovies.isEmpty
+                        ? const LoadingWidget()
+                        : slideShowBottom(homeProvider.listMovies);
                   },
                 ),
                 Padding(
@@ -222,13 +220,10 @@ class _Movie_HomeState extends State<MovieHomeProvider> {
                   child: Selector<HomeProvider, LoadingStatus>(
                     selector: (_, provider) => provider.loadListPopularStatus,
                     builder: (context, loadListPopularStatus, child) {
-                      List<Movie> listMovie =
-                          Provider.of<HomeProvider>(context, listen: false)
-                              .listMovies;
                       return loadListPopularStatus == LoadingStatus.loading
                           ? const SizedBox()
                           : Indicator(
-                              listMovie: listMovie,
+                              listMovie: homeProvider.listMovies,
                               currentPos: currentPosBottom);
                     },
                   ),
