@@ -5,10 +5,10 @@ import 'package:training_newwave/configs/app_colors.dart';
 import 'package:training_newwave/configs/app_styles.dart';
 import 'package:training_newwave/model/movie_collection_entity.dart';
 
-class ItemCategoryHome extends StatelessWidget {
+class ItemCollectionHome extends StatelessWidget {
   final MovieCollection movieCollection;
 
-  const ItemCategoryHome({
+  const ItemCollectionHome({
     Key? key,
     required this.movieCollection,
   }) : super(key: key);

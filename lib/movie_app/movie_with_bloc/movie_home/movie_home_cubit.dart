@@ -32,4 +32,24 @@ class MovieHomeCubit extends Cubit<MovieHomeState> {
       );
     }
   }
+
+  void setCurrentPosTop({
+    required int currentPosTop,
+  }) {
+    emit(
+      state.copyWith(
+        currentPosTop: currentPosTop,
+      ),
+    );
+  }
+
+  void setCurrentPosBottom({
+    required int currentPosBottom,
+  }) {
+    emit(
+      state.copyWith(
+        currentPosTop: currentPosBottom,
+      ),
+    );
+  }
 }

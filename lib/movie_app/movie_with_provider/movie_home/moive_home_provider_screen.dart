@@ -1,28 +1,28 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:training_newwave/configs/app_colors.dart';
-import 'package:training_newwave/configs/app_styles.dart';
-import 'package:training_newwave/configs/app_vectors.dart';
 import 'package:training_newwave/model/enums/loading_status.dart';
 import 'package:training_newwave/model/movie_collection_entity.dart';
 import 'package:training_newwave/model/popular_entity.dart';
-import 'package:training_newwave/movie_app/movie_with_provider/home_provider.dart';
+import 'package:training_newwave/movie_app/movie_with_provider/movie_home/movie_home_provider.dart';
+import 'package:training_newwave/movie_app/widget/app_bar_movie.dart';
 import 'package:training_newwave/movie_app/widget/image_carouseslide_provider.dart';
 import 'package:training_newwave/movie_app/widget/indicator.dart';
-import 'package:training_newwave/movie_app/widget/item_category_home.dart';
+import 'package:training_newwave/movie_app/widget/list_category_widget.dart';
 import 'package:training_newwave/movie_app/widget/loading_widget.dart';
+import 'package:training_newwave/movie_app/widget/search_movie_widget.dart';
+import 'package:training_newwave/movie_app/widget/text_mostpopular_widget.dart';
+import 'package:training_newwave/movie_app/widget/text_upcoming_widget.dart';
 
 class MovieHomeProvider extends StatefulWidget {
   const MovieHomeProvider({Key? key}) : super(key: key);
 
   @override
-  State<MovieHomeProvider> createState() => _Movie_HomeState();
+  State<MovieHomeProvider> createState() => _MovieHomeState();
 }
 
-// ignore: camel_case_types
-class _Movie_HomeState extends State<MovieHomeProvider> {
+class _MovieHomeState extends State<MovieHomeProvider> {
   int currentPosTop = 0;
   int currentPosBottom = 0;
   List<MovieCollection> listCollection = [];
@@ -58,86 +58,9 @@ class _Movie_HomeState extends State<MovieHomeProvider> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 65,
-                    right: 65,
-                    top: 24,
-                  ),
-                  child: Row(
-                    children: [
-                      RichText(
-                        text: TextSpan(
-                          style: AppTextStyles.whiteS18Medium,
-                          children: <TextSpan>[
-                            const TextSpan(text: "Hello, "),
-                            TextSpan(
-                              text: "jane!",
-                              style: AppTextStyles.whiteS18Bold,
-                            )
-                          ],
-                        ),
-                      ),
-                      const Spacer(),
-                      SvgPicture.asset(
-                        AppVectors.icNotification,
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(
-                    top: 20,
-                    left: 50,
-                    right: 50,
-                  ),
-                  padding: const EdgeInsets.only(
-                    top: 14,
-                    right: 17,
-                    bottom: 14,
-                  ),
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: AppColors.white20,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      prefixIcon: SvgPicture.asset(
-                        AppVectors.icSearch,
-                      ),
-                      hintText: "Search",
-                      contentPadding: const EdgeInsets.only(bottom: 10),
-                      hintStyle: AppTextStyles.white50S18Medium,
-                      suffixIcon: SizedBox(
-                        width: 1,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SvgPicture.asset(
-                              AppVectors.icLine1,
-                            ),
-                            SvgPicture.asset(
-                              AppVectors.icVoice,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 50,
-                    top: 26,
-                    bottom: 15,
-                  ),
-                  child: Text(
-                    "Most Popular",
-                    style: AppTextStyles.whiteS18Bold,
-                  ),
-                ),
+                const AppBarMovie(),
+                const SearchMovieWidget(),
+                const TextMostPopularWidget(),
                 SizedBox(
                   width: double.infinity,
                   height: 150,
@@ -172,38 +95,10 @@ class _Movie_HomeState extends State<MovieHomeProvider> {
                     },
                   ),
                 ),
-                SizedBox(
-                  height: 110,
-                  child: Center(
-                    child: ListView.separated(
-                      itemCount: listCollection.length,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      physics: const NeverScrollableScrollPhysics(),
-                      separatorBuilder: (context, index) {
-                        return const SizedBox(width: 12);
-                      },
-                      itemBuilder: (context, index) {
-                        return SizedBox(
-                          child: ItemCategoryHome(
-                            movieCollection: listCollection[index],
-                          ),
-                        );
-                      },
-                    ),
-                  ),
+                ListCategoryWidget(
+                  listCollection: listCollection,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 50,
-                    top: 26,
-                    bottom: 15,
-                  ),
-                  child: Text(
-                    "Upcoming releases",
-                    style: AppTextStyles.whiteS18Bold,
-                  ),
-                ),
+                const TextUpcomingWidget(),
                 Selector<HomeProvider, LoadingStatus>(
                   selector: (_, provider) => provider.loadListPopularStatus,
                   builder: (context, loadListPopularStatus, child) {
@@ -246,9 +141,9 @@ class _Movie_HomeState extends State<MovieHomeProvider> {
             options: CarouselOptions(
               autoPlay: true,
               onPageChanged: (index, reason) {
-                setState(() {
-                  currentPosTop = index;
-                });
+                homeProvider.setCurrentPosTop(
+                  currentPos: index,
+                );
               },
             ),
             itemBuilder: (context, index, realIndex) {
@@ -270,9 +165,9 @@ class _Movie_HomeState extends State<MovieHomeProvider> {
             options: CarouselOptions(
               autoPlay: true,
               onPageChanged: (index, reason) {
-                setState(() {
-                  currentPosBottom = index;
-                });
+                homeProvider.setCurrentPosBottom(
+                  currentPos: index,
+                );
               },
               viewportFraction: 0.5,
             ),

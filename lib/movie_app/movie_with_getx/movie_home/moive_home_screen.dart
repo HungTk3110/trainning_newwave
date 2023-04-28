@@ -1,13 +1,13 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:training_newwave/configs/app_colors.dart';
 import 'package:training_newwave/model/enums/loading_status.dart';
 import 'package:training_newwave/model/movie_collection_entity.dart';
 import 'package:training_newwave/model/popular_entity.dart';
-import 'package:training_newwave/movie_app/movie_with_bloc/movie_home/movie_home_cubit.dart';
+import 'package:training_newwave/movie_app/movie_with_getx/movie_home/movie_home_controller.dart';
 import 'package:training_newwave/movie_app/widget/app_bar_movie.dart';
-import 'package:training_newwave/movie_app/widget/image_carouseslide_bloc_pattern.dart';
+import 'package:training_newwave/movie_app/widget/image_carouseslide_getx.dart';
 import 'package:training_newwave/movie_app/widget/indicator.dart';
 import 'package:training_newwave/movie_app/widget/list_category_widget.dart';
 import 'package:training_newwave/movie_app/widget/loading_widget.dart';
@@ -15,53 +15,49 @@ import 'package:training_newwave/movie_app/widget/search_movie_widget.dart';
 import 'package:training_newwave/movie_app/widget/text_mostpopular_widget.dart';
 import 'package:training_newwave/movie_app/widget/text_upcoming_widget.dart';
 
-class MovieHomeScreen extends StatefulWidget {
-  const MovieHomeScreen({Key? key}) : super(key: key);
+class MovieHomeGetX extends StatefulWidget {
+  const MovieHomeGetX({Key? key}) : super(key: key);
 
   @override
-  State<MovieHomeScreen> createState() => _MovieHomeState();
+  State<MovieHomeGetX> createState() => _MovieHomeState();
 }
 
-class _MovieHomeState extends State<MovieHomeScreen> {
-  late final MovieHomeCubit _cubit;
+class _MovieHomeState extends State<MovieHomeGetX> {
   List<MovieCollection> listCollection = [];
+  late MovieHomeController movieHomeController;
 
   @override
   void initState() {
     super.initState();
-    _cubit = MovieHomeCubit();
-    _cubit.initData();
     listCollection = listCollectionEntity;
+    movieHomeController = MovieHomeController();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocProvider(
-        create: (context) => _cubit,
-        child: BlocBuilder<MovieHomeCubit, MovieHomeState>(
-          buildWhen: (previous, current) =>
-              previous.loadingStatus != current.loadingStatus,
-          builder: (context, state) {
-            return Container(
-              width: double.infinity,
-              height: double.infinity,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: <Color>[
-                    AppColors.sanJuan,
-                    AppColors.eastBay,
-                  ],
-                  tileMode: TileMode.mirror,
-                ),
-              ),
-              child: state.loadingStatus == LoadingStatus.loading
-                  ? const LoadingWidget()
-                  : SingleChildScrollView(
-                      child: SafeArea(
-                        child: Column(
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+            colors: <Color>[
+              AppColors.sanJuan,
+              AppColors.eastBay,
+            ],
+            tileMode: TileMode.mirror,
+          ),
+        ),
+        child: SingleChildScrollView(
+          child: SafeArea(
+            child: GetX<MovieHomeController>(
+                init: movieHomeController,
+                builder: (controller) {
+                  return controller.loadingStatus.value == LoadingStatus.loading
+                      ? const LoadingWidget()
+                      : Column(
                           children: [
                             const AppBarMovie(),
                             const SearchMovieWidget(),
@@ -70,7 +66,7 @@ class _MovieHomeState extends State<MovieHomeScreen> {
                               width: double.infinity,
                               height: 150,
                               child: slideShowTop(
-                                listMovie: state.popular?.results ?? [],
+                                listMovie: controller.listMovies,
                               ),
                             ),
                             Padding(
@@ -78,47 +74,29 @@ class _MovieHomeState extends State<MovieHomeScreen> {
                                 top: 17,
                                 bottom: 20,
                               ),
-                              child:
-                                  BlocBuilder<MovieHomeCubit, MovieHomeState>(
-                                buildWhen: (previous, current) =>
-                                    previous.currentPosTop !=
-                                    current.currentPosTop,
-                                builder: (context, state) {
-                                  return Indicator(
-                                    listMovie: state.popular?.results ?? [],
-                                    currentPos: state.currentPosTop ?? 0,
-                                  );
-                                },
-                              ),
+                              child: Indicator(
+                                  listMovie: controller.listMovies,
+                                  currentPos: controller.currentPosTop.value),
                             ),
                             ListCategoryWidget(
                               listCollection: listCollection,
                             ),
                             const TextUpcomingWidget(),
-                            slideShowBottom(state.popular?.results ?? []),
+                            slideShowBottom(controller.listMovies),
                             Padding(
                               padding: const EdgeInsets.only(
                                 top: 18,
                                 bottom: 20,
                               ),
-                              child: BlocBuilder<MovieHomeCubit,
-                                      MovieHomeState>(
-                                  buildWhen: (previous, current) =>
-                                      previous.currentPosBottom !=
-                                      current.currentPosBottom,
-                                  builder: (context, state) {
-                                    return Indicator(
-                                      listMovie: state.popular?.results ?? [],
-                                      currentPos: state.currentPosBottom ?? 0,
-                                    );
-                                  }),
+                              child: Indicator(
+                                  listMovie: controller.listMovies,
+                                  currentPos:
+                                      controller.currentPosBottom.value),
                             )
                           ],
-                        ),
-                      ),
-                    ),
-            );
-          },
+                        );
+                }),
+          ),
         ),
       ),
     );
@@ -134,13 +112,15 @@ class _MovieHomeState extends State<MovieHomeScreen> {
             options: CarouselOptions(
               autoPlay: true,
               onPageChanged: (index, reason) {
-                _cubit.setCurrentPosTop(
-                  currentPosTop: index,
-                );
+                setState(() {
+                  movieHomeController.setCurrentPosTop(
+                    currentPos: index,
+                  );
+                });
               },
             ),
             itemBuilder: (context, index, realIndex) {
-              return ItemCarousBlocPattern(
+              return ItemCarousGetX(
                 movie: listMovie[index],
                 height: 250.0,
                 width: 360.0,
@@ -158,14 +138,16 @@ class _MovieHomeState extends State<MovieHomeScreen> {
             options: CarouselOptions(
               autoPlay: true,
               onPageChanged: (index, reason) {
-                _cubit.setCurrentPosBottom(
-                  currentPosBottom: index,
-                );
+                setState(() {
+                  movieHomeController.setCurrentPosBottom(
+                    currentPos: index,
+                  );
+                });
               },
               viewportFraction: 0.5,
             ),
             itemBuilder: (context, index, realIndex) {
-              return ItemCarousBlocPattern(
+              return ItemCarousGetX(
                 movie: list[index],
                 height: 230.0,
                 width: 170.0,
@@ -175,6 +157,7 @@ class _MovieHomeState extends State<MovieHomeScreen> {
           );
   }
 }
+// ignore: must_be_immutable
 
 /*
 * 1. Sử dụng cachenetworkImage √

@@ -6,10 +6,13 @@ import 'package:training_newwave/configs/app_images.dart';
 import 'package:training_newwave/configs/app_styles.dart';
 import 'package:training_newwave/configs/app_vectors.dart';
 import 'package:training_newwave/model/enums/loading_status.dart';
+import 'package:training_newwave/model/note_entity.dart';
+import 'package:training_newwave/movie_app/widget/loading_widget.dart';
 import 'package:training_newwave/note_app/note_create/notes_create_screen.dart';
 import 'package:training_newwave/note_app/note_detail/note_detail_screen.dart';
 import 'package:training_newwave/note_app/note_home/note_home_cubit.dart';
 import 'package:training_newwave/note_app/note_search/notes_search_screen.dart';
+import 'package:training_newwave/note_app_isar/widget/item_note_isar_widget.dart';
 
 class NoteHomeScreen extends StatefulWidget {
   const NoteHomeScreen({Key? key}) : super(key: key);
@@ -42,94 +45,17 @@ class _NoteHomeScreenState extends State<NoteHomeScreen> {
             debugPrint(state.listNote?.length.toString());
             return SizedBox(
               child: state.loadingStatus == LoadingStatus.loading
-                  ? _buildLoading()
+                  ? const LoadingWidget()
                   : SafeArea(
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           appHomeBar(),
                           Expanded(
                             child: state.listNote?.isEmpty ?? true
-                                ? Center(
-                                  child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(horizontal: 32),
-                                          child: Image.asset(
-                                            AppImages.imgNoteNull,
-                                          ),
-                                        ),
-                                        Text(
-                                          "Create your first note !",
-                                          style: AppTextStyles.whiteS20Medium,
-                                        ),
-                                      ],
-                                    ),
-                                )
-                                : ListView.separated(
-                                    itemCount: state.listNote?.length ?? 0,
-                                    padding: const EdgeInsets.only(bottom: 10),
-                                    separatorBuilder: (BuildContext context, int index) {
-                                      return const SizedBox(
-                                        height: 23,
-                                      );
-                                    },
-                                    itemBuilder: (context, index) {
-                                      int color = state.listNote?[index].color ?? 0;
-                                      return Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 25),
-                                        child: Dismissible(
-                                          onDismissed: (direction) {
-                                            _noteCubit.deleteNote(state.listNote?[index].id ?? 0);
-                                          },
-                                          key: UniqueKey(),
-                                          direction: DismissDirection.horizontal,
-                                          background: Container(
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(10),
-                                              color: Colors.red,
-                                            ),
-                                            child: const Icon(
-                                              Icons.delete_rounded,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                          child: InkWell(
-                                            onTap: () async {
-                                              final result = await Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) => NoteDetailScreen(
-                                                      id: state.listNote?[index].id ?? 0),
-                                                ),
-                                              );
-
-                                              if (result == true) {
-                                                _noteCubit.getAllNote();
-                                              }
-                                            },
-                                            child: Container(
-                                              width: double.infinity,
-                                              padding: const EdgeInsets.symmetric(
-                                                horizontal: 45,
-                                                vertical: 25,
-                                              ),
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(10),
-                                                color: Color(color),
-                                              ),
-                                              child: Text(
-                                                state.listNote?[index].title ?? "",
-                                                style: AppTextStyles.blackS12Medium,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  ),
+                                ? _noteNullWidget()
+                                : _listNoteHomeWidget(
+                              listNote: state.listNote ?? [],
+                            ),
                           ),
                         ],
                       ),
@@ -275,7 +201,79 @@ class _NoteHomeScreenState extends State<NoteHomeScreen> {
     );
   }
 
-  Widget _buildLoading() => const Center(
-        child: CircularProgressIndicator(),
-      );
+  Widget _listNoteHomeWidget({
+    required List<NoteEntity> listNote,
+  }) {
+    return ListView.separated(
+      itemCount: listNote.length,
+      padding: const EdgeInsets.only(bottom: 10),
+      separatorBuilder: (BuildContext context, int index) {
+        return const SizedBox(
+          height: 23,
+        );
+      },
+      itemBuilder: (context, index) {
+        int color = listNote[index].color ?? 0;
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25),
+          child: Dismissible(
+            onDismissed: (direction) {
+              _noteCubit.deleteNote(listNote[index].id);
+            },
+            key: UniqueKey(),
+            direction: DismissDirection.horizontal,
+            background: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.red,
+              ),
+              child: const Icon(
+                Icons.delete_rounded,
+                color: Colors.white,
+              ),
+            ),
+            child: InkWell(
+              onTap: () async {
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        NoteDetailScreen(id: listNote[index].id),
+                  ),
+                );
+                if (result == true) {
+                  _noteCubit.getAllNote();
+                }
+              },
+              child: ItemNoteWidget(
+                title: listNote[index].title ?? "",
+                color: color,
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _noteNullWidget() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32),
+            child: Image.asset(
+              AppImages.imgNoteNull,
+            ),
+          ),
+          Text(
+            "Create your first note !",
+            style: AppTextStyles.whiteS20Medium,
+          ),
+        ],
+      ),
+    );
+  }
 }

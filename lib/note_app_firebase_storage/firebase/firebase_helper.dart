@@ -76,7 +76,7 @@ class FireBaseHelper {
       await db
           .collection('notes')
           .where('title', isGreaterThanOrEqualTo: title)
-          .where('title', isLessThan: title + 'z')
+          .where('title', isLessThan: '${title}z')
           .get()
           .then(
         (QuerySnapshot querySnapshot) {

@@ -43,13 +43,11 @@ class _NoteHomeFirebaseScreenState extends State<NoteHomeFirebaseScreen> {
               previous.loadingStatus != current.loadingStatus ||
               previous.loadingDeleteStatus != current.loadingDeleteStatus,
           builder: (context, state) {
-            debugPrint(state.listNote?.length.toString());
             return SizedBox(
               child: state.loadingStatus == LoadingStatus.loading
                   ? const LoadingWidget()
                   : SafeArea(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     appHomeBar(),
                     Expanded(

@@ -33,54 +33,49 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.mineShaftApprox,
       body: BlocProvider(
         create: (context) => _detailCubit,
         child: BlocBuilder<NoteDetailCubit, NoteDetailSate>(
           buildWhen: (previous, current) =>
               previous.loadingStatus != current.loadingStatus,
           builder: (context, state) {
-            return Container(
-              width: double.infinity,
-              height: double.infinity,
-              color: AppColors.mineShaftApprox,
-              child: SafeArea(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    appBarCraeteNote(),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        child: Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.only(
-                            left: 28,
-                            right: 28,
-                            bottom: 10,
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                state.note?.title ?? "",
-                                style: AppTextStyles.whiteS48Medium,
+            return SafeArea(
+              child: Column(
+                children: [
+                  appBarCraeteNote(),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.only(
+                          left: 28,
+                          right: 28,
+                          bottom: 10,
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              state.note?.title ?? "",
+                              style: AppTextStyles.whiteS48Medium,
+                              textAlign: TextAlign.start,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 36),
+                              child: Text(
+                                state.note?.describe ?? "",
+                                style: AppTextStyles.whiteS23Medium,
                                 textAlign: TextAlign.start,
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 36),
-                                child: Text(
-                                  state.note?.describe ?? "",
-                                  style: AppTextStyles.whiteS23Medium,
-                                  textAlign: TextAlign.start,
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             );
           },
