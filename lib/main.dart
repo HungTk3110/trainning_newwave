@@ -1,25 +1,59 @@
+import 'dart:developer';
+
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:training_newwave/exercise5/screen1.dart';
 import 'package:training_newwave/movie_app/movie_with_bloc/movie_home/movie_home_screen.dart';
 import 'package:training_newwave/movie_app/movie_with_getx/movie_home/moive_home_screen.dart';
 import 'package:training_newwave/movie_app/movie_with_provider/movie_detail/movie_detail_provider.dart';
-import 'package:training_newwave/movie_app/movie_with_provider/movie_home/movie_home_provider.dart';
 import 'package:training_newwave/movie_app/movie_with_provider/movie_home/moive_home_provider_screen.dart';
+import 'package:training_newwave/movie_app/movie_with_provider/movie_home/movie_home_provider.dart';
 import 'package:training_newwave/movie_app/movie_with_set_state/movie_home.dart';
 import 'package:training_newwave/note_app/note_home/notes_home_screen.dart';
 import 'package:training_newwave/note_app_firebase_storage/note_home_firebase/notes_home_firebase_screen.dart';
 import 'package:training_newwave/note_app_isar/isar/isar_helper.dart';
 import 'package:training_newwave/note_app_isar/note_home_isar/notes_home_isar_screen.dart';
 
+import 'authentication_with_firebase/authentication_with_email/login_screen.dart';
 import 'exercise3/exercise3_1.dart';
 import 'exercise4/exercise4.dart';
+
+Future<void> _firebaseMessagingBackgroundHandler(message) async {
+  await Firebase.initializeApp();
+  debugPrint('Handling a background message ${message.messageId}');
+}
 
 Future<void> main() async {
   final IsarHelper isarHelper = IsarHelper.instance;
   WidgetsFlutterBinding.ensureInitialized();
   await isarHelper.init();
-  runApp(const MyApp());
+  await Firebase.initializeApp();
+
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+  NotificationSettings settings = await messaging.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+
+  if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+    debugPrint('User granted permission');
+  } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
+    debugPrint('User granted provisional permission');
+  } else {
+    debugPrint('User declined or has not accepted permission');
+  }
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  runApp(
+    const MyApp(),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -38,7 +72,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         theme: ThemeData.light(),
-        home: const HomeMyApp(),
+        home: const LoginEmailScreen(),
       ),
     );
   }
@@ -56,8 +90,16 @@ class _HomeMyAppState extends State<HomeMyApp> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    FirebaseMessaging.onMessage.listen(
+      (RemoteMessage message) {
+        debugPrint("onMessage:");
+        log("onMessage: $message");
+        final snackBar =
+            SnackBar(content: Text(message.notification?.title ?? ""));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      },
+    );
   }
 
   @override

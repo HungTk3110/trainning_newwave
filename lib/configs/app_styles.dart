@@ -16,6 +16,13 @@ class AppTextStyles {
     color: Colors.white,
   );
 
+  static TextStyle blackS8Medium = white.copyWith(
+    fontSize: 10,
+    color: Colors.black,
+  );
+
+
+
   static TextStyle white50S8Medium = white.copyWith(
     fontSize: 8,
     color: Colors.white.withOpacity(0.5),
