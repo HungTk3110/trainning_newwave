@@ -20,7 +20,12 @@ class OTPScreenState extends State<OTPScreen> {
     height: 56,
     textStyle: const TextStyle(
         fontSize: 20,
-        color: Color.fromRGBO(30, 60, 87, 1),
+        color: Color.fromRGBO(
+          30,
+          60,
+          87,
+          1,
+        ),
         fontWeight: FontWeight.w600),
     decoration: BoxDecoration(
       border: Border.all(color: Colors.black),
@@ -42,8 +47,10 @@ class OTPScreenState extends State<OTPScreen> {
             child: Center(
               child: Text(
                 'Verify +84${widget.phone}',
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 26,
+                ),
               ),
             ),
           ),
@@ -57,20 +64,32 @@ class OTPScreenState extends State<OTPScreen> {
               onSubmitted: (pin) async {
                 try {
                   await FirebaseAuth.instance
-                      .signInWithCredential(PhoneAuthProvider.credential(
-                          verificationId: _verificationCode!, smsCode: pin))
-                      .then((value) async {
-                    if (value.user != null) {
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const HomeMyApp()),
-                          (route) => false);
-                    }
-                  });
+                      .signInWithCredential(
+                    PhoneAuthProvider.credential(
+                      verificationId: _verificationCode!,
+                      smsCode: pin,
+                    ),
+                  )
+                      .then(
+                    (value) async {
+                      if (value.user != null) {
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const HomeMyApp(),
+                            ),
+                            (route) => false);
+                      }
+                    },
+                  );
                 } catch (e) {
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(SnackBar(content: Text(e.toString())));
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        e.toString(),
+                      ),
+                    ),
+                  );
                 }
               },
             ),
@@ -82,37 +101,51 @@ class OTPScreenState extends State<OTPScreen> {
 
   _verifyPhone() async {
     await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: '+84${widget.phone}',
-        verificationCompleted: (PhoneAuthCredential credential) async {
-          await FirebaseAuth.instance.signInWithCredential(credential).then(
-            (value) async {
-              if (value.user != null) {
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => const HomeMyApp()),
-                    (route) => false);
-              }
-            },
-          );
-        },
-        verificationFailed: (FirebaseAuthException e) {
-          debugPrint("verificationFailed${e.message}");
-        },
-        codeSent: (String? verficationID, int? resendToken) {
-          setState(
-            () {
-              _verificationCode = verficationID;
-            },
-          );
-        },
-        codeAutoRetrievalTimeout: (String verificationID) {
-          setState(
-            () {
-              _verificationCode = verificationID;
-            },
-          );
-        },
-        timeout: const Duration(seconds: 120));
+      phoneNumber: '+84${widget.phone}',
+      verificationCompleted: (
+        PhoneAuthCredential credential,
+      ) async {
+        await FirebaseAuth.instance
+            .signInWithCredential(
+          credential,
+        )
+            .then(
+          (value) async {
+            if (value.user != null) {
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const HomeMyApp(),
+                  ),
+                  (route) => false);
+            }
+          },
+        );
+      },
+      verificationFailed: (FirebaseAuthException e) {
+        debugPrint("verificationFailed : ${e.message}");
+      },
+      codeSent: (
+        String? verficationID,
+        int? resendToken,
+      ) {
+        setState(
+          () {
+            _verificationCode = verficationID;
+          },
+        );
+      },
+      codeAutoRetrievalTimeout: (
+        String verificationID,
+      ) {
+        setState(
+          () {
+            _verificationCode = verificationID;
+          },
+        );
+      },
+      timeout: const Duration(seconds: 120),
+    );
   }
 
   @override
