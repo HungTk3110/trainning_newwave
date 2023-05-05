@@ -84,36 +84,39 @@ class OTPScreenState extends State<OTPScreen> {
     await FirebaseAuth.instance.verifyPhoneNumber(
         phoneNumber: '+84${widget.phone}',
         verificationCompleted: (PhoneAuthCredential credential) async {
-          await FirebaseAuth.instance
-              .signInWithCredential(credential)
-              .then((value) async {
-            if (value.user != null) {
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => const HomeMyApp()),
-                  (route) => false);
-            }
-          });
+          await FirebaseAuth.instance.signInWithCredential(credential).then(
+            (value) async {
+              if (value.user != null) {
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HomeMyApp()),
+                    (route) => false);
+              }
+            },
+          );
         },
         verificationFailed: (FirebaseAuthException e) {
           debugPrint("verificationFailed${e.message}");
         },
         codeSent: (String? verficationID, int? resendToken) {
-          setState(() {
-            _verificationCode = verficationID;
-          });
+          setState(
+            () {
+              _verificationCode = verficationID;
+            },
+          );
         },
         codeAutoRetrievalTimeout: (String verificationID) {
-          setState(() {
-            _verificationCode = verificationID;
-          });
+          setState(
+            () {
+              _verificationCode = verificationID;
+            },
+          );
         },
         timeout: const Duration(seconds: 120));
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _verifyPhone();
   }

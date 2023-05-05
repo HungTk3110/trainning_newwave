@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +30,9 @@ Future<void> main() async {
   await Firebase.initializeApp();
 
   FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+  final fcmToken = await FirebaseMessaging.instance.getToken();
+  debugPrint("getToken : $fcmToken");
 
   NotificationSettings settings = await messaging.requestPermission(
     alert: true,
@@ -91,15 +92,6 @@ class _HomeMyAppState extends State<HomeMyApp> {
   @override
   void initState() {
     super.initState();
-    FirebaseMessaging.onMessage.listen(
-      (RemoteMessage message) {
-        debugPrint("onMessage:");
-        log("onMessage: $message");
-        final snackBar =
-            SnackBar(content: Text(message.notification?.title ?? ""));
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      },
-    );
   }
 
   @override
