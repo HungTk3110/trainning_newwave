@@ -98,224 +98,228 @@ class _HomeMyAppState extends State<HomeMyApp> {
   Widget build(BuildContext context) {
     // theme: isThemeLight ? ThemeData.light() : ThemeData.dark(),
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("training newwave"),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          TextButton(
-            style: TextButton.styleFrom(
-              backgroundColor: Colors.red,
-            ),
-            child: Builder(
-              builder: (context) {
-                return const Text(
-                  'Exercise 3',
-                  style: TextStyle(fontSize: 28),
-                );
-              },
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => TrainingC3(),
-                ),
-              );
-            },
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 25,
           ),
-          TextButton(
-            style: TextButton.styleFrom(
-              backgroundColor: Colors.red,
-            ),
-            child: Builder(
-              builder: (context) {
-                return const Text(
-                  'Exercise 4',
-                  style: TextStyle(fontSize: 28),
-                );
-              },
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const Exercise4(),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              TextButton(
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.red,
                 ),
-              );
-            },
-          ),
-          TextButton(
-            style: TextButton.styleFrom(
-              backgroundColor: Colors.red,
-            ),
-            child: Builder(
-              builder: (context) {
-                return const Text(
-                  'Exercise 5',
-                  style: TextStyle(fontSize: 28),
-                );
-              },
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const Screen1(),
+                child: Builder(
+                  builder: (context) {
+                    return const Text(
+                      'Exercise 3',
+                      style: TextStyle(fontSize: 28),
+                    );
+                  },
                 ),
-              );
-            },
-          ),
-          TextButton(
-            style: TextButton.styleFrom(
-              backgroundColor: Colors.red,
-            ),
-            child: Builder(
-              builder: (context) {
-                return const Text(
-                  'Movie Ui with setState',
-                  style: TextStyle(fontSize: 28),
-                );
-              },
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const MovieHome(),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TrainingC3(),
+                    ),
+                  );
+                },
+              ),
+              TextButton(
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.red,
                 ),
-              );
-            },
-          ),
-          TextButton(
-            style: TextButton.styleFrom(
-              backgroundColor: Colors.red,
-            ),
-            child: Builder(
-              builder: (context) {
-                return const Text(
-                  'Movie Ui with provider',
-                  style: TextStyle(fontSize: 28),
-                );
-              },
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const MovieHomeProvider(),
+                child: Builder(
+                  builder: (context) {
+                    return const Text(
+                      'Exercise 4',
+                      style: TextStyle(fontSize: 28),
+                    );
+                  },
                 ),
-              );
-            },
-          ),
-          TextButton(
-            style: TextButton.styleFrom(
-              backgroundColor: Colors.red,
-            ),
-            child: Builder(
-              builder: (context) {
-                return const Text(
-                  'Movie Ui with bloc pattern',
-                  style: TextStyle(fontSize: 28),
-                );
-              },
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const MovieHomeScreen(),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Exercise4(),
+                    ),
+                  );
+                },
+              ),
+              TextButton(
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.red,
                 ),
-              );
-            },
-          ),
-          TextButton(
-            style: TextButton.styleFrom(
-              backgroundColor: Colors.red,
-            ),
-            child: Builder(
-              builder: (context) {
-                return const Text(
-                  'Movie Ui with GetX',
-                  style: TextStyle(fontSize: 28),
-                );
-              },
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const MovieHomeGetX(),
+                child: Builder(
+                  builder: (context) {
+                    return const Text(
+                      'Exercise 5',
+                      style: TextStyle(fontSize: 28),
+                    );
+                  },
                 ),
-              );
-            },
-          ),
-          TextButton(
-            style: TextButton.styleFrom(
-              backgroundColor: Colors.red,
-            ),
-            child: Builder(
-              builder: (context) {
-                return const Text(
-                  'NotesApp',
-                  style: TextStyle(fontSize: 28),
-                );
-              },
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const NoteHomeScreen(),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Screen1(),
+                    ),
+                  );
+                },
+              ),
+              TextButton(
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.red,
                 ),
-              );
-            },
-          ),
-          TextButton(
-            style: TextButton.styleFrom(
-              backgroundColor: Colors.red,
-            ),
-            child: Builder(
-              builder: (context) {
-                return const Text(
-                  'NotesApp With Firebase',
-                  style: TextStyle(fontSize: 28),
-                );
-              },
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const NoteHomeFirebaseScreen(),
+                child: Builder(
+                  builder: (context) {
+                    return const Text(
+                      'Movie Ui with setState',
+                      style: TextStyle(fontSize: 28),
+                    );
+                  },
                 ),
-              );
-            },
-          ),
-          TextButton(
-            style: TextButton.styleFrom(
-              backgroundColor: Colors.red,
-            ),
-            child: Builder(
-              builder: (context) {
-                return const Text(
-                  'NotesApp With Isar',
-                  style: TextStyle(fontSize: 28),
-                );
-              },
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const NoteHomeIsarScreen(),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MovieHome(),
+                    ),
+                  );
+                },
+              ),
+              TextButton(
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.red,
                 ),
-              );
-            },
+                child: Builder(
+                  builder: (context) {
+                    return const Text(
+                      'Movie Ui with provider',
+                      style: TextStyle(fontSize: 28),
+                    );
+                  },
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MovieHomeProvider(),
+                    ),
+                  );
+                },
+              ),
+              TextButton(
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.red,
+                ),
+                child: Builder(
+                  builder: (context) {
+                    return const Text(
+                      'Movie Ui with bloc pattern',
+                      style: TextStyle(fontSize: 28),
+                    );
+                  },
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MovieHomeScreen(),
+                    ),
+                  );
+                },
+              ),
+              TextButton(
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.red,
+                ),
+                child: Builder(
+                  builder: (context) {
+                    return const Text(
+                      'Movie Ui with GetX',
+                      style: TextStyle(fontSize: 28),
+                    );
+                  },
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MovieHomeGetX(),
+                    ),
+                  );
+                },
+              ),
+              TextButton(
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.red,
+                ),
+                child: Builder(
+                  builder: (context) {
+                    return const Text(
+                      'NotesApp',
+                      style: TextStyle(fontSize: 28),
+                    );
+                  },
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const NoteHomeScreen(),
+                    ),
+                  );
+                },
+              ),
+              TextButton(
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.red,
+                ),
+                child: Builder(
+                  builder: (context) {
+                    return const Text(
+                      'NotesApp With Firebase',
+                      style: TextStyle(fontSize: 28),
+                    );
+                  },
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const NoteHomeFirebaseScreen(),
+                    ),
+                  );
+                },
+              ),
+              TextButton(
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.red,
+                ),
+                child: Builder(
+                  builder: (context) {
+                    return const Text(
+                      'NotesApp With Isar',
+                      style: TextStyle(fontSize: 28),
+                    );
+                  },
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const NoteHomeIsarScreen(),
+                    ),
+                  );
+                },
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

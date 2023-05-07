@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:training_newwave/authentication_with_firebase/authentication_with_phone_number/opts_screen.dart';
+import 'package:training_newwave/configs/app_styles.dart';
 
 class LoginPhoneScreen extends StatefulWidget {
   const LoginPhoneScreen({Key? key}) : super(key: key);
@@ -9,68 +11,139 @@ class LoginPhoneScreen extends StatefulWidget {
 }
 
 class _LoginPhoneScreenState extends State<LoginPhoneScreen> {
-  final TextEditingController _controller = TextEditingController();
+  TextEditingController countryController = TextEditingController();
+  var phone = "";
+
+  @override
+  void initState() {
+    countryController.text = "+84";
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Phone Auth'),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            children: [
-              Container(
-                margin: const EdgeInsets.only(top: 60),
-                child: const Center(
-                  child: Text(
-                    'Phone Authentication',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
-                  ),
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 40, right: 10, left: 10),
-                child: TextField(
-                  decoration: const InputDecoration(
-                    hintText: 'Phone Number',
-                    prefix: Padding(
-                      padding: EdgeInsets.all(4),
-                      child: Text('+84'),
-                    ),
-                  ),
-                  maxLength: 10,
-                  keyboardType: TextInputType.number,
-                  controller: _controller,
-                ),
-              )
-            ],
+        backgroundColor: Colors.transparent,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios_rounded,
+            color: Colors.black,
           ),
-          Container(
-            margin: const EdgeInsets.all(10),
-            width: double.infinity,
-            child: TextButton(
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.blue,
-              ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => OTPScreen(
-                      phone: _controller.text,
+        ),
+        elevation: 0,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 25),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Login With Phone Number",
+              style: AppTextStyles.blackS22bold,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Text(
+              "Enter your phone number to continue",
+              style: AppTextStyles.blackS16Medium,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            Container(
+              height: 55,
+              decoration: BoxDecoration(
+                  border: Border.all(width: 1, color: Colors.grey),
+                  borderRadius: BorderRadius.circular(10),),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  SizedBox(
+                    width: 40,
+                    child: TextField(
+                      controller: countryController,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                      ),
                     ),
                   ),
-                );
-              },
-              child: const Text(
-                'Next',
-                style: TextStyle(color: Colors.white),
+                  const Text(
+                    "|",
+                    style: TextStyle(fontSize: 33, color: Colors.grey),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                      child: TextField(
+                    onChanged: (value) {
+                      phone = value;
+                    },
+                    keyboardType: TextInputType.phone,
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      hintText: "Phone",
+                    ),
+                  ))
+                ],
               ),
             ),
-          )
-        ],
+            const SizedBox(
+              height: 20,
+            ),
+            SizedBox(
+              width: double.infinity,
+              height: 45,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.lightBlue,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                onPressed: () async {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("please wait for the otp code"),
+                    ),
+                  );
+                  await FirebaseAuth.instance.verifyPhoneNumber(
+                    phoneNumber: countryController.text + phone,
+                    verificationCompleted: (PhoneAuthCredential credential) {
+                      debugPrint("verificationCompleted");
+                    },
+                    verificationFailed: (FirebaseAuthException e) {
+                      debugPrint("verificationFailed");
+                    },
+                    codeSent: (String verificationId, int? resendToken) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => OTPScreen(
+                            verificationId: verificationId,
+                            phoneNumber: phone,
+                          ),
+                        ),
+                      );
+                    },
+                    codeAutoRetrievalTimeout: (String verificationId) {},
+                  );
+                },
+                child: const Text("Send the code"),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

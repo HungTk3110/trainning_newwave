@@ -2,8 +2,9 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:training_newwave/authentication_with_firebase/authentication_with_email/regester_screen.dart';
+import 'package:training_newwave/authentication_with_firebase/authentication_with_email/register_screen.dart';
 import 'package:training_newwave/authentication_with_firebase/authentication_with_phone_number/login_screen.dart';
 import 'package:training_newwave/configs/app_styles.dart';
 import 'package:training_newwave/main.dart';
@@ -16,6 +17,9 @@ class LoginEmailScreen extends StatefulWidget {
 }
 
 class _LoginEmailScreenState extends State<LoginEmailScreen> {
+  bool emailError = false;
+  bool passWordError = false;
+
   @override
   void initState() {
     super.initState();
@@ -34,35 +38,84 @@ class _LoginEmailScreenState extends State<LoginEmailScreen> {
   Widget build(BuildContext context) {
     String email = '', pass = '';
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Login'),
-      ),
-      body: Center(
-        child: Container(
-          margin: const EdgeInsets.only(left: 30, right: 30),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextField(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 25),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Login With Email",
+              style: AppTextStyles.blackS22bold,
+            ),
+            Container(
+              height: 55,
+              margin: const EdgeInsets.only(
+                top: 30,
+                bottom: 10,
+              ),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 8,
+              ),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  width: 1,
+                  color: emailError == false ? Colors.grey : Colors.red,
+                ),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: TextField(
                 onChanged: (value) {
                   email = value;
                 },
-                decoration: const InputDecoration(hintText: 'Email'),
+                decoration: const InputDecoration(
+                  border: InputBorder.none,
+                  hintText: "Email",
+                ),
               ),
-              TextField(
+            ),
+            Container(
+              height: 55,
+              margin: const EdgeInsets.only(
+                bottom: 20,
+              ),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 8,
+              ),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  width: 1,
+                  color: passWordError == false ? Colors.grey : Colors.red,
+                ),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: TextField(
+                obscureText: true,
                 onChanged: (value) {
                   pass = value;
                 },
-                obscureText: true,
-                decoration: const InputDecoration(hintText: 'Password'),
+                decoration: const InputDecoration(
+                  border: InputBorder.none,
+                  hintText: "PassWord",
+                ),
               ),
-              ElevatedButton(
+            ),
+            SizedBox(
+              width: double.infinity,
+              height: 45,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.lightBlue,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
                 onPressed: () async {
                   try {
-                    UserCredential userCredential = await FirebaseAuth.instance
-                        .signInWithEmailAndPassword(
-                            email: email, password: pass);
-                    await Future.delayed(const Duration(seconds: 1));
+                    await FirebaseAuth.instance.signInWithEmailAndPassword(
+                        email: email, password: pass);
+                    await Future.delayed(
+                      const Duration(seconds: 1),
+                    );
                     if (context.mounted) {
                       Navigator.push(
                         context,
@@ -72,47 +125,81 @@ class _LoginEmailScreenState extends State<LoginEmailScreen> {
                       );
                     }
                   } on FirebaseAuthException catch (e) {
-                    if (e.code == 'user-not-found') {
-                      print('No user found for that email.');
+                    if (e.code == 'user-not-found' ||
+                        email.contains("@") == false) {
+                      setState(() {
+                        emailError = true;
+                      });
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('No user found for that email.'),
+                        ),
+                      );
                     } else if (e.code == 'wrong-password') {
-                      print('Wrong password provided for that user.');
+                      setState(() {
+                        passWordError = true;
+                      });
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content:
+                              Text('Wrong password provided for that user.'),
+                        ),
+                      );
                     }
                   }
                 },
                 child: const Text('LogIn'),
               ),
-              Text(
-                "If you do not already have an account?",
-                style: AppTextStyles.blackS12Medium,
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            RichText(
+              text: TextSpan(
+                style: AppTextStyles.blackS16Medium,
+                children: <TextSpan>[
+                  const TextSpan(text: "If you not already have a account?   "),
+                  TextSpan(
+                    text: "Register",
+                    style: AppTextStyles.blueS16Medium,
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => RegisterEmailScreen(),
+                          ),
+                        );
+                      },
+                  ),
+                ],
               ),
-              ElevatedButton(
-                onPressed: () async {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const RegesterEmailScreen(),
-                    ),
-                  );
-                },
-                child: const Text('Regester'),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            RichText(
+              text: TextSpan(
+                style: AppTextStyles.blackS16Medium,
+                children: <TextSpan>[
+                  const TextSpan(text: "OR  "),
+                  TextSpan(
+                    text: "Login with phone number",
+                    style: AppTextStyles.blueS16Medium,
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LoginPhoneScreen(),
+                          ),
+                        );
+                      },
+                  ),
+                ],
               ),
-              Text(
-                "or Login with phone number",
-                style: AppTextStyles.blackS12Medium,
-              ),
-              ElevatedButton(
-                onPressed: () async {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const LoginPhoneScreen(),
-                    ),
-                  );
-                },
-                child: const Text('login with phone number'),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
