@@ -11,12 +11,12 @@ class LoginPhoneScreen extends StatefulWidget {
 }
 
 class _LoginPhoneScreenState extends State<LoginPhoneScreen> {
-  TextEditingController countryController = TextEditingController();
+  late TextEditingController countryController;
   var phone = "";
 
   @override
   void initState() {
-    countryController.text = "+84";
+    countryController = TextEditingController(text: "+84");
     super.initState();
   }
 
@@ -59,8 +59,9 @@ class _LoginPhoneScreenState extends State<LoginPhoneScreen> {
             Container(
               height: 55,
               decoration: BoxDecoration(
-                  border: Border.all(width: 1, color: Colors.grey),
-                  borderRadius: BorderRadius.circular(10),),
+                border: Border.all(width: 1, color: Colors.grey),
+                borderRadius: BorderRadius.circular(10),
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -85,16 +86,17 @@ class _LoginPhoneScreenState extends State<LoginPhoneScreen> {
                     width: 10,
                   ),
                   Expanded(
-                      child: TextField(
-                    onChanged: (value) {
-                      phone = value;
-                    },
-                    keyboardType: TextInputType.phone,
-                    decoration: const InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "Phone",
+                    child: TextField(
+                      keyboardType: TextInputType.phone,
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Phone",
+                      ),
+                      onChanged: (value) {
+                        phone = value;
+                      },
                     ),
-                  ))
+                  )
                 ],
               ),
             ),
@@ -117,6 +119,7 @@ class _LoginPhoneScreenState extends State<LoginPhoneScreen> {
                       content: Text("please wait for the otp code"),
                     ),
                   );
+
                   await FirebaseAuth.instance.verifyPhoneNumber(
                     phoneNumber: countryController.text + phone,
                     verificationCompleted: (PhoneAuthCredential credential) {

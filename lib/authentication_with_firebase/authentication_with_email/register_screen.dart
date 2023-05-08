@@ -5,7 +5,6 @@ import 'package:training_newwave/authentication_with_firebase/authentication_wit
 import 'package:training_newwave/configs/app_styles.dart';
 
 class RegisterEmailScreen extends StatefulWidget {
-
   const RegisterEmailScreen({Key? key}) : super(key: key);
 
   @override
@@ -15,10 +14,10 @@ class RegisterEmailScreen extends StatefulWidget {
 class _RegisterEmailScreenState extends State<RegisterEmailScreen> {
   bool emailError = false;
   bool passWordError = false;
+  String email = '', pass = '';
 
   @override
   Widget build(BuildContext context) {
-    String email = '', pass = '';
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -61,9 +60,9 @@ class _RegisterEmailScreenState extends State<RegisterEmailScreen> {
               ),
               child: TextField(
                 onChanged: (value) {
-                  email = value;
                   setState(() {
-                    emailError =false;
+                    email = value;
+                    emailError = false;
                     passWordError = false;
                   });
                 },
@@ -91,9 +90,9 @@ class _RegisterEmailScreenState extends State<RegisterEmailScreen> {
               child: TextField(
                 obscureText: true,
                 onChanged: (value) {
-                  pass = value;
                   setState(() {
-                    emailError =false;
+                    pass = value;
+                    emailError = false;
                     passWordError = false;
                   });
                 },
@@ -107,70 +106,69 @@ class _RegisterEmailScreenState extends State<RegisterEmailScreen> {
               width: double.infinity,
               height: 45,
               child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.lightBlue,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.lightBlue,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                  onPressed: () async {
-                    try {
-                      await FirebaseAuth.instance
-                          .createUserWithEmailAndPassword(
-                        email: email,
-                        password: pass,
-                      );
-                      await Future.delayed(
-                        const Duration(seconds: 1),
-                      );
-                      if (context.mounted) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const LoginEmailScreen(),
-                          ),
-                        );
-                      }
-                    } on FirebaseAuthException catch (e) {
-                      if (e.code == 'weak-password') {
-                        setState(() {
-                          passWordError = true;
-                        });
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content:
-                            Text('The password provided is too weak.'),
-                          ),
-                        );
-                        debugPrint('The password provided is too weak.');
-                      }else if(email.contains("@")){
-                        setState(() {
-                          emailError = true;
-                        });
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text( 'Email invalidate'),
-                          ),
-                        );
-                      } else if (e.code == 'email-already-in-use') {
-                        setState(() {
-                          emailError = true;
-                        });
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text( 'The account already exists for that email.'),
-                          ),
-                        );
-                        debugPrint(
-                            'The account already exists for that email.');
-                      }
-                    } catch (e) {
-                      debugPrint(
-                        e.toString(),
+                ),
+                onPressed: () async {
+                  try {
+                    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                      email: email,
+                      password: pass,
+                    );
+                    await Future.delayed(
+                      const Duration(seconds: 1),
+                    );
+                    if (context.mounted) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LoginEmailScreen(),
+                        ),
                       );
                     }
-                  },
-                  child: const Text('Register')),
+                  } on FirebaseAuthException catch (e) {
+                    if (e.code == 'weak-password') {
+                      setState(() {
+                        passWordError = true;
+                      });
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('The password provided is too weak.'),
+                        ),
+                      );
+                      debugPrint('The password provided is too weak.');
+                    } else if (email.contains("@")) {
+                      setState(() {
+                        emailError = true;
+                      });
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Email invalidate'),
+                        ),
+                      );
+                    } else if (e.code == 'email-already-in-use') {
+                      setState(() {
+                        emailError = true;
+                      });
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                              'The account already exists for that email.'),
+                        ),
+                      );
+                      debugPrint('The account already exists for that email.');
+                    }
+                  } catch (e) {
+                    debugPrint(
+                      e.toString(),
+                    );
+                  }
+                },
+                child: const Text('Register'),
+              ),
             ),
             const SizedBox(
               height: 30,

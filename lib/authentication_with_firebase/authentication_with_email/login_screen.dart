@@ -21,22 +21,20 @@ class _LoginEmailScreenState extends State<LoginEmailScreen> {
   bool passWordError = false;
   String email = '', pass = '';
 
-
   @override
   void initState() {
     super.initState();
-    try{
+    try {
       FirebaseMessaging.onMessage.listen(
-            (RemoteMessage message) {
+        (RemoteMessage message) {
           debugPrint("onMessage:");
           log("onMessage: $message");
           final snackBar =
-          SnackBar(content: Text(message.notification?.title ?? ""));
+              SnackBar(content: Text(message.notification?.title ?? ""));
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         },
       );
-
-    }catch(e){
+    } catch (e) {
       debugPrint(e.toString());
     }
   }
@@ -69,7 +67,7 @@ class _LoginEmailScreenState extends State<LoginEmailScreen> {
                 ),
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: TextField(
+              child: TextFormField(
                 onChanged: (value) {
                   setState(() {
                     email = value;
@@ -103,7 +101,7 @@ class _LoginEmailScreenState extends State<LoginEmailScreen> {
                 onChanged: (value) {
                   setState(() {
                     pass = value;
-                    emailError =false;
+                    emailError = false;
                     passWordError = false;
                   });
                 },
@@ -126,7 +124,9 @@ class _LoginEmailScreenState extends State<LoginEmailScreen> {
                 onPressed: () async {
                   try {
                     await FirebaseAuth.instance.signInWithEmailAndPassword(
-                        email: email, password: pass);
+                      email: email,
+                      password: pass,
+                    );
                     debugPrint("email$email");
                     await Future.delayed(
                       const Duration(seconds: 1),

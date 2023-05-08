@@ -83,17 +83,17 @@ class _NotesEditIsarScreenState extends State<NotesEditIsarScreen> {
                                       textEditingController: _titleController,
                                       textStyle: AppTextStyles.whiteS48Medium,
                                       textStyleHint:
-                                      AppTextStyles.dustyGrayS48Medium,
+                                          AppTextStyles.dustyGrayS48Medium,
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 36),
                                       child: _textInputWidget(
                                         textHint: 'Type something...',
                                         textEditingController:
-                                        _descriptionController,
+                                            _descriptionController,
                                         textStyle: AppTextStyles.whiteS23Medium,
                                         textStyleHint:
-                                        AppTextStyles.dustyGrayS23Medium,
+                                            AppTextStyles.dustyGrayS23Medium,
                                       ),
                                     ),
                                   ],
@@ -145,7 +145,6 @@ class _NotesEditIsarScreenState extends State<NotesEditIsarScreen> {
           InkWell(
             onTap: () => {
               openDialogSave(
-                context: context,
                 note: note,
               ),
             },
@@ -169,7 +168,6 @@ class _NotesEditIsarScreenState extends State<NotesEditIsarScreen> {
   }
 
   Future openDialogSave({
-    required BuildContext context,
     required NoteIsarEntity note,
   }) {
     return showDialog(

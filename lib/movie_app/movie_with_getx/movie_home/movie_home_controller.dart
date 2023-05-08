@@ -5,7 +5,7 @@ import 'package:training_newwave/movie_app/networks/api_service.dart';
 
 class MovieHomeController extends GetxController {
   var listMovies = <Movie>[].obs;
-  var loadingStatus = LoadingStatus.init.obs;
+  Rx<LoadingStatus> loadingStatus = LoadingStatus.init.obs;
   var currentPosTop = 0.obs;
   var currentPosBottom = 0.obs;
 

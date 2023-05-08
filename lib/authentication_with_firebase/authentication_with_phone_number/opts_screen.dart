@@ -36,6 +36,7 @@ class OTPScreenState extends State<OTPScreen> {
         borderRadius: BorderRadius.circular(20),
       ),
     );
+
     final errorPinTheme = PinTheme(
       width: 56,
       height: 56,
@@ -49,7 +50,7 @@ class OTPScreenState extends State<OTPScreen> {
     );
 
     return Scaffold(
-      extendBodyBehindAppBar: true,
+      extendBodyBehindAppBar: false,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         leading: IconButton(
