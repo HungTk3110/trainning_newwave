@@ -50,7 +50,6 @@ dependencies:
   path: any
   image_picker: ^0.8.7+3
   sqflite: ^2.2.6
-  firebase_core_dart:
   firebase_messaging:
   cloud_firestore:
   firebase_core_platform_interface: ^4.6.0
@@ -60,6 +59,7 @@ dependencies:
   firebase_core: ^2.10.0
   firebase_auth: ^4.4.2
   pinput: ^2.2.31
+  firebase_core_dart: ^1.0.1
 
 
 

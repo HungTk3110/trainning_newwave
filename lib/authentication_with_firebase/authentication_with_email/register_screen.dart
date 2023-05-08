@@ -62,6 +62,10 @@ class _RegisterEmailScreenState extends State<RegisterEmailScreen> {
               child: TextField(
                 onChanged: (value) {
                   email = value;
+                  setState(() {
+                    emailError =false;
+                    passWordError = false;
+                  });
                 },
                 decoration: const InputDecoration(
                   border: InputBorder.none,
@@ -88,6 +92,10 @@ class _RegisterEmailScreenState extends State<RegisterEmailScreen> {
                 obscureText: true,
                 onChanged: (value) {
                   pass = value;
+                  setState(() {
+                    emailError =false;
+                    passWordError = false;
+                  });
                 },
                 decoration: const InputDecoration(
                   border: InputBorder.none,
@@ -124,7 +132,7 @@ class _RegisterEmailScreenState extends State<RegisterEmailScreen> {
                         );
                       }
                     } on FirebaseAuthException catch (e) {
-                      if (e.code == 'weak-password' || pass.length < 6) {
+                      if (e.code == 'weak-password') {
                         setState(() {
                           passWordError = true;
                         });

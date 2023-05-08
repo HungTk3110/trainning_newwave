@@ -17,9 +17,12 @@ import 'package:training_newwave/note_app_isar/note_home_isar/notes_home_isar_sc
 import 'authentication_with_firebase/authentication_with_email/login_screen.dart';
 import 'exercise3/exercise3_1.dart';
 import 'exercise4/exercise4.dart';
+import 'firebase_options.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(message) async {
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   debugPrint('Handling a background message ${message.messageId}');
 }
 
@@ -27,8 +30,9 @@ Future<void> main() async {
   final IsarHelper isarHelper = IsarHelper.instance;
   WidgetsFlutterBinding.ensureInitialized();
   await isarHelper.init();
-  await Firebase.initializeApp();
-
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   FirebaseMessaging messaging = FirebaseMessaging.instance;
 
   final fcmToken = await FirebaseMessaging.instance.getToken();

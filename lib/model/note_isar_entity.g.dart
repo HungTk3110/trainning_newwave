@@ -44,7 +44,7 @@ const NoteIsarEntitySchema = CollectionSchema(
   getId: _noteIsarEntityGetId,
   getLinks: _noteIsarEntityGetLinks,
   attach: _noteIsarEntityAttach,
-  version: '3.1.0',
+  version: '3.1.0+1',
 );
 
 int _noteIsarEntityEstimateSize(

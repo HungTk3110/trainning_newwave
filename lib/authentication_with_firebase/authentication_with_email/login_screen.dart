@@ -19,24 +19,30 @@ class LoginEmailScreen extends StatefulWidget {
 class _LoginEmailScreenState extends State<LoginEmailScreen> {
   bool emailError = false;
   bool passWordError = false;
+  String email = '', pass = '';
+
 
   @override
   void initState() {
     super.initState();
-    FirebaseMessaging.onMessage.listen(
-      (RemoteMessage message) {
-        debugPrint("onMessage:");
-        log("onMessage: $message");
-        final snackBar =
-            SnackBar(content: Text(message.notification?.title ?? ""));
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      },
-    );
+    try{
+      FirebaseMessaging.onMessage.listen(
+            (RemoteMessage message) {
+          debugPrint("onMessage:");
+          log("onMessage: $message");
+          final snackBar =
+          SnackBar(content: Text(message.notification?.title ?? ""));
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        },
+      );
+
+    }catch(e){
+      debugPrint(e.toString());
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    String email = '', pass = '';
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25),
@@ -65,7 +71,11 @@ class _LoginEmailScreenState extends State<LoginEmailScreen> {
               ),
               child: TextField(
                 onChanged: (value) {
-                  email = value;
+                  setState(() {
+                    email = value;
+                    emailError = false;
+                    passWordError = false;
+                  });
                 },
                 decoration: const InputDecoration(
                   border: InputBorder.none,
@@ -91,7 +101,11 @@ class _LoginEmailScreenState extends State<LoginEmailScreen> {
               child: TextField(
                 obscureText: true,
                 onChanged: (value) {
-                  pass = value;
+                  setState(() {
+                    pass = value;
+                    emailError =false;
+                    passWordError = false;
+                  });
                 },
                 decoration: const InputDecoration(
                   border: InputBorder.none,
@@ -113,6 +127,7 @@ class _LoginEmailScreenState extends State<LoginEmailScreen> {
                   try {
                     await FirebaseAuth.instance.signInWithEmailAndPassword(
                         email: email, password: pass);
+                    debugPrint("email$email");
                     await Future.delayed(
                       const Duration(seconds: 1),
                     );
@@ -167,7 +182,7 @@ class _LoginEmailScreenState extends State<LoginEmailScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => RegisterEmailScreen(),
+                            builder: (context) => const RegisterEmailScreen(),
                           ),
                         );
                       },

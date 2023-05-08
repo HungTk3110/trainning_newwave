@@ -28,13 +28,10 @@ class OTPScreenState extends State<OTPScreen> {
     final defaultPinTheme = PinTheme(
       width: 56,
       height: 56,
-      textStyle: const TextStyle(
-          fontSize: 20,
-          color: Color.fromRGBO(30, 60, 87, 1),
-          fontWeight: FontWeight.w600),
+      textStyle: AppTextStyles.blackS16Medium,
       decoration: BoxDecoration(
         border: Border.all(
-          color: const Color.fromRGBO(234, 239, 243, 1),
+          color: Colors.grey,
         ),
         borderRadius: BorderRadius.circular(20),
       ),
@@ -42,10 +39,7 @@ class OTPScreenState extends State<OTPScreen> {
     final errorPinTheme = PinTheme(
       width: 56,
       height: 56,
-      textStyle: const TextStyle(
-          fontSize: 20,
-          color: Color.fromRGBO(30, 60, 87, 1),
-          fontWeight: FontWeight.w600),
+      textStyle: AppTextStyles.blackS16Medium,
       decoration: BoxDecoration(
         border: Border.all(
           color: Colors.red.shade700,
@@ -96,6 +90,9 @@ class OTPScreenState extends State<OTPScreen> {
               showCursor: true,
               onChanged: (value) {
                 code = value;
+                setState(() {
+                  errorPin = false;
+                });
               },
             ),
             const SizedBox(

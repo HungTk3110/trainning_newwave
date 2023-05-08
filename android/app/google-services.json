@@ -37,6 +37,13 @@
             {
               "client_id": "348915048960-h7vokrb00jmfrn2v9ik89s2861dn1r0i.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "348915048960-439q9p36va9kl5jg7jhubh4u5kcbgljj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.trainingNewwave"
+              }
             }
           ]
         }

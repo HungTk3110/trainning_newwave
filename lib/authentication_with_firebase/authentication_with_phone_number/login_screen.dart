@@ -123,7 +123,7 @@ class _LoginPhoneScreenState extends State<LoginPhoneScreen> {
                       debugPrint("verificationCompleted");
                     },
                     verificationFailed: (FirebaseAuthException e) {
-                      debugPrint("verificationFailed");
+                      debugPrint("verificationFailed: $e");
                     },
                     codeSent: (String verificationId, int? resendToken) {
                       Navigator.push(
