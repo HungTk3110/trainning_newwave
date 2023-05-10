@@ -24,13 +24,13 @@ class _WeatherHomeScreenState extends State<WeatherHomeScreen> {
   void initState() {
     super.initState();
     _cubit = WeatherHomeCubit();
+    _cubit.initDataWeatherNextDay(
+      city: 'HaNoi',
+    );
     _cubit.initDataWeather(
       city: "HaNoi",
     );
     _cubit.initDataWeatherToday(
-      city: 'HaNoi',
-    );
-    _cubit.initDataWeatherNextDay(
       city: 'HaNoi',
     );
   }
@@ -42,31 +42,38 @@ class _WeatherHomeScreenState extends State<WeatherHomeScreen> {
         create: (context) => _cubit,
         child: BlocBuilder<WeatherHomeCubit, WeatherHomeState>(
           buildWhen: (previous, current) =>
-              previous.loadingStatus != current.loadingStatus,
+              previous.loadingStatus != current.loadingStatus ||
+              previous.loadingStatusWeatherToday !=
+                  current.loadingStatusWeatherToday ||
+              previous.loadingStatusWeatherNextDay !=
+                  current.loadingStatusWeatherNextDay,
           builder: (context, state) {
-            return state.loadingStatus == LoadingStatus.loading &&
-                    state.loadingStatusWeatherToday == LoadingStatus.init &&
-                    state.loadingStatusWeatherNextDay == LoadingStatus.loading
-                ? const LoadingWidget()
-                : SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        const SizedBox(
-                          height: 62,
-                        ),
-                        WeatherInCity(
-                          weather: state.weather ?? Weather(),
-                        ),
-                        ListWeatherToday(
-                          weatherToday: state.weatherToday ?? WeatherToday(),
-                        ),
-                        WeatherForNextDay(
-                          weatherNextDay:
-                              state.weatherNextDay ?? WeatherNextDay(),
-                        )
-                      ],
+            if (state.loadingStatus == LoadingStatus.loading &&
+                state.loadingStatusWeatherToday == LoadingStatus.init &&
+                state.loadingStatusWeatherNextDay == LoadingStatus.loading) {
+              return const LoadingWidget();
+            } else {
+              return SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 62,
                     ),
-                  );
+                    WeatherInCity(
+                      weather: state.weather ?? Weather(),
+                    ),
+                    ListWeatherToday(
+                      weatherToday: state.weatherToday ?? WeatherToday(),
+                    ),
+                    WeatherForNextDay(
+                      weatherNextDay: state.weatherNextDay ??
+                          WeatherNextDay(
+                              code: '', message: 0.0, cnt: 0, list: []),
+                    )
+                  ],
+                ),
+              );
+            }
           },
         ),
       ),

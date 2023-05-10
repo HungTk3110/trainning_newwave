@@ -53,8 +53,8 @@ class WeatherHomeCubit extends Cubit<WeatherHomeState> {
       );
       emit(
         state.copyWith(
-          loadingStatusWeatherToday: LoadingStatus.success,
           weatherToday: responWeatherToday,
+          loadingStatusWeatherToday: LoadingStatus.success,
         ),
       );
     } catch (e) {
@@ -80,8 +80,8 @@ class WeatherHomeCubit extends Cubit<WeatherHomeState> {
       );
       emit(
         state.copyWith(
-          loadingStatusWeatherNextDay: LoadingStatus.success,
           weatherNextDay: responWeatherNextDay,
+          loadingStatusWeatherNextDay: LoadingStatus.success,
         ),
       );
     } catch (e) {
