@@ -21,8 +21,6 @@ class AppTextStyles {
     color: Colors.black,
   );
 
-
-
   static TextStyle white50S8Medium = white.copyWith(
     fontSize: 8,
     color: Colors.white.withOpacity(0.5),
@@ -57,6 +55,17 @@ class AppTextStyles {
   static TextStyle blackS12bold = white.copyWith(
     fontSize: 12,
     color: Colors.black,
+    fontWeight: FontWeight.bold,
+  );
+
+  static TextStyle whiteS16Medium = white.copyWith(
+    fontSize: 16,
+    color: Colors.white,
+  );
+
+  static TextStyle whiteS16Bold = white.copyWith(
+    fontSize: 16,
+    color: Colors.white,
     fontWeight: FontWeight.bold,
   );
 
@@ -118,6 +127,11 @@ class AppTextStyles {
     color: Colors.black,
   );
 
+  static TextStyle blackS24Medium = white.copyWith(
+    fontSize: 24,
+    color: Colors.black,
+  );
+
   static TextStyle blueS16Medium = white.copyWith(
     fontSize: 16,
     color: Colors.blue,
@@ -140,6 +154,12 @@ class AppTextStyles {
 
   static TextStyle whiteS64Bold = white.copyWith(
     fontSize: 64,
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
+  );
+
+  static TextStyle whiteS72Bold = white.copyWith(
+    fontSize: 72,
     color: Colors.white,
     fontWeight: FontWeight.bold,
   );

@@ -19,4 +19,8 @@ class AppColors {
   static Color dustyGray = const Color(0xff9A9A9A);
   static Color jungleGreen = const Color(0xff30BE71);
   static Color silver = const Color(0xffCCCCCC);
+  static Color malibu = const Color(0xff62B8F6);
+  static Color mariner = const Color(0xff2C79C1);
+  static Color scampi = const Color(0xffA6A1E0).withOpacity(0.3);
+  static Color aquamarineBlue = const Color(0xffA1F3FE).withOpacity(0.3);
 }

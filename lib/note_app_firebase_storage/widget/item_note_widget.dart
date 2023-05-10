@@ -24,7 +24,7 @@ class ItemNoteWidget extends StatelessWidget {
       ),
       child: Text(
         title,
-        style: AppTextStyles.blackS12Medium,
+        style: AppTextStyles.blackS24Medium,
       ),
     );
   }

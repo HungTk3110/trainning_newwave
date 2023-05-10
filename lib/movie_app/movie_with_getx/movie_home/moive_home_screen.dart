@@ -7,6 +7,7 @@ import 'package:training_newwave/model/movie_collection_entity.dart';
 import 'package:training_newwave/model/popular_entity.dart';
 import 'package:training_newwave/movie_app/movie_with_getx/movie_home/movie_home_controller.dart';
 import 'package:training_newwave/movie_app/widget/app_bar_movie.dart';
+import 'package:training_newwave/movie_app/widget/bottom_nav_bar.dart';
 import 'package:training_newwave/movie_app/widget/image_carouseslide_getx.dart';
 import 'package:training_newwave/movie_app/widget/indicator.dart';
 import 'package:training_newwave/movie_app/widget/list_category_widget.dart';
@@ -36,6 +37,10 @@ class _MovieHomeState extends State<MovieHomeGetX> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: BottomNavBar(
+        currentIndex: 0,
+        onPageChange: (value) {},
+      ),
       body: Container(
         width: double.infinity,
         height: double.infinity,

@@ -49,105 +49,108 @@ class OTPScreenState extends State<OTPScreen> {
       ),
     );
 
-    return Scaffold(
-      extendBodyBehindAppBar: false,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(
-            Icons.arrow_back_ios_rounded,
-            color: Colors.black,
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        extendBodyBehindAppBar: false,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(
+              Icons.arrow_back_ios_rounded,
+              color: Colors.black,
+            ),
           ),
+          elevation: 0,
         ),
-        elevation: 0,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.only(left: 25, right: 25),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "Enter OTP Code",
-              style: AppTextStyles.blackS22bold,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Text(
-              "please enter the otp code sent to phone number +84${widget.phoneNumber}",
-              style: AppTextStyles.blackS16Medium,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            Pinput(
-              length: 6,
-              defaultPinTheme:
-                  errorPin == false ? defaultPinTheme : errorPinTheme,
-              showCursor: true,
-              onChanged: (value) {
-                code = value;
-                setState(() {
-                  errorPin = false;
-                });
-              },
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            SizedBox(
-              width: double.infinity,
-              height: 45,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.lightBlue,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+        body: Padding(
+          padding: const EdgeInsets.only(left: 25, right: 25),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Enter OTP Code",
+                style: AppTextStyles.blackS22bold,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                "please enter the otp code sent to phone number +84${widget.phoneNumber}",
+                style: AppTextStyles.blackS16Medium,
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Pinput(
+                length: 6,
+                defaultPinTheme:
+                    errorPin == false ? defaultPinTheme : errorPinTheme,
+                showCursor: true,
+                onChanged: (value) {
+                  code = value;
+                  setState(() {
+                    errorPin = false;
+                  });
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              SizedBox(
+                width: double.infinity,
+                height: 45,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.lightBlue,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
-                ),
-                onPressed: () async {
-                  try {
-                    PhoneAuthCredential credential =
-                        PhoneAuthProvider.credential(
-                      verificationId: widget.verificationId,
-                      smsCode: code,
-                    );
-                    // Sign the user in (or link) with the credential
-                    await auth.signInWithCredential(credential);
-                    await Future.delayed(
-                      const Duration(seconds: 1),
-                    );
-                    if (context.mounted) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const HomeMyApp(),
+                  onPressed: () async {
+                    try {
+                      PhoneAuthCredential credential =
+                          PhoneAuthProvider.credential(
+                        verificationId: widget.verificationId,
+                        smsCode: code,
+                      );
+                      // Sign the user in (or link) with the credential
+                      await auth.signInWithCredential(credential);
+                      await Future.delayed(
+                        const Duration(seconds: 1),
+                      );
+                      if (context.mounted) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const HomeMyApp(),
+                          ),
+                        );
+                      }
+                    } catch (e) {
+                      setState(
+                        () {
+                          errorPin = true;
+                        },
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content:
+                              Text("otp code is incorrect, please try again"),
                         ),
                       );
                     }
-                  } catch (e) {
-                    setState(
-                      () {
-                        errorPin = true;
-                      },
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content:
-                            Text("otp code is incorrect, please try again"),
-                      ),
-                    );
-                  }
-                  // Create a PhoneAuthCredential with the code
-                },
-                child: const Text("Verify Phone Number"),
+                    // Create a PhoneAuthCredential with the code
+                  },
+                  child: const Text("Verify Phone Number"),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

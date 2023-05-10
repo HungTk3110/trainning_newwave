@@ -19,35 +19,59 @@ class ItemCollectionHome extends StatelessWidget {
       width: 70,
       height: 95,
       decoration: BoxDecoration(
-        color: AppColors.white20,
-        border: Border.all(
-          width: 1,
-          color: AppColors.white20,
+        gradient: LinearGradient(
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+          colors: <Color>[
+            AppColors.sanJuan,
+            AppColors.eastBay,
+          ],
+          tileMode: TileMode.mirror,
         ),
         borderRadius: const BorderRadius.all(
             Radius.circular(15.0) //                 <--- border radius here
             ),
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          SizedBox(
-            child: SvgPicture.asset(
-              movieCollection.assetImage,
-              fit: BoxFit.cover,
-            ),
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+            colors: <Color>[
+              AppColors.scampi,
+              AppColors.aquamarineBlue,
+            ],
+            tileMode: TileMode.mirror,
           ),
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 20,
-              bottom: 15,
+          border: Border.all(
+            width: 1,
+            color: AppColors.white20,
+          ),
+          borderRadius: const BorderRadius.all(
+              Radius.circular(15.0) //                 <--- border radius here
+              ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            SizedBox(
+              child: SvgPicture.asset(
+                movieCollection.assetImage,
+                fit: BoxFit.cover,
+              ),
             ),
-            child: Text(
-              movieCollection.title,
-              style: AppTextStyles.whiteS10Medium,
-            ),
-          )
-        ],
+            Padding(
+              padding: const EdgeInsets.only(
+                top: 20,
+                bottom: 15,
+              ),
+              child: Text(
+                movieCollection.title,
+                style: AppTextStyles.whiteS10Medium,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

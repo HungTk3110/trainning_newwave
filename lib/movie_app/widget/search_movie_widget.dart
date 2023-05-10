@@ -15,39 +15,58 @@ class SearchMovieWidget extends StatelessWidget {
         left: 50,
         right: 50,
       ),
-      padding: const EdgeInsets.only(
-        top: 14,
-        right: 17,
-        bottom: 14,
-      ),
       height: 50,
       decoration: BoxDecoration(
-        color: AppColors.white20,
-        borderRadius: BorderRadius.circular(15),
+        gradient: LinearGradient(
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+          colors: <Color>[
+            AppColors.sanJuan,
+            AppColors.eastBay,
+          ],
+          tileMode: TileMode.mirror,
+        ),
       ),
-      child: TextField(
-        decoration: InputDecoration(
-          border: InputBorder.none,
-          prefixIcon: SvgPicture.asset(
-            AppVectors.icSearch,
+      child: Container(
+        padding: const EdgeInsets.only(
+          top: 14,
+          right: 17,
+          bottom: 14,
+        ),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+            colors: <Color>[
+              AppColors.scampi,
+              AppColors.aquamarineBlue,
+            ],
+            tileMode: TileMode.mirror,
           ),
-          hintText: "Search",
-          contentPadding:
-          const EdgeInsets.only(bottom: 10),
-          hintStyle: AppTextStyles.white50S18Medium,
-          suffixIcon: SizedBox(
-            width: 1,
-            child: Row(
-              mainAxisAlignment:
-              MainAxisAlignment.spaceBetween,
-              children: [
-                SvgPicture.asset(
-                  AppVectors.icLine1,
-                ),
-                SvgPicture.asset(
-                  AppVectors.icVoice,
-                ),
-              ],
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: TextField(
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            prefixIcon: SvgPicture.asset(
+              AppVectors.icSearch,
+            ),
+            hintText: "Search",
+            contentPadding: const EdgeInsets.only(bottom: 10),
+            hintStyle: AppTextStyles.white50S18Medium,
+            suffixIcon: SizedBox(
+              width: 1,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SvgPicture.asset(
+                    AppVectors.icLine1,
+                  ),
+                  SvgPicture.asset(
+                    AppVectors.icVoice,
+                  ),
+                ],
+              ),
             ),
           ),
         ),

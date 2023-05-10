@@ -5,6 +5,7 @@ import 'package:training_newwave/model/movie_collection_entity.dart';
 import 'package:training_newwave/model/popular_entity.dart';
 import 'package:training_newwave/movie_app/networks/api_service.dart';
 import 'package:training_newwave/movie_app/widget/app_bar_movie.dart';
+import 'package:training_newwave/movie_app/widget/bottom_nav_bar.dart';
 import 'package:training_newwave/movie_app/widget/indicator.dart';
 import 'package:training_newwave/movie_app/widget/list_category_widget.dart';
 import 'package:training_newwave/movie_app/widget/loading_widget.dart';
@@ -22,6 +23,7 @@ class MovieHome extends StatefulWidget {
 }
 
 class _MovieHomeState extends State<MovieHome> {
+  int currentPage = 0;
   int currentPosTop = 0;
   int currentPosBottom = 0;
   List<Movie> listMovies = [];
@@ -44,6 +46,14 @@ class _MovieHomeState extends State<MovieHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: BottomNavBar(
+        currentIndex: 0,
+        onPageChange: (value) {
+          setState(() {
+            currentPage = value;
+          });
+        },
+      ),
       body: Container(
         width: double.infinity,
         height: double.infinity,
