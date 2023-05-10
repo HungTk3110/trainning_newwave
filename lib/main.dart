@@ -78,7 +78,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         theme: ThemeData.light(),
-        home: const LoginEmailScreen(),
+        home: const WeatherHomeScreen(),
       ),
     );
   }

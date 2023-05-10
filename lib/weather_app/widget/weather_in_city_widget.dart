@@ -6,7 +6,7 @@ import 'package:training_newwave/configs/app_colors.dart';
 import 'package:training_newwave/configs/app_constant.dart';
 import 'package:training_newwave/configs/app_styles.dart';
 import 'package:training_newwave/configs/app_vectors.dart';
-import 'package:training_newwave/weather_app/models/weather.dart';
+import 'package:training_newwave/weather_app/models/weather_entity.dart';
 
 class WeatherInCity extends StatelessWidget {
   final Weather weather;
@@ -67,7 +67,7 @@ class WeatherInCity extends StatelessWidget {
           ),
           CachedNetworkImage(
             imageUrl:
-                "${AppConstant.baseImageWeather}${weather.weather[0].icon}@4x.png",
+                "${AppConstant.baseImageWeather}${weather.weather?[0].icon}@4x.png",
             width: 240,
             height: 240,
             fit: BoxFit.cover,
@@ -106,7 +106,7 @@ class WeatherInCity extends StatelessWidget {
             style: AppTextStyles.whiteS72Bold,
           ),
           Text(
-            weather.weather[0].main ?? "",
+            weather.weather?[0].main ?? "",
             style: AppTextStyles.whiteS16Medium,
           ),
           Padding(

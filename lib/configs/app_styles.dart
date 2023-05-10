@@ -58,6 +58,11 @@ class AppTextStyles {
     fontWeight: FontWeight.bold,
   );
 
+  static TextStyle whiteS14Medium = white.copyWith(
+    fontSize: 14,
+    color: Colors.white,
+  );
+
   static TextStyle whiteS16Medium = white.copyWith(
     fontSize: 16,
     color: Colors.white,
