@@ -69,20 +69,16 @@ class _MovieHomeState extends State<MovieHomeProvider> {
                 SizedBox(
                   width: double.infinity,
                   height: 150,
-                  child: homeProvider.listMovies.isEmpty
-                      ? const LoadingWidget()
-                      : Selector<HomeProvider, LoadingStatus>(
-                          selector: (_, provider) =>
-                              provider.loadListPopularStatus,
-                          builder: (context, loadListPopularStatus, child) {
-                            return loadListPopularStatus ==
-                                    LoadingStatus.loading
-                                ? const SizedBox()
-                                : slideShowTop(
-                                    listMovie: homeProvider.listMovies,
-                                  );
-                          },
-                        ),
+                  child: Selector<HomeProvider, LoadingStatus>(
+                    selector: (_, provider) => provider.loadListPopularStatus,
+                    builder: (context, loadListPopularStatus, child) {
+                      return loadListPopularStatus == LoadingStatus.loading
+                          ? const SizedBox()
+                          : slideShowTop(
+                              listMovie: homeProvider.listMovies,
+                            );
+                    },
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(
@@ -145,6 +141,8 @@ class _MovieHomeState extends State<MovieHomeProvider> {
             itemCount: listMovie.length,
             options: CarouselOptions(
               autoPlay: true,
+              enlargeCenterPage: true,
+              reverse: false,
               onPageChanged: (index, reason) {
                 homeProvider.setCurrentPosTop(
                   currentPos: index,

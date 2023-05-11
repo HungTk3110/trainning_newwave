@@ -23,4 +23,5 @@ class AppColors {
   static Color mariner = const Color(0xff2C79C1);
   static Color scampi = const Color(0xffA6A1E0).withOpacity(0.3);
   static Color aquamarineBlue = const Color(0xffA1F3FE).withOpacity(0.3);
+  static Color blueRibbon = const Color(0xff0A44E6);
 }

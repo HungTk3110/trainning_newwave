@@ -21,148 +21,154 @@ class WeatherInCity extends StatelessWidget {
     final now = DateTime.now();
     double temperature = weather.main?.temp ?? 0;
 
-    return Container(
-      height: 566,
-      width: double.infinity,
-      margin: const EdgeInsets.symmetric(
-        horizontal: 16,
-      ),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: <Color>[
-            AppColors.malibu,
-            AppColors.mariner,
-          ],
-          tileMode: TileMode.clamp,
+    return Expanded(
+      child: Container(
+        width: double.infinity,
+        margin: const EdgeInsets.symmetric(
+          horizontal: 16,
         ),
-        borderRadius: BorderRadius.circular(30),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 16,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: <Color>[
+              AppColors.malibu,
+              AppColors.mariner,
+            ],
+            tileMode: TileMode.clamp,
+          ),
+          borderRadius: BorderRadius.circular(30),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 16,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SvgPicture.asset(
+                    AppVectors.icAddWeather,
+                    fit: BoxFit.cover,
+                  ),
+                  Text(
+                    weather.name ?? "",
+                    style: AppTextStyles.whiteS16Bold,
+                  ),
+                  SvgPicture.asset(
+                    AppVectors.icMenuWeather,
+                    fit: BoxFit.cover,
+                  ),
+                ],
+              ),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Expanded(
+              child: CachedNetworkImage(
+                imageUrl:
+                    "${AppConstant.baseImageWeather}${weather.weather?[0].icon}@4x.png",
+                width: 240,
+                height: 240,
+                fit: BoxFit.cover,
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SvgPicture.asset(
-                  AppVectors.icAddWeather,
-                  fit: BoxFit.cover,
+                Text(
+                  DateFormat('EEEE').format(
+                    now,
+                  ),
+                  style: AppTextStyles.whiteS16Medium,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                  ),
+                  child: SvgPicture.asset(
+                    AppVectors.icRectangleWeather,
+                    fit: BoxFit.cover,
+                  ),
                 ),
                 Text(
-                  weather.name ?? "",
-                  style: AppTextStyles.whiteS16Bold,
-                ),
-                SvgPicture.asset(
-                  AppVectors.icMenuWeather,
-                  fit: BoxFit.cover,
+                  DateFormat.MMMd('en_US').format(
+                    now,
+                  ),
+                  style: AppTextStyles.whiteS16Medium,
                 ),
               ],
             ),
-          ),
-          CachedNetworkImage(
-            imageUrl:
-                "${AppConstant.baseImageWeather}${weather.weather?[0].icon}@4x.png",
-            width: 240,
-            height: 240,
-            fit: BoxFit.cover,
-            errorWidget: (context, url, error) => const Icon(Icons.error),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                DateFormat('EEEE').format(
-                  now,
-                ),
-                style: AppTextStyles.whiteS16Medium,
+            Text(
+              temperature == temperature.toInt()
+                  ? "${temperature.toInt()}°"
+                  : "$temperature°",
+              style: AppTextStyles.whiteS72Bold,
+            ),
+            Text(
+              weather.weather?[0].main ?? "",
+              style: AppTextStyles.whiteS16Medium,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                top: 16,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                ),
-                child: SvgPicture.asset(
-                  AppVectors.icRectangleWeather,
-                  fit: BoxFit.cover,
-                ),
+              child: SvgPicture.asset(
+                AppVectors.icRectangleHrzWeather,
+                fit: BoxFit.cover,
               ),
-              Text(
-                DateFormat.MMMd('en_US').format(
-                  now,
-                ),
-                style: AppTextStyles.whiteS16Medium,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                top: 16,
+                left: 38,
+                right: 38,
               ),
-            ],
-          ),
-          Text(
-            temperature == temperature.toInt()
-                ? "${temperature.toInt()}°"
-                : "$temperature°",
-            style: AppTextStyles.whiteS72Bold,
-          ),
-          Text(
-            weather.weather?[0].main ?? "",
-            style: AppTextStyles.whiteS16Medium,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 16,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      itemWeather(
+                          icon: AppVectors.icWindWeather,
+                          statisticalValue: "${weather.wind?.speed} km/h",
+                          statisticalQuantity: "Wind"),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      itemWeather(
+                          icon: AppVectors.icPressureWeather,
+                          statisticalValue: "${weather.main?.pressure} mbar",
+                          statisticalQuantity: "Pressure"),
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      itemWeather(
+                          icon: AppVectors.icChanceOfRainWeather,
+                          statisticalValue: "${weather.wind?.speed} %",
+                          statisticalQuantity: "Chance of rain"),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      itemWeather(
+                          icon: AppVectors.icHumidityWeather,
+                          statisticalValue: "${weather.main?.humidity} %",
+                          statisticalQuantity: "Humidity"),
+                    ],
+                  ),
+                ],
+              ),
             ),
-            child: SvgPicture.asset(
-              AppVectors.icRectangleHrzWeather,
-              fit: BoxFit.cover,
+            const SizedBox(
+              height: 16,
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 16,
-              left: 38,
-              right: 38,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    itemWeather(
-                        icon: AppVectors.icWindWeather,
-                        statisticalValue: "${weather.wind?.speed} km/h",
-                        statisticalQuantity: "Wind"),
-                    const SizedBox(
-                      height: 24,
-                    ),
-                    itemWeather(
-                        icon: AppVectors.icPressureWeather,
-                        statisticalValue: "${weather.main?.pressure} mbar",
-                        statisticalQuantity: "Pressure"),
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    itemWeather(
-                        icon: AppVectors.icChanceOfRainWeather,
-                        statisticalValue: "${weather.wind?.speed} %",
-                        statisticalQuantity: "Chance of rain"),
-                    const SizedBox(
-                      height: 24,
-                    ),
-                    itemWeather(
-                        icon: AppVectors.icHumidityWeather,
-                        statisticalValue: "${weather.main?.humidity} %",
-                        statisticalQuantity: "Humidity"),
-                  ],
-                ),
-              ],
-            ),
-          )
-        ],
+          ],
+        ),
       ),
     );
   }

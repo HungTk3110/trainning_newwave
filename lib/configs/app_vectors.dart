@@ -29,4 +29,6 @@ class AppVectors {
   static const String icTicketMovieBottomNav = 'assets/svg/ticket_home.svg';
   static const String icAccountMovieBottomNav = 'assets/svg/account_movie.svg';
   static const String icShuffleMovieBottomNav = 'assets/svg/shuffle_movie.svg';
+  static const String icBackDetailMovie = 'assets/svg/back_detail_movie.svg';
+  static const String icEvaWeather = 'assets/svg/eva_arrow_weather.svg';
 }

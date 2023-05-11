@@ -39,9 +39,12 @@ class _MovieDetailProviderState extends State<MovieDetailProvider> {
         showBottomSheet();
       },
     );
+    fetchData();
+  }
 
-    detailProvider.getDetailMovie(widget.id);
-    detailProvider.getListCast(widget.id);
+  void fetchData() async {
+    await detailProvider.getDetailMovie(widget.id);
+    await detailProvider.getListCast(widget.id);
   }
 
   void showBottomSheet() {

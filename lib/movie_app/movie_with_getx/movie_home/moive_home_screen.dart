@@ -116,6 +116,8 @@ class _MovieHomeState extends State<MovieHomeGetX> {
             itemCount: listMovie.length,
             options: CarouselOptions(
               autoPlay: true,
+              enlargeCenterPage: true,
+              reverse: false,
               onPageChanged: (index, reason) {
                 setState(() {
                   movieHomeController.setCurrentPosTop(

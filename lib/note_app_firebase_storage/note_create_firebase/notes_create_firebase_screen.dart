@@ -7,16 +7,17 @@ import 'package:training_newwave/configs/app_colors.dart';
 import 'package:training_newwave/configs/app_styles.dart';
 import 'package:training_newwave/configs/app_vectors.dart';
 import 'package:training_newwave/model/enums/loading_status.dart';
+import 'package:training_newwave/note_app_firebase_storage/note_create_firebase/app_baar.dart';
 import 'package:training_newwave/note_app_firebase_storage/note_create_firebase/note_create_firebase_cubit.dart';
 
 class NotesCreateFirebaseScreen extends StatefulWidget {
-
   const NotesCreateFirebaseScreen({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<NotesCreateFirebaseScreen> createState() => _NotesCreateFirebaseScreenState();
+  State<NotesCreateFirebaseScreen> createState() =>
+      _NotesCreateFirebaseScreenState();
 }
 
 class _NotesCreateFirebaseScreenState extends State<NotesCreateFirebaseScreen> {
@@ -35,23 +36,25 @@ class _NotesCreateFirebaseScreenState extends State<NotesCreateFirebaseScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBarWidget(
+        onTap: () async {
+          await openDialogSave(context);
+        },
+      ),
       body: BlocProvider(
         create: (context) => _noteCubit,
         child: BlocBuilder<NoteCreateFirebaseCubit, NoteCreateFirebaseSate>(
-          buildWhen: (previous, current) => previous.loadingStatus != current.loadingStatus,
+          buildWhen: (previous, current) =>
+              previous.loadingStatus != current.loadingStatus,
           builder: (context, state) {
             return state.loadingStatus == LoadingStatus.loading
                 ? const SizedBox()
                 : Container(
-              color: AppColors.mineShaftApprox,
-              child: SafeArea(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    appBarCreateNote(),
-                    Expanded(
+                    color: AppColors.mineShaftApprox,
+                    child: SafeArea(
                       child: SingleChildScrollView(
                         child: Container(
+                          height: MediaQuery.of(context).size.height,
                           padding: const EdgeInsets.only(
                             left: 28,
                             right: 28,
@@ -64,18 +67,15 @@ class _NotesCreateFirebaseScreenState extends State<NotesCreateFirebaseScreen> {
                                 textHint: 'Title',
                                 textEditingController: _titleController,
                                 textStyle: AppTextStyles.whiteS48Medium,
-                                textStyleHint:
-                                AppTextStyles.dustyGrayS48Medium,
+                                textStyleHint: AppTextStyles.dustyGrayS48Medium,
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 36),
+                              Expanded(
                                 child: _textInputWidget(
                                   textHint: 'Type something...',
-                                  textEditingController:
-                                  _descriptionController,
+                                  textEditingController: _descriptionController,
                                   textStyle: AppTextStyles.whiteS23Medium,
                                   textStyleHint:
-                                  AppTextStyles.dustyGrayS23Medium,
+                                      AppTextStyles.dustyGrayS23Medium,
                                 ),
                               ),
                             ],
@@ -83,10 +83,7 @@ class _NotesCreateFirebaseScreenState extends State<NotesCreateFirebaseScreen> {
                         ),
                       ),
                     ),
-                  ],
-                ),
-              ),
-            );
+                  );
           },
         ),
       ),
@@ -200,17 +197,18 @@ class _NotesCreateFirebaseScreenState extends State<NotesCreateFirebaseScreen> {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: Text('Discard', style: AppTextStyles.whiteS18Medium),
+                      child:
+                          Text('Discard', style: AppTextStyles.whiteS18Medium),
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.jungleGreen, // foreground
                       ),
                       onPressed: () {
-                          saveItem();
-                          Navigator.of(context)
-                            ..pop()
-                            ..pop(true);
+                        saveItem();
+                        Navigator.of(context)
+                          ..pop()
+                          ..pop(true);
                       },
                       child: Text('Save', style: AppTextStyles.whiteS18Medium),
                     )
@@ -232,13 +230,12 @@ class _NotesCreateFirebaseScreenState extends State<NotesCreateFirebaseScreen> {
       Colors.cyan.value,
     ];
     final random = Random();
-      await _noteCubit.addNote(
-        _titleController.text,
-        _descriptionController.text,
-        listColor[random.nextInt(listColor.length)],
-      );
+    await _noteCubit.addNote(
+      _titleController.text,
+      _descriptionController.text,
+      listColor[random.nextInt(listColor.length)],
+    );
   }
-
 
   Widget _textInputWidget({
     required String textHint,

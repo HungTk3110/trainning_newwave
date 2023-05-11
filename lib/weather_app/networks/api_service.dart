@@ -15,7 +15,7 @@ class ApiService {
   static const String apiKey = '905972eaff41a8bc1e2251372b003af4';
   static const String apiKeyPro = "b1b15e88fa797225412429c1c50c122a1";
 
-  static Future<Weather> fetchWeather({
+  static Future<Weather?> fetchWeather({
     required String city,
   }) async {
     String url = "$baseUrl1?q=$city&units=metric&appid=$apiKey";
@@ -29,7 +29,7 @@ class ApiService {
     }
   }
 
-  static Future<WeatherToday> fetchWeatherToday({
+  static Future<WeatherToday?> fetchWeatherToday({
     required String city,
   }) async {
     String url = "$baseUrl2?q=$city&cnt=16&units=metric&appid=$apiKeyPro";
@@ -43,7 +43,7 @@ class ApiService {
     }
   }
 
-  static Future<WeatherNextDay> fetchWeatherNextDay({
+  static Future<WeatherNextDay?> fetchWeatherNextDay({
     required String city,
   }) async {
     String url = "$baseUrl3?q=$city&cnt=7&units=metric&appid=$apiKeyPro";

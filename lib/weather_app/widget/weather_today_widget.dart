@@ -9,9 +9,9 @@ import 'package:training_newwave/configs/app_styles.dart';
 import 'package:training_newwave/configs/app_vectors.dart';
 import 'package:training_newwave/weather_app/models/weather_today_entity.dart';
 
-class ListWeatherToday extends StatelessWidget {
+class WeatherTodayWidget extends StatelessWidget {
   final WeatherToday weatherToday;
-  const ListWeatherToday({
+  const WeatherTodayWidget({
     required this.weatherToday,
     Key? key,
   }) : super(key: key);
@@ -28,6 +28,7 @@ class ListWeatherToday extends StatelessWidget {
       padding: const EdgeInsets.only(
         top: 8,
         left: 16,
+        right: 16,
       ),
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -91,7 +92,7 @@ Widget listWeatherInToDay({required WeatherToday weatherToday}) {
     scrollDirection: Axis.horizontal,
     itemBuilder: (BuildContext context, int index) {
       return SizedBox(
-        width: 72,
+        width: 98,
         height: 104,
         child: Column(
           children: [
@@ -120,7 +121,7 @@ Widget listWeatherInToDay({required WeatherToday weatherToday}) {
               height: 4,
             ),
             Text(
-              "% rain",
+              "${weatherToday.list?[index].main.humidity}% humidity",
               style: AppTextStyles.whiteS14Medium,
             ),
           ],

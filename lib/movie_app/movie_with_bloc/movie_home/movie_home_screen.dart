@@ -67,6 +67,7 @@ class _MovieHomeState extends State<MovieHomeScreen> {
                   : SingleChildScrollView(
                       child: SafeArea(
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const AppBarMovie(),
                             const SearchMovieWidget(),
@@ -138,6 +139,8 @@ class _MovieHomeState extends State<MovieHomeScreen> {
             itemCount: listMovie.length,
             options: CarouselOptions(
               autoPlay: true,
+              enlargeCenterPage: true,
+              reverse: false,
               onPageChanged: (index, reason) {
                 _cubit.setCurrentPosTop(
                   currentPosTop: index,

@@ -18,6 +18,7 @@ class DetailProvider extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       loadDetailStatus = LoadingStatus.failure;
+      notifyListeners();
     }
   }
 
@@ -30,6 +31,7 @@ class DetailProvider extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       loadDetailStatus = LoadingStatus.failure;
+      notifyListeners();
     }
   }
 }

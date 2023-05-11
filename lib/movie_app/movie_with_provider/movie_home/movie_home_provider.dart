@@ -18,6 +18,7 @@ class HomeProvider extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       loadListPopularStatus = LoadingStatus.failure;
+      notifyListeners();
     }
   }
 
@@ -31,7 +32,7 @@ class HomeProvider extends ChangeNotifier {
   void setCurrentPosBottom({
     required int currentPos,
   }) {
-    currentPosBottom =currentPos;
+    currentPosBottom = currentPos;
     notifyListeners();
   }
 }

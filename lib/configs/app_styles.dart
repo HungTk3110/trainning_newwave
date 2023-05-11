@@ -68,6 +68,11 @@ class AppTextStyles {
     color: Colors.white,
   );
 
+  static TextStyle blueRibbonS16Medium = white.copyWith(
+    fontSize: 16,
+    color: AppColors.blueRibbon,
+  );
+
   static TextStyle whiteS16Bold = white.copyWith(
     fontSize: 16,
     color: Colors.white,

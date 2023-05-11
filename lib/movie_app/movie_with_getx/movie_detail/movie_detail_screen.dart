@@ -159,14 +159,29 @@ class _MovieDetailGetXState extends State<MovieDetailGetX> {
         builder: (controller) {
           return controller.loadDetail.value == LoadingStatus.loading
               ? const LoadingWidget()
-              : SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  child: CachedNetworkImage(
-                    imageUrl: AppConstant.baseImage +
-                        (controller.detailMovie.value.posterPath ?? ""),
-                    fit: BoxFit.fill,
-                  ),
+              : Stack(
+                  children: [
+                    CachedNetworkImage(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
+                      imageUrl: AppConstant.baseImage +
+                          (controller.detailMovie.value.posterPath ?? ""),
+                      fit: BoxFit.fill,
+                    ),
+                    Positioned(
+                      top: 54,
+                      left: 50,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: SvgPicture.asset(
+                          AppVectors.icBackDetailMovie,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ],
                 );
         },
       ),

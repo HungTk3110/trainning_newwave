@@ -8,7 +8,7 @@ import 'widget/item_listview_salad.dart';
 class TrainingC3 extends StatefulWidget {
   var isThemeLight = true;
 
-   TrainingC3({
+  TrainingC3({
     Key? key,
   }) : super(key: key);
 
@@ -28,11 +28,7 @@ class TrainingC3State extends State<TrainingC3> {
       body: RefreshIndicator(
         onRefresh: () {
           setState(() {
-            if (isRefresh) {
-              isRefresh = false;
-            } else {
-              isRefresh = true;
-            }
+            isRefresh = !isRefresh;
           });
           return Future<void>.delayed(
             const Duration(microseconds: 600),
@@ -53,7 +49,8 @@ class TrainingC3State extends State<TrainingC3> {
                     Text(
                       "Sort by",
                       style: TextStyle(
-                        color: widget.isThemeLight ? Colors.black : Colors.white,
+                        color:
+                            widget.isThemeLight ? Colors.black : Colors.white,
                         fontSize: 20.0,
                       ),
                     ),
@@ -112,11 +109,7 @@ class TrainingC3State extends State<TrainingC3> {
             color: Colors.black,
             onPressed: () {
               setState(() {
-                if (widget.isThemeLight) {
-                  widget.isThemeLight = false;
-                } else {
-                  widget.isThemeLight = true;
-                }
+                widget.isThemeLight = !widget.isThemeLight;
               });
             },
             icon: Icon(

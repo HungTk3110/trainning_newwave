@@ -23,13 +23,14 @@ class WeatherHomeCubit extends Cubit<WeatherHomeState> {
       final responseWeather = await ApiService.fetchWeather(
         city: city,
       );
-
-      emit(
-        state.copyWith(
-          loadingStatus: LoadingStatus.success,
-          weather: responseWeather,
-        ),
-      );
+      if (responseWeather != null) {
+        emit(
+          state.copyWith(
+            loadingStatus: LoadingStatus.success,
+            weather: responseWeather,
+          ),
+        );
+      }
     } catch (e) {
       emit(
         state.copyWith(
@@ -51,12 +52,14 @@ class WeatherHomeCubit extends Cubit<WeatherHomeState> {
       final responWeatherToday = await ApiService.fetchWeatherToday(
         city: city,
       );
-      emit(
-        state.copyWith(
-          weatherToday: responWeatherToday,
-          loadingStatusWeatherToday: LoadingStatus.success,
-        ),
-      );
+      if (responWeatherToday != null) {
+        emit(
+          state.copyWith(
+            weatherToday: responWeatherToday,
+            loadingStatusWeatherToday: LoadingStatus.success,
+          ),
+        );
+      }
     } catch (e) {
       emit(
         state.copyWith(
@@ -78,12 +81,14 @@ class WeatherHomeCubit extends Cubit<WeatherHomeState> {
       final responWeatherNextDay = await ApiService.fetchWeatherNextDay(
         city: city,
       );
-      emit(
-        state.copyWith(
-          weatherNextDay: responWeatherNextDay,
-          loadingStatusWeatherNextDay: LoadingStatus.success,
-        ),
-      );
+      if (responWeatherNextDay != null) {
+        emit(
+          state.copyWith(
+            weatherNextDay: responWeatherNextDay,
+            loadingStatusWeatherNextDay: LoadingStatus.success,
+          ),
+        );
+      }
     } catch (e) {
       emit(
         state.copyWith(

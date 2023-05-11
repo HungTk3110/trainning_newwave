@@ -41,6 +41,48 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
     );
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => _movieDetailCubit,
+      child: BlocBuilder<MovieDetailCubit, MovieDetailState>(
+        bloc: _movieDetailCubit,
+        buildWhen: (previous, current) =>
+            previous.loadingStatus != current.loadingStatus,
+        builder: (context, state) {
+          return state.loadingStatus == LoadingStatus.loading
+              ? const LoadingWidget()
+              : Scaffold(
+                  body: Stack(
+                    children: [
+                      CachedNetworkImage(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height,
+                        imageUrl: AppConstant.baseImage +
+                            (state.detailMovie?.posterPath ?? ""),
+                        fit: BoxFit.fill,
+                      ),
+                      Positioned(
+                        top: 54,
+                        left: 50,
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: SvgPicture.asset(
+                            AppVectors.icBackDetailMovie,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+        },
+      ),
+    );
+  }
+
   void showBottomSheet() {
     showModalBottomSheet(
       context: context,
@@ -155,33 +197,6 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
           ),
         );
       },
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => _movieDetailCubit,
-      child: BlocBuilder<MovieDetailCubit, MovieDetailState>(
-        bloc: _movieDetailCubit,
-        buildWhen: (previous, current) =>
-            previous.loadingStatus != current.loadingStatus,
-        builder: (context, state) {
-          return state.loadingStatus == LoadingStatus.loading
-              ? const LoadingWidget()
-              : Scaffold(
-                  body: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height,
-                    child: CachedNetworkImage(
-                      imageUrl: AppConstant.baseImage +
-                          (state.detailMovie?.posterPath ?? ""),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                );
-        },
-      ),
     );
   }
 }
