@@ -7,7 +7,8 @@ import 'package:training_newwave/configs/app_colors.dart';
 import 'package:training_newwave/configs/app_styles.dart';
 import 'package:training_newwave/configs/app_vectors.dart';
 import 'package:training_newwave/model/enums/loading_status.dart';
-import 'package:training_newwave/note_app/note_create/note_create_cubit.dart';
+import 'package:training_newwave/note_app_with_sqlite/note_create/note_create_cubit.dart';
+import 'package:training_newwave/note_app_with_sqlite/widget/app_bar_create_note.dart';
 
 class NotesCreateScreen extends StatefulWidget {
   final int? id;
@@ -53,6 +54,11 @@ class _NotesCreateScreenState extends State<NotesCreateScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBarCreateNote(
+        openDialogSave: () async {
+          await openDialogSave(context);
+        },
+      ),
       backgroundColor: AppColors.mineShaftApprox,
       body: BlocProvider(
         create: (context) => _noteCubit,
@@ -63,46 +69,38 @@ class _NotesCreateScreenState extends State<NotesCreateScreen> {
             return state.statusGet == LoadingStatus.loading
                 ? const SizedBox()
                 : SafeArea(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        appBarCraeteNote(),
-                        Expanded(
-                          child: SingleChildScrollView(
-                            child: Container(
-                              width: double.infinity,
-                              padding: const EdgeInsets.only(
-                                left: 28,
-                                right: 28,
-                                bottom: 10,
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  _textInputWidget(
-                                    textHint: 'Title',
-                                    textEditingController: _titleController,
-                                    textStyle: AppTextStyles.whiteS48Medium,
-                                    textStyleHint:
-                                        AppTextStyles.dustyGrayS48Medium,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 36),
-                                    child: _textInputWidget(
-                                      textHint: 'Type something...',
-                                      textEditingController:
-                                          _descriptionController,
-                                      textStyle: AppTextStyles.whiteS23Medium,
-                                      textStyleHint:
-                                          AppTextStyles.dustyGrayS23Medium,
-                                    ),
-                                  ),
-                                ],
+                    child: SingleChildScrollView(
+                      child: Container(
+                        width: double.infinity,
+                        height: MediaQuery.of(context).size.height,
+                        padding: const EdgeInsets.only(
+                          left: 28,
+                          right: 28,
+                          bottom: 10,
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            _textInputWidget(
+                              textHint: 'Title',
+                              textEditingController: _titleController,
+                              textStyle: AppTextStyles.whiteS48Medium,
+                              textStyleHint: AppTextStyles.dustyGrayS48Medium,
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 36),
+                                child: _textInputWidget(
+                                  textHint: 'Type something...',
+                                  textEditingController: _descriptionController,
+                                  textStyle: AppTextStyles.whiteS23Medium,
+                                  textStyleHint: AppTextStyles.dustyGrayS23Medium,
+                                ),
                               ),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   );
           },
@@ -111,74 +109,7 @@ class _NotesCreateScreenState extends State<NotesCreateScreen> {
     );
   }
 
-  Widget appBarCraeteNote() {
-    return Padding(
-      padding: const EdgeInsets.only(
-        left: 24,
-        right: 24,
-        top: 8,
-        bottom: 36,
-      ),
-      child: Row(
-        children: [
-          InkWell(
-            onTap: () => {Navigator.pop(context, true)},
-            child: Container(
-              width: 50,
-              height: 50,
-              decoration: BoxDecoration(
-                color: AppColors.mineShaft,
-                borderRadius: BorderRadius.circular(15),
-              ),
-              padding: const EdgeInsets.symmetric(
-                horizontal: 18,
-                vertical: 13,
-              ),
-              child: SvgPicture.asset(
-                AppVectors.icNoteBack,
-              ),
-            ),
-          ),
-          const Spacer(),
-          Container(
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-              color: AppColors.mineShaft,
-              borderRadius: BorderRadius.circular(15),
-            ),
-            padding: const EdgeInsets.all(13),
-            child: InkWell(
-              onTap: () => {},
-              child: SvgPicture.asset(
-                AppVectors.icNoteVisibility,
-              ),
-            ),
-          ),
-          InkWell(
-            onTap: () => {
-              openDialogSave(context),
-            },
-            child: Container(
-              width: 50,
-              height: 50,
-              decoration: BoxDecoration(
-                color: AppColors.mineShaft,
-                borderRadius: BorderRadius.circular(15),
-              ),
-              padding: const EdgeInsets.all(13),
-              margin: const EdgeInsets.only(left: 22),
-              child: SvgPicture.asset(
-                AppVectors.icNoteSave,
-              ),
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
-  Future openDialogSave(BuildContext context) {
+  Future<void> openDialogSave(BuildContext context) {
     return showDialog(
       context: context,
       builder: (context) => AlertDialog(

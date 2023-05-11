@@ -8,6 +8,7 @@ import 'package:training_newwave/configs/app_styles.dart';
 import 'package:training_newwave/configs/app_vectors.dart';
 import 'package:training_newwave/model/enums/loading_status.dart';
 import 'package:training_newwave/note_app_firebase_storage/note_edit_firebase/note_edit_firebase_cubit.dart';
+import 'package:training_newwave/note_app_firebase_storage/widget/app_bar_edit_note_widget.dart';
 import 'package:training_newwave/note_app_firebase_storage/widget/loading_widget.dart';
 
 class NotesEditFirebaseScreen extends StatefulWidget {
@@ -19,12 +20,12 @@ class NotesEditFirebaseScreen extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<NotesEditFirebaseScreen> createState() => _NotesEditFirebaseScreenState();
+  State<NotesEditFirebaseScreen> createState() =>
+      _NotesEditFirebaseScreenState();
 }
 
 class _NotesEditFirebaseScreenState extends State<NotesEditFirebaseScreen> {
   late TextEditingController _titleController;
-
   late TextEditingController _descriptionController;
   late final NoteEditFirebaseCubit _noteCubit;
 
@@ -32,128 +33,68 @@ class _NotesEditFirebaseScreenState extends State<NotesEditFirebaseScreen> {
   void initState() {
     super.initState();
     _noteCubit = NoteEditFirebaseCubit();
-
     _init();
   }
 
   void _init() async {
     await _noteCubit.getNote(widget.id);
-      _titleController = TextEditingController(text: _noteCubit.state.note?.title ?? "");
-      _descriptionController = TextEditingController(text: _noteCubit.state.note?.describe ?? "");
+    _titleController =
+        TextEditingController(text: _noteCubit.state.note?.title ?? "");
+    _descriptionController =
+        TextEditingController(text: _noteCubit.state.note?.describe ?? "");
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBarEditNote(
+        openDialogSave: () async {
+          await openDialogSave(context);
+        },
+      ),
       backgroundColor: AppColors.mineShaftApprox,
       body: BlocProvider(
         create: (context) => _noteCubit,
         child: BlocBuilder<NoteEditFirebaseCubit, NoteEditFirebaseSate>(
-          buildWhen: (previous, current) => previous.loadingStatus != current.loadingStatus,
+          buildWhen: (previous, current) =>
+              previous.loadingStatus != current.loadingStatus,
           builder: (context, state) {
             return state.loadingStatus == LoadingStatus.loading
                 ? const LoadingWidget()
-                : SizedBox(
-                    width: double.infinity,
-                    height: double.infinity,
-                    child: SafeArea(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          appBarEditNote(),
-                          Expanded(
-                            child: SingleChildScrollView(
-                              child: Container(
-                                width: double.infinity,
-                                padding: const EdgeInsets.only(
-                                  left: 28,
-                                  right: 28,
-                                  bottom: 10,
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    _textInputWidget(
-                                      textHint: 'Title',
-                                      textEditingController: _titleController,
-                                      textStyle: AppTextStyles.whiteS48Medium,
-                                      textStyleHint:
-                                      AppTextStyles.dustyGrayS48Medium,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 36),
-                                      child: _textInputWidget(
-                                        textHint: 'Type something...',
-                                        textEditingController:
-                                        _descriptionController,
-                                        textStyle: AppTextStyles.whiteS23Medium,
-                                        textStyleHint:
-                                        AppTextStyles.dustyGrayS23Medium,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                : SafeArea(
+                    child: SingleChildScrollView(
+                      child: Container(
+                        color: AppColors.mineShaftApprox,
+                        height: MediaQuery.of(context).size.height,
+                        padding: const EdgeInsets.only(
+                          left: 28,
+                          right: 28,
+                          bottom: 10,
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            _textInputWidget(
+                              textHint: 'Title',
+                              textEditingController: _titleController,
+                              textStyle: AppTextStyles.whiteS48Medium,
+                              textStyleHint: AppTextStyles.dustyGrayS48Medium,
+                            ),
+                            Expanded(
+                              child: _textInputWidget(
+                                textHint: 'Type something...',
+                                textEditingController: _descriptionController,
+                                textStyle: AppTextStyles.whiteS23Medium,
+                                textStyleHint: AppTextStyles.dustyGrayS23Medium,
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   );
           },
         ),
-      ),
-    );
-  }
-
-  Widget appBarEditNote() {
-    return Padding(
-      padding: const EdgeInsets.only(
-        left: 24,
-        right: 24,
-        top: 8,
-        bottom: 36,
-      ),
-      child: Row(
-        children: [
-          InkWell(
-            onTap: () => {Navigator.pop(context, true)},
-            child: Container(
-              width: 50,
-              height: 50,
-              decoration: BoxDecoration(
-                color: AppColors.mineShaft,
-                borderRadius: BorderRadius.circular(15),
-              ),
-              padding: const EdgeInsets.symmetric(
-                horizontal: 18,
-                vertical: 13,
-              ),
-              child: SvgPicture.asset(
-                AppVectors.icNoteBack,
-              ),
-            ),
-          ),
-          const Spacer(),
-          InkWell(
-            onTap: () => {
-              openDialogSave(context),
-            },
-            child: Container(
-              width: 50,
-              height: 50,
-              decoration: BoxDecoration(
-                color: AppColors.mineShaft,
-                borderRadius: BorderRadius.circular(15),
-              ),
-              padding: const EdgeInsets.all(13),
-              margin: const EdgeInsets.only(left: 22),
-              child: SvgPicture.asset(
-                AppVectors.icNoteEdit,
-              ),
-            ),
-          )
-        ],
       ),
     );
   }
@@ -198,17 +139,23 @@ class _NotesEditFirebaseScreenState extends State<NotesEditFirebaseScreen> {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: Text('Discard', style: AppTextStyles.whiteS18Medium),
+                      child:
+                          Text('Discard', style: AppTextStyles.whiteS18Medium),
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.jungleGreen, // foreground
                       ),
                       onPressed: () {
+                        if (_titleController.text.isEmpty ||
+                            _descriptionController.text.isEmpty) {
+                          Navigator.pop(context);
+                        } else {
                           saveItem();
                           Navigator.of(context)
                             ..pop()
                             ..pop(true);
+                        }
                       },
                       child: Text('Save', style: AppTextStyles.whiteS18Medium),
                     )
@@ -230,12 +177,12 @@ class _NotesEditFirebaseScreenState extends State<NotesEditFirebaseScreen> {
       Colors.cyan.value,
     ];
     final random = Random();
-      await _noteCubit.updateNote(
-        id: widget.id,
-        title: _titleController.text,
-        describe: _descriptionController.text,
-        color: listColor[random.nextInt(listColor.length)],
-      );
+    await _noteCubit.updateNote(
+      id: widget.id,
+      title: _titleController.text,
+      describe: _descriptionController.text,
+      color: listColor[random.nextInt(listColor.length)],
+    );
   }
 
   Widget _textInputWidget({

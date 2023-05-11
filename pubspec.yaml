@@ -60,7 +60,8 @@ dependencies:
   firebase_auth: ^4.4.2
   pinput: ^2.2.31
   firebase_core_dart: ^1.0.1
-  email_validator: '^2.1.16'
+  email_validator: ^2.1.16
+  readmore: ^2.1.0
 
 
 

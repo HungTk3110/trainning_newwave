@@ -7,6 +7,7 @@ import 'package:training_newwave/configs/app_colors.dart';
 import 'package:training_newwave/configs/app_styles.dart';
 import 'package:training_newwave/configs/app_vectors.dart';
 import 'package:training_newwave/model/enums/loading_status.dart';
+import 'package:training_newwave/note_app_firebase_storage/widget/app_bar_create_note_widget.dart';
 import 'package:training_newwave/note_app_isar/note_create_isar/note_create_isar_cubit.dart';
 
 class NotesCreateIsarScreen extends StatefulWidget {
@@ -34,6 +35,11 @@ class _NotesCreateIsarScreenState extends State<NotesCreateIsarScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBarWidget(
+        onTap: () async {
+          await openDialogSave(context);
+        },
+      ),
       body: BlocProvider(
         create: (context) => _noteCubit,
         child: BlocBuilder<NoteCreateIsarCubit, NoteCreateIsarSate>(
@@ -42,126 +48,47 @@ class _NotesCreateIsarScreenState extends State<NotesCreateIsarScreen> {
           builder: (context, state) {
             return state.loadingStatus == LoadingStatus.loading
                 ? const SizedBox()
-                : Container(
-                    color: AppColors.mineShaftApprox,
-                    child: SafeArea(
+                : SafeArea(
+                  child: SingleChildScrollView(
+                    child: Container(
+                      color: AppColors.mineShaftApprox,
+                      height: MediaQuery.of(context).size.height,
+                      padding: const EdgeInsets.only(
+                        left: 28,
+                        right: 28,
+                        bottom: 10,
+                      ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          appBarCreateNote(),
+                          _textInputWidget(
+                            textHint: 'Title',
+                            textEditingController: _titleController,
+                            textStyle: AppTextStyles.whiteS48Medium,
+                            textStyleHint:
+                                AppTextStyles.dustyGrayS48Medium,
+                          ),
                           Expanded(
-                            child: SingleChildScrollView(
-                              child: Container(
-                                padding: const EdgeInsets.only(
-                                  left: 28,
-                                  right: 28,
-                                  bottom: 10,
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    _textInputWidget(
-                                      textHint: 'Title',
-                                      textEditingController: _titleController,
-                                      textStyle: AppTextStyles.whiteS48Medium,
-                                      textStyleHint:
-                                          AppTextStyles.dustyGrayS48Medium,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 36),
-                                      child: _textInputWidget(
-                                        textHint: 'Type something...',
-                                        textEditingController:
-                                            _descriptionController,
-                                        textStyle: AppTextStyles.whiteS23Medium,
-                                        textStyleHint:
-                                            AppTextStyles.dustyGrayS23Medium,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                            child: _textInputWidget(
+                              textHint: 'Type something...',
+                              textEditingController:
+                                  _descriptionController,
+                              textStyle: AppTextStyles.whiteS23Medium,
+                              textStyleHint:
+                                  AppTextStyles.dustyGrayS23Medium,
                             ),
                           ),
                         ],
                       ),
                     ),
-                  );
+                  ),
+                );
           },
         ),
       ),
     );
   }
-
-  Widget appBarCreateNote() {
-    return Padding(
-      padding: const EdgeInsets.only(
-        left: 24,
-        right: 24,
-        top: 8,
-        bottom: 36,
-      ),
-      child: Row(
-        children: [
-          InkWell(
-            onTap: () {
-              Navigator.pop(context, true);
-            },
-            child: Container(
-              width: 50,
-              height: 50,
-              decoration: BoxDecoration(
-                color: AppColors.mineShaft,
-                borderRadius: BorderRadius.circular(15),
-              ),
-              padding: const EdgeInsets.symmetric(
-                horizontal: 18,
-                vertical: 13,
-              ),
-              child: SvgPicture.asset(
-                AppVectors.icNoteBack,
-              ),
-            ),
-          ),
-          const Spacer(),
-          Container(
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-              color: AppColors.mineShaft,
-              borderRadius: BorderRadius.circular(15),
-            ),
-            padding: const EdgeInsets.all(13),
-            child: InkWell(
-              onTap: () => {},
-              child: SvgPicture.asset(
-                AppVectors.icNoteVisibility,
-              ),
-            ),
-          ),
-          InkWell(
-            onTap: () => {
-              openDialogSave(context),
-            },
-            child: Container(
-              width: 50,
-              height: 50,
-              decoration: BoxDecoration(
-                color: AppColors.mineShaft,
-                borderRadius: BorderRadius.circular(15),
-              ),
-              padding: const EdgeInsets.all(13),
-              margin: const EdgeInsets.only(left: 22),
-              child: SvgPicture.asset(
-                AppVectors.icNoteSave,
-              ),
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
+  
   Future openDialogSave(BuildContext context) {
     return showDialog(
       context: context,
@@ -210,11 +137,15 @@ class _NotesCreateIsarScreenState extends State<NotesCreateIsarScreen> {
                         backgroundColor: AppColors.jungleGreen, // foreground
                       ),
                       onPressed: () async {
-                        await saveItem();
-                        if (!mounted) return;
-                        Navigator.of(context)
-                          ..pop()
-                          ..pop(true);
+                        if(_titleController.text.isEmpty || _descriptionController.text.isEmpty){
+                          Navigator.pop(context);
+                        }else{
+                          await saveItem();
+                          if (!mounted) return;
+                          Navigator.of(context)
+                            ..pop()
+                            ..pop(true);
+                        }
                       },
                       child: Text('Save', style: AppTextStyles.whiteS18Medium),
                     )

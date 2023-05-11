@@ -9,6 +9,7 @@ import 'package:training_newwave/configs/app_styles.dart';
 import 'package:training_newwave/configs/app_vectors.dart';
 import 'package:training_newwave/model/enums/loading_status.dart';
 import 'package:training_newwave/model/note_isar_entity.dart';
+import 'package:training_newwave/note_app_firebase_storage/widget/app_bar_edit_note_widget.dart';
 import 'package:training_newwave/note_app_firebase_storage/widget/loading_widget.dart';
 import 'package:training_newwave/note_app_isar/note_edit_isar/note_edit_isar_cubit.dart';
 
@@ -26,7 +27,6 @@ class NotesEditIsarScreen extends StatefulWidget {
 
 class _NotesEditIsarScreenState extends State<NotesEditIsarScreen> {
   late TextEditingController _titleController;
-
   late TextEditingController _descriptionController;
   late final NoteEditIsarCubit _noteCubit;
 
@@ -49,120 +49,57 @@ class _NotesEditIsarScreenState extends State<NotesEditIsarScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.mineShaftApprox,
-      body: BlocProvider(
-        create: (context) => _noteCubit,
-        child: BlocBuilder<NoteEditIsarCubit, NoteEditIsarSate>(
-          buildWhen: (previous, current) =>
-              previous.loadingStatus != current.loadingStatus,
-          builder: (context, state) {
-            return state.loadingStatus == LoadingStatus.loading
+    return BlocProvider(
+      create: (context) => _noteCubit,
+      child: BlocBuilder<NoteEditIsarCubit, NoteEditIsarSate>(
+        buildWhen: (previous, current) =>
+            previous.loadingStatus != current.loadingStatus,
+        builder: (context, state) {
+          return Scaffold(
+            appBar: AppBarEditNote(
+              openDialogSave: () async {
+                await openDialogSave(note: state.note ?? NoteIsarEntity());
+              },
+            ),
+            backgroundColor: AppColors.mineShaftApprox,
+            body: state.loadingStatus == LoadingStatus.loading
                 ? const LoadingWidget()
-                : SizedBox(
-                    child: SafeArea(
+                : SafeArea(
+                  child: SingleChildScrollView(
+                    child: Container(
+                      height: MediaQuery.of(context).size.height,
+                      padding: const EdgeInsets.only(
+                        left: 28,
+                        right: 28,
+                        bottom: 10,
+                      ),
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          appBarEditNote(
-                            note: state.note ?? NoteIsarEntity(),
+                          _textInputWidget(
+                            textHint: 'Title',
+                            textEditingController: _titleController,
+                            textStyle: AppTextStyles.whiteS48Medium,
+                            textStyleHint:
+                                AppTextStyles.dustyGrayS48Medium,
                           ),
                           Expanded(
-                            child: SingleChildScrollView(
-                              child: Container(
-                                width: double.infinity,
-                                padding: const EdgeInsets.only(
-                                  left: 28,
-                                  right: 28,
-                                  bottom: 10,
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    _textInputWidget(
-                                      textHint: 'Title',
-                                      textEditingController: _titleController,
-                                      textStyle: AppTextStyles.whiteS48Medium,
-                                      textStyleHint:
-                                          AppTextStyles.dustyGrayS48Medium,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 36),
-                                      child: _textInputWidget(
-                                        textHint: 'Type something...',
-                                        textEditingController:
-                                            _descriptionController,
-                                        textStyle: AppTextStyles.whiteS23Medium,
-                                        textStyleHint:
-                                            AppTextStyles.dustyGrayS23Medium,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                            child: _textInputWidget(
+                              textHint: 'Type something...',
+                              textEditingController:
+                                  _descriptionController,
+                              textStyle: AppTextStyles.whiteS23Medium,
+                              textStyleHint:
+                                  AppTextStyles.dustyGrayS23Medium,
                             ),
                           ),
                         ],
                       ),
                     ),
-                  );
-          },
-        ),
-      ),
-    );
-  }
-
-  Widget appBarEditNote({
-    required NoteIsarEntity note,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        left: 24,
-        right: 24,
-        top: 8,
-        bottom: 36,
-      ),
-      child: Row(
-        children: [
-          InkWell(
-            onTap: () => {Navigator.pop(context, true)},
-            child: Container(
-              width: 50,
-              height: 50,
-              decoration: BoxDecoration(
-                color: AppColors.mineShaft,
-                borderRadius: BorderRadius.circular(15),
-              ),
-              padding: const EdgeInsets.symmetric(
-                horizontal: 18,
-                vertical: 13,
-              ),
-              child: SvgPicture.asset(
-                AppVectors.icNoteBack,
-              ),
-            ),
-          ),
-          const Spacer(),
-          InkWell(
-            onTap: () => {
-              openDialogSave(
-                note: note,
-              ),
-            },
-            child: Container(
-              width: 50,
-              height: 50,
-              decoration: BoxDecoration(
-                color: AppColors.mineShaft,
-                borderRadius: BorderRadius.circular(15),
-              ),
-              padding: const EdgeInsets.all(13),
-              margin: const EdgeInsets.only(left: 22),
-              child: SvgPicture.asset(
-                AppVectors.icNoteEdit,
-              ),
-            ),
-          )
-        ],
+                  ),
+                ),
+          );
+        },
       ),
     );
   }
@@ -217,11 +154,16 @@ class _NotesEditIsarScreenState extends State<NotesEditIsarScreen> {
                         backgroundColor: AppColors.jungleGreen, // foreground
                       ),
                       onPressed: () async {
-                        await saveItem(note: note);
-                        if (!mounted) return;
-                        Navigator.of(context)
-                          ..pop()
-                          ..pop(true);
+                        if (_titleController.text.isEmpty ||
+                            _descriptionController.text.isEmpty) {
+                          Navigator.pop(context);
+                        } else {
+                          await saveItem(note: note);
+                          if (!mounted) return;
+                          Navigator.of(context)
+                            ..pop()
+                            ..pop(true);
+                        }
                       },
                       child: Text('Save', style: AppTextStyles.whiteS18Medium),
                     )

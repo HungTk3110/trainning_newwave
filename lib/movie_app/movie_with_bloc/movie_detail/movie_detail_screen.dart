@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:readmore/readmore.dart';
 import 'package:training_newwave/configs/app_colors.dart';
 import 'package:training_newwave/configs/app_constant.dart';
 import 'package:training_newwave/configs/app_styles.dart';
@@ -154,13 +155,15 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 16),
-                            child: Center(
-                              child: Text(
-                                state.detailMovie?.overview ?? "",
-                                maxLines: 3,
-                                textAlign: TextAlign.start,
-                                style: AppTextStyles.white75S12Medium,
-                              ),
+                            child: ReadMoreText(
+                              state.detailMovie?.overview ?? "",
+                              trimLines: 3,
+                              colorClickableText: Colors.lightBlueAccent,
+                              trimMode: TrimMode.Line,
+                              trimCollapsedText: 'More',
+                              trimExpandedText: 'Less',
+                              textAlign: TextAlign.start,
+                              style: AppTextStyles.white75S12Medium,
                             ),
                           ),
                           Padding(

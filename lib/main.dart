@@ -9,10 +9,10 @@ import 'package:training_newwave/movie_app/movie_with_provider/movie_detail/movi
 import 'package:training_newwave/movie_app/movie_with_provider/movie_home/moive_home_provider_screen.dart';
 import 'package:training_newwave/movie_app/movie_with_provider/movie_home/movie_home_provider.dart';
 import 'package:training_newwave/movie_app/movie_with_set_state/movie_home.dart';
-import 'package:training_newwave/note_app/note_home/notes_home_screen.dart';
 import 'package:training_newwave/note_app_firebase_storage/note_home_firebase/notes_home_firebase_screen.dart';
 import 'package:training_newwave/note_app_isar/isar/isar_helper.dart';
 import 'package:training_newwave/note_app_isar/note_home_isar/notes_home_isar_screen.dart';
+import 'package:training_newwave/note_app_with_sqlite/note_home/notes_home_screen.dart';
 import 'package:training_newwave/weather_app/weather_home/weather_home_screen.dart';
 
 import 'authentication_with_firebase/authentication_with_email/login_screen.dart';
@@ -78,7 +78,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         theme: ThemeData.light(),
-        home: const LoginEmailScreen(),
+        home: const HomeMyApp(),
       ),
     );
   }

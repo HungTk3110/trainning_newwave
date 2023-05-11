@@ -4,8 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:training_newwave/configs/app_colors.dart';
 import 'package:training_newwave/configs/app_styles.dart';
 import 'package:training_newwave/configs/app_vectors.dart';
-import 'package:training_newwave/note_app/note_create/notes_create_screen.dart';
-import 'package:training_newwave/note_app/note_detail/note_detail_cubit.dart';
+import 'package:training_newwave/note_app_with_sqlite/note_create/notes_create_screen.dart';
+import 'package:training_newwave/note_app_with_sqlite/note_detail/note_detail_cubit.dart';
 
 // ignore: must_be_immutable
 class NoteDetailScreen extends StatefulWidget {

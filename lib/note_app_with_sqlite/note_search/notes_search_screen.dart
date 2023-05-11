@@ -5,10 +5,10 @@ import 'package:training_newwave/configs/app_images.dart';
 import 'package:training_newwave/configs/app_styles.dart';
 import 'package:training_newwave/model/enums/loading_status.dart';
 import 'package:training_newwave/model/note_entity.dart';
-import 'package:training_newwave/note_app/note_detail/note_detail_screen.dart';
-import 'package:training_newwave/note_app/note_search/note_search_cubit.dart';
 import 'package:training_newwave/note_app_isar/widget/item_note_isar_widget.dart';
 import 'package:training_newwave/note_app_isar/widget/loading_isar_widget.dart';
+import 'package:training_newwave/note_app_with_sqlite/note_detail/note_detail_screen.dart';
+import 'package:training_newwave/note_app_with_sqlite/note_search/note_search_cubit.dart';
 
 
 class NoteSearchScreen extends StatefulWidget {

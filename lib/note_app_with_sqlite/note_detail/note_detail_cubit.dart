@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:training_newwave/model/enums/loading_status.dart';
 import 'package:training_newwave/model/note_entity.dart';
-import 'package:training_newwave/note_app/database/note_database_helper.dart';
+import 'package:training_newwave/note_app_with_sqlite/database/note_database_helper.dart';
 
 part 'note_detail_state.dart';
 

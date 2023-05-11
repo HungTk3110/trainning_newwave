@@ -8,11 +8,11 @@ import 'package:training_newwave/configs/app_vectors.dart';
 import 'package:training_newwave/model/enums/loading_status.dart';
 import 'package:training_newwave/model/note_entity.dart';
 import 'package:training_newwave/movie_app/widget/loading_widget.dart';
-import 'package:training_newwave/note_app/note_create/notes_create_screen.dart';
-import 'package:training_newwave/note_app/note_detail/note_detail_screen.dart';
-import 'package:training_newwave/note_app/note_home/note_home_cubit.dart';
-import 'package:training_newwave/note_app/note_search/notes_search_screen.dart';
 import 'package:training_newwave/note_app_isar/widget/item_note_isar_widget.dart';
+import 'package:training_newwave/note_app_with_sqlite/note_create/notes_create_screen.dart';
+import 'package:training_newwave/note_app_with_sqlite/note_detail/note_detail_screen.dart';
+import 'package:training_newwave/note_app_with_sqlite/note_home/note_home_cubit.dart';
+import 'package:training_newwave/note_app_with_sqlite/note_search/notes_search_screen.dart';
 
 class NoteHomeScreen extends StatefulWidget {
   const NoteHomeScreen({Key? key}) : super(key: key);
