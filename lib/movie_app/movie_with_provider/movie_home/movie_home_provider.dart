@@ -6,6 +6,8 @@ import 'package:training_newwave/movie_app/networks/api_service.dart';
 class HomeProvider extends ChangeNotifier {
   List<Movie> listMovies = [];
   LoadingStatus loadListPopularStatus = LoadingStatus.init;
+  LoadingStatus loadPositionTopStatus = LoadingStatus.init;
+  LoadingStatus loadPositionBottomStatus = LoadingStatus.init;
   int currentPosTop = 0;
   int currentPosBottom = 0;
 
@@ -26,6 +28,7 @@ class HomeProvider extends ChangeNotifier {
     required int currentPos,
   }) {
     currentPosTop = currentPos;
+    loadPositionTopStatus = LoadingStatus.loading;
     notifyListeners();
   }
 
@@ -33,6 +36,7 @@ class HomeProvider extends ChangeNotifier {
     required int currentPos,
   }) {
     currentPosBottom = currentPos;
+    loadPositionBottomStatus = LoadingStatus.loading;
     notifyListeners();
   }
 }

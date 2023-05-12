@@ -24,6 +24,7 @@ class TrainingC3State extends State<TrainingC3> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: widget.isThemeLight ? Colors.white : Colors.black,
       appBar: _appBarWidget(),
       body: RefreshIndicator(
         onRefresh: () {
@@ -129,7 +130,6 @@ class TrainingC3State extends State<TrainingC3> {
       height: MediaQuery.of(context).size.height * 0.2,
       child: ListView.separated(
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        shrinkWrap: true,
         itemCount: listSalad.length,
         scrollDirection: Axis.horizontal,
         separatorBuilder: (BuildContext context, int index) {

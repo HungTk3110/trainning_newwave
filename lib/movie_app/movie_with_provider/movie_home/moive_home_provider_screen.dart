@@ -92,7 +92,7 @@ class _MovieHomeState extends State<MovieHomeProvider> {
                           ? const SizedBox()
                           : Indicator(
                               listMovie: homeProvider.listMovies,
-                              currentPos: currentPosTop);
+                              currentPos: homeProvider.currentPosTop);
                     },
                   ),
                 ),
@@ -114,13 +114,15 @@ class _MovieHomeState extends State<MovieHomeProvider> {
                     bottom: 20,
                   ),
                   child: Selector<HomeProvider, LoadingStatus>(
-                    selector: (_, provider) => provider.loadListPopularStatus,
+                    selector: (_, provider) =>
+                        provider.loadPositionBottomStatus,
                     builder: (context, loadListPopularStatus, child) {
                       return loadListPopularStatus == LoadingStatus.loading
                           ? const SizedBox()
                           : Indicator(
                               listMovie: homeProvider.listMovies,
-                              currentPos: currentPosBottom);
+                              currentPos: homeProvider.currentPosBottom,
+                            );
                     },
                   ),
                 ),

@@ -55,14 +55,14 @@ class _MovieHomeState extends State<MovieHomeGetX> {
             tileMode: TileMode.mirror,
           ),
         ),
-        child: SingleChildScrollView(
-          child: SafeArea(
-            child: GetX<MovieHomeController>(
-                init: movieHomeController,
-                builder: (controller) {
-                  return controller.loadingStatus.value == LoadingStatus.loading
-                      ? const LoadingWidget()
-                      : Column(
+        child: GetX<MovieHomeController>(
+            init: movieHomeController,
+            builder: (controller) {
+              return controller.loadingStatus.value == LoadingStatus.loading
+                  ? const LoadingWidget()
+                  : SingleChildScrollView(
+                      child: SafeArea(
+                        child: Column(
                           children: [
                             const AppBarMovie(),
                             const SearchMovieWidget(),
@@ -99,10 +99,10 @@ class _MovieHomeState extends State<MovieHomeGetX> {
                                       controller.currentPosBottom.value),
                             )
                           ],
-                        );
-                }),
-          ),
-        ),
+                        ),
+                      ),
+                    );
+            }),
       ),
     );
   }

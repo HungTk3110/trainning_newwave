@@ -35,25 +35,18 @@ class _MovieDetailProviderState extends State<MovieDetailProvider> {
   void initState() {
     detailProvider = Provider.of<DetailProvider>(context, listen: false);
     super.initState();
+    detailProvider.getDetailMovie(widget.id);
+    detailProvider.getListCast(widget.id);
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
         showBottomSheet();
       },
     );
-    fetchData();
-  }
-
-  void fetchData() async {
-    await detailProvider.getDetailMovie(widget.id);
-    await detailProvider.getListCast(widget.id);
   }
 
   void showBottomSheet() {
     showModalBottomSheet(
       context: context,
-      isDismissible: false,
-      isScrollControlled: true,
-      useRootNavigator: true,
       barrierColor: Colors.black.withAlpha(1),
       backgroundColor: Colors.transparent,
       shape: const RoundedRectangleBorder(
@@ -100,29 +93,29 @@ class _MovieDetailProviderState extends State<MovieDetailProvider> {
                     selector: (_, provider) => provider.loadDetailStatus,
                     builder: (context, loadDetailStatus, child) {
                       return loadDetailStatus == LoadingStatus.loading
-                          ? const SizedBox()
-                          : Flexible(
+                          ? Flexible(
                               child: Text(
                                 detailProvider.detailMovie.title ?? "",
                                 textAlign: TextAlign.center,
                                 style: AppTextStyles.whiteS64Bold,
                               ),
-                            );
+                            )
+                          : const SizedBox();
                     },
                   ),
                   Selector<DetailProvider, LoadingStatus>(
                     selector: (_, provider) => provider.loadDetailStatus,
                     builder: (context, loadDetailStatus, child) {
-                      return loadDetailStatus == LoadingStatus.loading
-                          ? const SizedBox()
-                          : Text(
+                      return loadDetailStatus == LoadingStatus.success
+                          ? Text(
                               Provider.of<DetailProvider>(context,
                                           listen: false)
                                       .detailMovie
                                       .tagline ??
                                   "",
                               style: AppTextStyles.white50S18Medium,
-                            );
+                            )
+                          : const SizedBox();
                     },
                   ),
                   Selector<DetailProvider, LoadingStatus>(
@@ -198,21 +191,37 @@ class _MovieDetailProviderState extends State<MovieDetailProvider> {
     return Selector<DetailProvider, LoadingStatus>(
       selector: (_, provider) => provider.loadDetailStatus,
       builder: (context, loadDetailStatus, child) {
-        DetailMovie detailMovie =
-            Provider.of<DetailProvider>(context, listen: false).detailMovie;
-        return loadDetailStatus == LoadingStatus.loading
-            ? const LoadingWidget()
-            : Scaffold(
-                body: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  child: CachedNetworkImage(
-                    imageUrl:
-                        AppConstant.baseImage + (detailMovie.posterPath ?? ""),
-                    fit: BoxFit.fill,
-                  ),
+        return loadDetailStatus == LoadingStatus.success
+            ? Scaffold(
+                body: Stack(
+                  children: [
+                    CachedNetworkImage(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
+                      imageUrl: AppConstant.baseImage +
+                          (Provider.of<DetailProvider>(context, listen: false)
+                                  .detailMovie
+                                  .posterPath ??
+                              ""),
+                      fit: BoxFit.fill,
+                    ),
+                    Positioned(
+                      top: 54,
+                      left: 50,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: SvgPicture.asset(
+                          AppVectors.icBackDetailMovie,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              );
+              )
+            : const LoadingWidget();
       },
     );
   }

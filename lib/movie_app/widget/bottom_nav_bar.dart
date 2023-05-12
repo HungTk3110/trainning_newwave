@@ -23,7 +23,6 @@ class BottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 84,
       width: double.infinity,
       decoration: BoxDecoration(
         border: Border.all(
@@ -54,7 +53,7 @@ class BottomNavBar extends StatelessWidget {
         ),
         padding: const EdgeInsets.symmetric(
           horizontal: 68,
-          vertical: 20,
+          vertical: 18,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -86,13 +85,15 @@ class BottomNavBar extends StatelessWidget {
                   BlendMode.srcIn,
                 ),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(
+                height: 8,
+              ),
               Visibility(
                 visible: isChoose,
                 replacement: const SizedBox(height: 4),
                 child: Container(
-                  width: 4,
-                  height: 4,
+                  width: 6,
+                  height: 6,
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.white,

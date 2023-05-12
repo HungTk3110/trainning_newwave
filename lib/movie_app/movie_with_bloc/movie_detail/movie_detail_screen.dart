@@ -87,9 +87,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
   void showBottomSheet() {
     showModalBottomSheet(
       context: context,
-      isDismissible: false,
       isScrollControlled: true,
-      useRootNavigator: true,
       barrierColor: Colors.black.withAlpha(1),
       backgroundColor: Colors.transparent,
       shape: const RoundedRectangleBorder(

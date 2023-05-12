@@ -41,9 +41,7 @@ class _MovieDetailGetXState extends State<MovieDetailGetX> {
   void showBottomSheet() {
     showModalBottomSheet(
       context: context,
-      isDismissible: false,
       isScrollControlled: true,
-      useRootNavigator: true,
       barrierColor: Colors.black.withAlpha(1),
       backgroundColor: Colors.transparent,
       shape: const RoundedRectangleBorder(
@@ -162,9 +160,9 @@ class _MovieDetailGetXState extends State<MovieDetailGetX> {
       body: GetX<MovieDetailController>(
         init: MovieDetailController(id: widget.id),
         builder: (controller) {
-          return controller.loadDetail.value == LoadingStatus.loading
-              ? const LoadingWidget()
-              : Stack(
+          return controller.loadDetail.value == LoadingStatus.success &&
+                  controller.loadCast.value == LoadingStatus.success
+              ? Stack(
                   children: [
                     CachedNetworkImage(
                       width: MediaQuery.of(context).size.width,
@@ -187,7 +185,8 @@ class _MovieDetailGetXState extends State<MovieDetailGetX> {
                       ),
                     ),
                   ],
-                );
+                )
+              : const LoadingWidget();
         },
       ),
     );
