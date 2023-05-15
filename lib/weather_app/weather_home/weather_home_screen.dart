@@ -35,10 +35,10 @@ class _WeatherHomeScreenState extends State<WeatherHomeScreen> {
   }
 
   void fetchData() async {
-    String city = await SharedPreferencesManager.getUserData() ?? '';
+    String city = await SharedPreferencesManager.getWeatherData() ?? '';
     if (city == '') {
-      SharedPreferencesManager.saveUserData("Hà nội");
-      String city = await SharedPreferencesManager.getUserData() ?? '';
+      SharedPreferencesManager.saveWeatherData("Hà nội");
+      String city = await SharedPreferencesManager.getWeatherData() ?? '';
       await _cubit.initDataWeather(
         city: city,
       );

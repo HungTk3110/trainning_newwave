@@ -1,16 +1,16 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesManager {
-  static String valueSharedPreferences = 'City';
+  static String keyCity = 'City';
   // Write DATA
-  static Future<void> saveUserData(String value) async {
+  static Future<void> saveWeatherData(String value) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    await sharedPreferences.setString(valueSharedPreferences, value);
+    await sharedPreferences.setString(keyCity, value);
   }
 
 // Read Data
-  static Future<String?> getUserData() async {
+  static Future<String?> getWeatherData() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    return sharedPreferences.getString(valueSharedPreferences);
+    return sharedPreferences.getString(keyCity);
   }
 }

@@ -24,9 +24,8 @@ class MyImageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Container(
+    return SizedBox(
       width: width,
-      margin: const EdgeInsets.symmetric(horizontal: 5),
       child: GestureDetector(
         //Inkwell
         onTap: () {

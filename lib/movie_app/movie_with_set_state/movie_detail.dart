@@ -59,6 +59,7 @@ class _MovieDetailState extends State<MovieDetail> {
             return true;
           },
           child: Container(
+            margin: const EdgeInsets.only(bottom: 76),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.centerLeft,

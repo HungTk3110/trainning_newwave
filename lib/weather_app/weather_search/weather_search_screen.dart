@@ -67,7 +67,7 @@ class _WeatherSearchScreenState extends State<WeatherSearchScreen> {
                     return state.loadingStatus == LoadingStatus.success
                         ? InkWell(
                             onTap: () async {
-                              SharedPreferencesManager.saveUserData(
+                              SharedPreferencesManager.saveWeatherData(
                                   _searchController.text);
                               Navigator.push(
                                 context,
