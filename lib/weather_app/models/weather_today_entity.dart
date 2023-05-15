@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:training_newwave/weather_app/models/weather_entity.dart';
+
 WeatherToday weatherToDayFromJson(String str) =>
     WeatherToday.fromJson(json.decode(str));
 
@@ -257,8 +259,8 @@ final podValues = EnumValues({"d": Pod.D, "n": Pod.N});
 
 class WeatherTime {
   int id;
-  MainEnum main;
-  Description description;
+  MainEnum? main;
+  Description? description;
   String icon;
 
   WeatherTime({
@@ -270,8 +272,8 @@ class WeatherTime {
 
   factory WeatherTime.fromJson(Map<String, dynamic> json) => WeatherTime(
         id: json["id"],
-        main: mainEnumValues.map[json["main"]]!,
-        description: descriptionValues.map[json["description"]]!,
+        main: mainEnumValues.map[json["main"]],
+        description: descriptionValues.map[json["description"]],
         icon: json["icon"],
       );
 

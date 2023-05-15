@@ -6,6 +6,7 @@ import 'package:training_newwave/configs/app_styles.dart';
 import 'package:training_newwave/configs/app_vectors.dart';
 import 'package:training_newwave/model/enums/loading_status.dart';
 import 'package:training_newwave/movie_app/widget/loading_widget.dart';
+import 'package:training_newwave/weather_app/database/sharedpreferences_manager.dart';
 import 'package:training_newwave/weather_app/models/weather_entity.dart';
 import 'package:training_newwave/weather_app/models/weather_next_day_entity.dart';
 import 'package:training_newwave/weather_app/models/weather_today_entity.dart';
@@ -34,15 +35,18 @@ class _WeatherHomeScreenState extends State<WeatherHomeScreen> {
   }
 
   void fetchData() async {
-    await _cubit.initDataWeatherNextDay(
-      city: 'HaNoi',
-    );
-    await _cubit.initDataWeather(
-      city: "HaNoi",
-    );
-    await _cubit.initDataWeatherToday(
-      city: 'HaNoi',
-    );
+    String city = await SharedPreferencesManager.getUserData() ?? '';
+    if (city == '') {
+      SharedPreferencesManager.saveUserData("Hà nội");
+      String city = await SharedPreferencesManager.getUserData() ?? '';
+      await _cubit.initDataWeather(
+        city: city,
+      );
+    } else {
+      await _cubit.initDataWeather(
+        city: city,
+      );
+    }
   }
 
   @override
@@ -55,15 +59,9 @@ class _WeatherHomeScreenState extends State<WeatherHomeScreen> {
           create: (context) => _cubit,
           child: BlocBuilder<WeatherHomeCubit, WeatherHomeState>(
             buildWhen: (previous, current) =>
-                previous.loadingStatus != current.loadingStatus ||
-                previous.loadingStatusWeatherToday !=
-                    current.loadingStatusWeatherToday ||
-                previous.loadingStatusWeatherNextDay !=
-                    current.loadingStatusWeatherNextDay,
+                previous.loadingStatus != current.loadingStatus,
             builder: (context, state) {
-              if (state.loadingStatus == LoadingStatus.loading &&
-                  state.loadingStatusWeatherToday == LoadingStatus.loading &&
-                  state.loadingStatusWeatherNextDay == LoadingStatus.loading) {
+              if (state.loadingStatus == LoadingStatus.loading) {
                 return const LoadingWidget();
               } else {
                 return isSeeMore == false

@@ -41,6 +41,11 @@ class AppTextStyles {
     color: Colors.white,
   );
 
+  static TextStyle grayS12Medium = white.copyWith(
+    fontSize: 12,
+    color: Colors.grey,
+  );
+
   static TextStyle altoS15Medium = white.copyWith(
     fontSize: 15,
     color: AppColors.alto,

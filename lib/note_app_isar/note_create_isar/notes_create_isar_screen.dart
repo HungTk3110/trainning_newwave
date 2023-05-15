@@ -49,46 +49,43 @@ class _NotesCreateIsarScreenState extends State<NotesCreateIsarScreen> {
             return state.loadingStatus == LoadingStatus.loading
                 ? const SizedBox()
                 : SafeArea(
-                  child: SingleChildScrollView(
-                    child: Container(
-                      color: AppColors.mineShaftApprox,
-                      height: MediaQuery.of(context).size.height,
-                      padding: const EdgeInsets.only(
-                        left: 28,
-                        right: 28,
-                        bottom: 10,
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          _textInputWidget(
-                            textHint: 'Title',
-                            textEditingController: _titleController,
-                            textStyle: AppTextStyles.whiteS48Medium,
-                            textStyleHint:
-                                AppTextStyles.dustyGrayS48Medium,
-                          ),
-                          Expanded(
-                            child: _textInputWidget(
-                              textHint: 'Type something...',
-                              textEditingController:
-                                  _descriptionController,
-                              textStyle: AppTextStyles.whiteS23Medium,
-                              textStyleHint:
-                                  AppTextStyles.dustyGrayS23Medium,
+                    child: SingleChildScrollView(
+                      child: Container(
+                        color: AppColors.mineShaftApprox,
+                        height: MediaQuery.of(context).size.height,
+                        padding: const EdgeInsets.only(
+                          left: 28,
+                          right: 28,
+                          bottom: 10,
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            _textInputWidget(
+                              textHint: 'Title',
+                              textEditingController: _titleController,
+                              textStyle: AppTextStyles.whiteS48Medium,
+                              textStyleHint: AppTextStyles.dustyGrayS48Medium,
                             ),
-                          ),
-                        ],
+                            Expanded(
+                              child: _textInputWidget(
+                                textHint: 'Type something...',
+                                textEditingController: _descriptionController,
+                                textStyle: AppTextStyles.whiteS23Medium,
+                                textStyleHint: AppTextStyles.dustyGrayS23Medium,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                );
+                  );
           },
         ),
       ),
     );
   }
-  
+
   Future openDialogSave(BuildContext context) {
     return showDialog(
       context: context,
@@ -137,9 +134,10 @@ class _NotesCreateIsarScreenState extends State<NotesCreateIsarScreen> {
                         backgroundColor: AppColors.jungleGreen, // foreground
                       ),
                       onPressed: () async {
-                        if(_titleController.text.isEmpty || _descriptionController.text.isEmpty){
+                        if (_titleController.text.isEmpty ||
+                            _descriptionController.text.isEmpty) {
                           Navigator.pop(context);
-                        }else{
+                        } else {
                           await saveItem();
                           if (!mounted) return;
                           Navigator.of(context)

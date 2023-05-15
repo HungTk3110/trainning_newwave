@@ -216,18 +216,18 @@ class WeatherElement {
 class Wind {
   double? speed;
   int? deg;
-  double? gust;
+  dynamic gust;
 
   Wind({
     this.speed,
     this.deg,
-    this.gust,
+    required this.gust,
   });
 
   factory Wind.fromJson(Map<String, dynamic> json) => Wind(
         speed: json["speed"].toDouble(),
         deg: json["deg"],
-        gust: json["gust"].toDouble(),
+        gust: json["gust"],
       );
 
   Map<String, dynamic> toJson() => {

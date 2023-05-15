@@ -30,17 +30,7 @@ class WeatherTodayWidget extends StatelessWidget {
         left: 16,
         right: 16,
       ),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: <Color>[
-            AppColors.malibu,
-            AppColors.mariner,
-          ],
-          tileMode: TileMode.clamp,
-        ),
-      ),
+      color: AppColors.mariner,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

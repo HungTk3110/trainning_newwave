@@ -24,17 +24,7 @@ class WeatherForNextDay extends StatelessWidget {
         top: 16,
       ),
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: <Color>[
-            AppColors.malibu,
-            AppColors.mariner,
-          ],
-          tileMode: TileMode.clamp,
-        ),
-      ),
+      color: AppColors.mariner,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -7,6 +7,7 @@ import 'package:training_newwave/configs/app_constant.dart';
 import 'package:training_newwave/configs/app_styles.dart';
 import 'package:training_newwave/configs/app_vectors.dart';
 import 'package:training_newwave/weather_app/models/weather_entity.dart';
+import 'package:training_newwave/weather_app/weather_search/weather_search_screen.dart';
 
 class WeatherInCity extends StatelessWidget {
   final Weather weather;
@@ -50,9 +51,19 @@ class WeatherInCity extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SvgPicture.asset(
-                    AppVectors.icAddWeather,
-                    fit: BoxFit.cover,
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const WeatherSearchScreen(),
+                        ),
+                      );
+                    },
+                    child: SvgPicture.asset(
+                      AppVectors.icAddWeather,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                   Text(
                     weather.name ?? "",
