@@ -41,6 +41,7 @@ class _MovieDetailState extends State<MovieDetail> {
   void showBottomSheet() {
     showModalBottomSheet(
       context: context,
+      enableDrag: false,
       isScrollControlled: true,
       barrierColor: Colors.black.withAlpha(1),
       backgroundColor: Colors.transparent,

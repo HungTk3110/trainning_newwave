@@ -11,48 +11,55 @@ class Exercise4 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          ElevatedButton(
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Exercise4_1()));
-            },
-            child: const Text("Feature 1"),
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const Exercise4_2()));
-            },
-            child: const Text("Feature 2"),
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Exercise4_3()));
-            },
-            child: const Text("Feature 3"),
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const Exercise4_4()));
-            },
-            child: const Text("Feature 4"),
-          ),
-        ],
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Exercise4_1()));
+              },
+              child: const Text("Feature 1"),
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const Exercise4_2()));
+              },
+              child: const Text("Feature 2"),
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Exercise4_3()));
+              },
+              child: const Text("Feature 3"),
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const Exercise4_4()));
+              },
+              child: const Text("Feature 4"),
+            ),
+          ],
+        ),
       ),
     );
   }

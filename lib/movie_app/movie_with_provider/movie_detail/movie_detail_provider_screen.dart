@@ -11,6 +11,7 @@ import 'package:training_newwave/model/detail_movie_entity.dart';
 import 'package:training_newwave/model/enums/loading_status.dart';
 import 'package:training_newwave/movie_app/movie_with_provider/movie_detail/movie_detail_provider.dart';
 import 'package:training_newwave/movie_app/widget/action_movie_detail_widget.dart';
+import 'package:training_newwave/movie_app/widget/bottom_nav_bar.dart';
 import 'package:training_newwave/movie_app/widget/list_cast_widget.dart';
 import 'package:training_newwave/movie_app/widget/loading_widget.dart';
 
@@ -47,6 +48,7 @@ class _MovieDetailProviderState extends State<MovieDetailProvider> {
   void showBottomSheet() {
     showModalBottomSheet(
       context: context,
+      enableDrag: false,
       barrierColor: Colors.black.withAlpha(1),
       backgroundColor: Colors.transparent,
       shape: const RoundedRectangleBorder(
@@ -64,6 +66,7 @@ class _MovieDetailProviderState extends State<MovieDetailProvider> {
             return true;
           },
           child: Container(
+            margin: const EdgeInsets.only(bottom: 76),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.centerLeft,
@@ -193,6 +196,10 @@ class _MovieDetailProviderState extends State<MovieDetailProvider> {
       builder: (context, loadDetailStatus, child) {
         return loadDetailStatus == LoadingStatus.success
             ? Scaffold(
+                bottomNavigationBar: BottomNavBar(
+                  onPageChange: (value) {},
+                  currentIndex: 0,
+                ),
                 body: Stack(
                   children: [
                     CachedNetworkImage(

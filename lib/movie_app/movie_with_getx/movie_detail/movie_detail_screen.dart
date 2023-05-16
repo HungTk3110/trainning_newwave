@@ -10,6 +10,7 @@ import 'package:training_newwave/configs/app_vectors.dart';
 import 'package:training_newwave/model/enums/loading_status.dart';
 import 'package:training_newwave/movie_app/movie_with_getx/movie_detail/movie_detail_controller.dart';
 import 'package:training_newwave/movie_app/widget/action_movie_detail_widget.dart';
+import 'package:training_newwave/movie_app/widget/bottom_nav_bar.dart';
 import 'package:training_newwave/movie_app/widget/list_cast_widget.dart';
 import 'package:training_newwave/movie_app/widget/loading_widget.dart';
 
@@ -41,6 +42,7 @@ class _MovieDetailGetXState extends State<MovieDetailGetX> {
   void showBottomSheet() {
     showModalBottomSheet(
       context: context,
+      enableDrag: false,
       isScrollControlled: true,
       barrierColor: Colors.black.withAlpha(1),
       backgroundColor: Colors.transparent,
@@ -64,6 +66,7 @@ class _MovieDetailGetXState extends State<MovieDetailGetX> {
                       controller.loadDetail.value == LoadingStatus.loading
                   ? const LoadingWidget()
                   : Container(
+                      margin: const EdgeInsets.only(bottom: 76),
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           begin: Alignment.centerLeft,
@@ -157,6 +160,10 @@ class _MovieDetailGetXState extends State<MovieDetailGetX> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: BottomNavBar(
+        onPageChange: (value) {},
+        currentIndex: 0,
+      ),
       body: GetX<MovieDetailController>(
         init: MovieDetailController(id: widget.id),
         builder: (controller) {

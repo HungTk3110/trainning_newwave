@@ -11,6 +11,7 @@ import 'package:training_newwave/model/detail_movie_entity.dart';
 import 'package:training_newwave/model/enums/loading_status.dart';
 import 'package:training_newwave/movie_app/movie_with_bloc/movie_detail/movie_detail_cubit.dart';
 import 'package:training_newwave/movie_app/widget/action_movie_detail_widget.dart';
+import 'package:training_newwave/movie_app/widget/bottom_nav_bar.dart';
 import 'package:training_newwave/movie_app/widget/list_cast_widget.dart';
 import 'package:training_newwave/movie_app/widget/loading_widget.dart';
 
@@ -44,42 +45,48 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => _movieDetailCubit,
-      child: BlocBuilder<MovieDetailCubit, MovieDetailState>(
-        bloc: _movieDetailCubit,
-        buildWhen: (previous, current) =>
-            previous.loadingStatus != current.loadingStatus,
-        builder: (context, state) {
-          return state.loadingStatus == LoadingStatus.loading
-              ? const LoadingWidget()
-              : Scaffold(
-                  body: Stack(
-                    children: [
-                      CachedNetworkImage(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height,
-                        imageUrl: AppConstant.baseImage +
-                            (state.detailMovie?.posterPath ?? ""),
-                        fit: BoxFit.fill,
-                      ),
-                      Positioned(
-                        top: 54,
-                        left: 50,
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: SvgPicture.asset(
-                            AppVectors.icBackDetailMovie,
-                            fit: BoxFit.cover,
+    return Scaffold(
+      bottomNavigationBar: BottomNavBar(
+        onPageChange: (value) {},
+        currentIndex: 0,
+      ),
+      body: BlocProvider(
+        create: (_) => _movieDetailCubit,
+        child: BlocBuilder<MovieDetailCubit, MovieDetailState>(
+          bloc: _movieDetailCubit,
+          buildWhen: (previous, current) =>
+              previous.loadingStatus != current.loadingStatus,
+          builder: (context, state) {
+            return state.loadingStatus == LoadingStatus.loading
+                ? const LoadingWidget()
+                : Scaffold(
+                    body: Stack(
+                      children: [
+                        CachedNetworkImage(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height,
+                          imageUrl: AppConstant.baseImage +
+                              (state.detailMovie?.posterPath ?? ""),
+                          fit: BoxFit.fill,
+                        ),
+                        Positioned(
+                          top: 54,
+                          left: 50,
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: SvgPicture.asset(
+                              AppVectors.icBackDetailMovie,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                );
-        },
+                      ],
+                    ),
+                  );
+          },
+        ),
       ),
     );
   }
@@ -87,6 +94,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
   void showBottomSheet() {
     showModalBottomSheet(
       context: context,
+      enableDrag: false,
       isScrollControlled: true,
       barrierColor: Colors.black.withAlpha(1),
       backgroundColor: Colors.transparent,
@@ -114,6 +122,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                     return true;
                   },
                   child: Container(
+                    margin: const EdgeInsets.only(bottom: 76),
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         begin: Alignment.centerLeft,
