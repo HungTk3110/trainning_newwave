@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:training_newwave/configs/app_images.dart';
 import 'package:training_newwave/exercise5/screen1.dart';
 import 'package:training_newwave/movie_app/movie_with_bloc/movie_home/movie_home_screen.dart';
 import 'package:training_newwave/movie_app/movie_with_getx/movie_home/moive_home_screen.dart';
@@ -78,7 +81,40 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         theme: ThemeData.light(),
-        home: const LoginEmailScreen(),
+        home: const SplashScreen(),
+      ),
+    );
+  }
+}
+
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Timer(
+      const Duration(seconds: 1),
+      () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const LoginEmailScreen(),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      child: Image.asset(
+        AppImages.imgSplashScreen,
       ),
     );
   }
