@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:training_newwave/configs/app_colors.dart';
 import 'package:training_newwave/configs/app_vectors.dart';
 
-class AppBarEditNote extends StatelessWidget with PreferredSizeWidget {
+class AppBarEditNote extends StatelessWidget implements PreferredSizeWidget {
   final Function() openDialogSave;
 
   const AppBarEditNote({

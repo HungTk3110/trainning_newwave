@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:training_newwave/configs/app_colors.dart';
 import 'package:training_newwave/configs/app_vectors.dart';
 
-class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
+class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   final Function() onTap;
 
   const AppBarWidget({Key? key, required this.onTap}) : super(key: key);
